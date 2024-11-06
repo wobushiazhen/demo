@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Object</title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+        <style>
+            .trapezoid {
+                margin-left: 100px; 
+                width: 100px;
+                /* 梯形的底边宽度 */
+                height: 50px;  
+                /* 梯形的高度 */
+                background-color: blue;
+                /* 梯形的颜色 */ 
+                transform: perspective(550px) rotateX(45deg);
+                /* 使用 transform 来倾斜元素 */  
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="main">
+            <p>Object</p>
+            <div class="trapezoid"></div>
+        </div>
+        <script>
+            var obj1 = { a: 1, q: { ss: "sss" }, c: undefined }
+            var o1 = { msg: '你干嘛哟啊', b: 123, a: 2 }
+            // Object.assign()   目标对象,源对象...
+            var obj2 = Object.assign(o1, obj1)
+            obj2.a = 3
+            obj1.a = 6
+            console.log(o1);
+            o1.msg = '狗叫什么'
+            obj1.q.ss = 'qqqq'
+            console.log(obj1, 'obj1');
+            obj2.q.ss = 'zzzz' //如果 Object.assign(o1,obj1) 的改变值为一个对象或者引用类型数据，那原始值也会跟着改变。如果是基本数据类型则不会
+            obj2.a = 4
+            console.log(obj2, 'obj2');
+            // 静态方法返回一个有给定对象自身可枚举的字符串键名组成的数组。就是返回一个对象的所有可枚举的属性名组成的一个数组，每个属性名都是字符串。
+            console.log(Object.keys(obj2));
+            console.log(Object.values(obj2));
+            console.log(Object.entries(obj2));
+            console.log(Object.hasOwn(obj1, 'a'));   
+        </script>
+        <script>
+            // 浅拷贝方法：
+            // 1. 直接拷贝
+            let kb = '443534'
+            let cy = kb;
+            // 2. ...扩展运算符
+            let ob1 = 55
+            let cb = { ...ob1 }
+            cb = '6666'
+            // 3. 
+            let jb = JSON.parse(JSON.stringify(ob1))
+            console.log(ob1);
+            console.log(Object.is(ob1, cb));    
+        </script>
+    </body>
+
+</html>

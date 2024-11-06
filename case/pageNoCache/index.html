@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>页面不缓存</title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/layui.js"></script>
+    </head>
+    <style>
+        .step {
+            min-width: 1200px;
+            width: 1200px;
+            margin: 20px auto;
+        }
+
+        .step .t {
+            font-weight: bold;
+            line-height: 38px;
+            font-size: 20px;
+        }
+
+        .step .tq {
+            color: #c4c4c4;
+            display: block;
+            background: #191919;
+            margin: 10px auto 20px;
+            padding: 8px;
+        }
+
+        .step .layui-elem-quote {
+            padding: 6px 15px;
+        }
+    </style>
+
+    <body>
+        <div class="step">
+            <p class="t">解决浏览器缓存问题</p>
+            <span
+                class="tq">浏览器缓存是浏览器是为了节约网络的资源加速浏览，浏览器在用户磁盘上对最近请求过的文档进行存储，当访问者再次请求这个页面时，浏览器就可以从本地磁盘显示文档，这样就可以加速页面的阅览。这是好事，但是我们开发的重新发布新版本要强制刷新或者清理缓存之后才难看到新的修改内容，对于开发中的我们和测试人员并不是很友好。</span>
+            <blockquote class="layui-elem-quote">
+                方案一、在meta标签中添加不缓存属性
+                <div class="code hidden">
+<pre id="demo1" lay-skin="notepad">
+<meta http-equiv="pragram" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="expires" content="0">
+</pre>
+                </div>
+            </blockquote>
+            <blockquote class="layui-elem-quote">
+                方案二、vue2脚手架项目 在 vue.config.js 文件 对编译后的文件名称添加上版本号或时间戳（文件名有变化）
+                <div class="code hidden">
+<pre id="demo2" lay-skin="notepad">
+const version = new Date().getTime()
+// 配置 
+module.exports = {
+    devServer: {},
+    filenameHashing: false, // 打包的时候不使用 hash 值，因为后面自行添加时间戳或者版本号了
+    css: {
+        // 是否使用 css 分离插件 ExtractTextPlugin
+        extract: { 
+            // 输出编译后的文件名称：【文件名称.时间戳】、【文件名称.版本号.时间戳】...
+            filename: `css/[name].${version}.css`,
+            chunkFilename: `css/[name].${version}.css`
+            // filename: `css/[name].${process.env.VUE_APP_VERSION}.${version}.css`,
+            // chunkFilename: `css/[name].${process.env.VUE_APP_VERSION}.${version}.css`
+        }
+    },
+    configureWebpack: {
+        output: { // 输出编译后的文件名称：【文件名称.时间戳】、【文件名称.版本号.时间戳】...
+            filename: `js/[name].${version}.js`,
+            chunkFilename: `js/[name].${version}.js`
+            // filename: `js/[name].${process.env.VUE_APP_VERSION}.${version}.js`,
+            // chunkFilename: `js/[name].${process.env.VUE_APP_VERSION}.${version}.js`
+        }
+    }
+}
+</pre>
+                </div>
+            </blockquote>
+            <blockquote class="layui-elem-quote">
+                方案三、使用webpack的情况 在 webpack.config.js 配置输入文件的文件名加上版本号或时间戳，与上相似。
+                <div class="code hidden">
+<pre id="demo3" lay-skin="notepad">
+const date = new Date()
+const version = moment(date).format('YYYYMMDDHHmmssSSS') // 打包时候的版本号
+const timestamp = date.getTime() // 时间戳
+// 注意需下面这段放到配置导出中
+output: {
+    path: config.build.assetsRoot,
+    filename: utils.assetsPath(`js/[name].[chunkhash:8].${ version }.js?_t=${ timestamp }`),
+    chunkFilename: utils.assetsPath(`js/[name].[chunkhash:8].${ version }.js?_t=${ timestamp }`)
+}
+</pre>
+                </div>
+            </blockquote>
+            <blockquote class="layui-elem-quote">
+                方案四、vite.config.js server开启header不缓存。
+                <div class="code hidden">
+<pre id="demo4" lay-skin="notepad">
+// vite.config.js
+export default ({ mode }) => ({
+    server: {
+    // 开发服务器配置
+        hmr: {
+            overlay: true,  
+        },
+        // 根据环境变量来设置缓存行为
+        headers: { 
+            'Cache-Control': mode === 'production' ? 'max-age=31536000' : 'no-store',
+        },
+    },
+});     
+</pre>
+                </div>
+            </blockquote>
+            <div class="baiduMap">
+                <div id="container" style="width: 600px; height: 480px;"></div>
+            </div>
+        </div>
+    </body>
+    <script>
+        $(document).ready(function () {
+            function configureCodeBlock(elem, lang) {
+                layui.code({
+                    elem: elem,
+                    previewStyle: "word-wrap: break-word;",
+                    wordWrap: true,
+                    lang: lang,
+                    theme: "dark",
+                });
+            }
+            configureCodeBlock("#demo1", "html"); 
+            configureCodeBlock("#demo2", "js");
+            configureCodeBlock("#demo3", "js");
+            configureCodeBlock("#demo4", "js");
+        }); 
+    </script>
+
+</html>

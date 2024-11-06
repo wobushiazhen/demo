@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>浏览器插件</title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <link rel="stylesheet" href="/public/css/pc_base.css">
+        <link rel="stylesheet" href="/public/css/article.css">
+        <link rel="stylesheet" href="/public/iconfont/iconfont.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+        <link rel="stylesheet" href="/tool/swiper10.0.4.min.css">
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/layui.js"></script>
+    </head>
+
+    <body>
+        <script src="/public/js/common.js"></script>
+        
+        <div class="main">
+            <div class="pc-wrap"></div>
+            <script>$('.pc-wrap').prepend(c_header('tool'))</script>
+            <div class="article-cont">
+                <div class="article-lnav">
+                    <div class="creative-center">
+                        <div class="cc-top">
+                            <i class="iconfont icon-chuangzuozhongxin"></i>
+                            <span>创作</span>
+                            <a href="#"><span class="cgj">草稿箱(0)</span></a>
+                        </div>
+                        <div class="cc-center">
+                            <p>开启您的创作吧，哥</p>
+                            <img src="./images/kanshan.0c7f1d08.png" alt="" srcset="">
+                            <span>发布首篇创作中心，快来成为作者吧，赢取大奖~</span>
+                        </div>
+                        <div class="cc-bottom"> 
+                            <a href="./article/createAricle.html"> 
+                                <i class="iconfont icon-jiahaozhankai"></i>
+                                <span>开始创作</span>
+                            </a>
+                        </div>
+                    </div>
+                    <ul class="lnav-ul">
+                        <!-- <li>我的收藏 <i class="iconfont icon-wodeshoucang"></i></li>
+                        <li>我的关注 <i class="iconfont icon-guanzhu_wodeguanzhu"></i></li> 
+                        <li>客服与帮助 <i class="iconfont icon-pinglunjilu"></i></li>  -->
+                    </ul>
+                </div>
+                <div class="article-wrap">
+                    <div class="t-nav">
+                        <ul class="tnav-ul">
+                            <li class="tnav-li active" data-inx="0">推荐</li>
+                            <li class="tnav-li" data-inx="1">最新</li>
+                            <li class="tnav-li" data-inx="2">点赞最多</li>
+                        </ul>
+                    </div>
+                    <div class="swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="swcontent" id="swcontent">
+                                    <ul class="ac-ul">
+                                        <!-- <li class="ac-li">
+                                            <h5 class="bpaname"></h5>
+                                        </li> -->
+                                        <span>暂无数据</span>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="swcontent " id="latest">
+                                    <ul class="ac-ul">
+                                        <span>暂无数据</span>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="swcontent" id="mostLike">
+                                    <ul class="ac-ul">
+                                        <span>暂无数据</span>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="article-fixed">
+                    <div class="close iconfont icon-guanbi"></div>
+                    <img src="./images/th.jpg" alt="">
+                    <div class="gg">
+                        广告
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/tool/swiper10.0.4.min.js"></script>
+        <script src="/tool/axios.min.js"></script>
+        <script src="/public/js/common.js"></script>
+        <script>
+
+            $(".close").click(function () {
+                $(this).parent('div').hide()
+            })
+            const swiper = new Swiper('.swiper', {
+                speed: 400,
+                spaceBetween: 100,
+                allowTouchMove: false,
+            });
+
+            $('.tnav-ul li').click(function () {
+                $(this).siblings().removeClass('active')
+                $(this).addClass('active')
+                swiper.slideTo($(this).data('inx'));
+                $('.swiper-slide').hide()
+                $('.swiper-slide').eq($(this).data('inx')).show()
+            })
+
+            var bpaData = null
+            // 获取浏览器插件文章
+            function getBPA() {
+                axios({
+                    url: baseurl + "/article/getBrowserPlugins",
+                    method: "GET",
+                    headers: {
+                        authorization: getCookie('uToken')
+                    }
+                }).then((response) => {
+                    bpaData = response.data
+                    bpaData.forEach(item => {
+                        item.bpa_datetime = formattedDateString(item.bpa_datetime)
+                    });
+                    renderBPA(bpaData)
+                }).catch((error) => {
+                    console.error(error);
+                });
+            }
+
+            // function getPD() {
+            //     axios({
+            //         url: baseurl + "/article/personalData",
+            //         method: "GET",
+            //         headers: {
+            //             authorization: getCookie('uToken')
+            //         }
+            //     }).then((response) => {
+            //         console.log(response);
+            //         $(".lnav-ul").append(response.data)
+            //     }).catch((error) => {
+            //         console.error(error);
+            //     });
+            // }
+
+            function renderBPA(bpaData) {
+                // 推荐、最新、点赞最多
+                const renderList = (target, data, limit) => {
+                    const sortedData = data.slice().sort((a, b) => {
+                        if (target === 'mostLike') {
+                            return b.bpa_like - a.bpa_like;
+                        }
+                        return new Date(b.bpa_datetime) - new Date(a.bpa_datetime);
+                    });
+
+                    const renderedHTML = sortedData.slice(0, limit).map(item => `
+                        <li class="ac-li">       
+                            <a href="/useTools/article/bpadetail.html?bpaid=${item.bpa_id}&bpaname=${item.bpa_name}" target="_blank" data-bpaid="${item.bpa_id}"> 
+                                <h5 class="bpaname">${item.bpa_name}</h5>  
+                                <span class="bpakeyword">${item.bpa_keyword}</span>  
+                                <div class="from">    
+                                    <span class="bpaauthor">${item.bpa_author}</span> |     
+                                    ${item.bpa_viewers ? `<span class="bpaviewers"><i class="iconfont icon-zhiboguankanshu"></i>${item.bpa_viewers}</span>` : ''}
+                                    ${item.bpa_like ? `<span class="bpalike"><i class="iconfont icon-dianzan"></i>${item.bpa_like}</span>` : ''}
+                                </div>
+                                <img class="bpacover" src="${item.bpa_cover}" alt="暂无图片">
+                            </a>
+                        </li>`
+                    ).join('');
+
+                    $(`#${target} ul`).html(renderedHTML);
+                };
+                renderList('swcontent', bpaData, bpaData.length); // 推荐
+                renderList('latest', bpaData, 10); // 最新 
+                renderList('mostLike', bpaData, 10); // 点赞最多
+            }
+            getBPA()
+            // getPD()     
+        </script>
+    </body>
+</html>

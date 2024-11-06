@@ -1,0 +1,147 @@
+@charset "UTF-8";
+/* 样式定义：无序列表去除默认样式，设置消息区域的内边距，按钮样式 */
+body {
+  width: 16rem;
+  margin: 0 auto;
+  padding: 0;
+  height: 100vh;
+  overflow: hidden;
+  font-family: \5FAE\8F6F\96C5\9ED1;
+  padding-bottom: 2.56rem;
+}
+
+label {
+  font-size: 0.55rem;
+}
+
+#messages {
+  position: relative;
+  height: 78vh;
+  list-style-type: none;
+  padding-right: .5rem;
+  overflow: auto;
+  padding-top: 0.43rem;
+  padding-left: .5rem;
+  padding-bottom: 0.43rem;
+  border-top: 1px solid #cacaca;
+  border-bottom: 1px solid #cacaca;
+}
+
+#messages li {
+  padding: 0.21rem 0.32rem;
+  margin: 0.13rem 0;
+  border-radius: 0.11rem;
+  clear: both;
+  max-width: 12.8rem;
+  text-align: left;
+  font-size: 0.51rem;
+}
+
+/* 每条消息的样式 */
+.message-received {
+  background-color: #e0e0e0;
+  line-height: 0.81rem;
+  text-align: left;
+  float: left;
+}
+
+.message-sent {
+  background-color: #dcf8c6;
+  text-align: right;
+  line-height: 0.81rem;
+  float: right;
+  margin-right: 0.21rem;
+}
+
+button {
+  font-size: 0.55rem;
+}
+
+.send-input {
+  position: fixed;
+  bottom: 0.85rem;
+  left: 0.38rem;
+  width: 74%;
+  padding: 0.38rem 0.32rem;
+  font-size: 0.55rem;
+  border: 1px solid #6a6a6a;
+  outline: none;
+}
+
+#sendBtn {
+  position: fixed;
+  bottom: 0.85rem;
+  right: 2%;
+  width: 16%;
+  font-size: 0.55rem;
+  padding: 0.35rem 0.32rem;
+  border: none;
+}
+
+.friend-ul {
+  padding: 0;
+  margin: 1.28rem auto 0;
+  list-style-type: none;
+  width: 14.93rem;
+}
+
+.friend-ul li {
+  margin: 0.43rem 0;
+  padding: 0.53rem 0;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  height: 1.07rem;
+  font-size: 0.55rem;
+  position: relative;
+}
+
+.friend-ul li img {
+  position: absolute;
+  left: 0;
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-right: 0.21rem;
+}
+
+.friend-ul li span {
+  position: absolute;
+  left: 1.28rem;
+}
+
+.friend-ul li a {
+  display: block;
+  color: #333;
+  font-size: 0.55rem;
+  width: 100%;
+  height: 100%;
+}
+
+.friend-ul li p {
+  position: absolute;
+  left: 1.28rem;
+  color: #7b7b7b;
+  font-size: 0.43rem;
+  bottom: -0.21rem;
+}
+
+[data-dpr="2"] body .layui-layer-hui {
+  min-width: 440px !important;
+  border-radius: 10px;
+}
+
+[data-dpr="3"] body .layui-layer-hui {
+  min-width: 600px !important;
+  border-radius: 10px;
+}
+
+[data-dpr="2"] body .layui-layer-msg .layui-layer-content {
+  padding: 24px 50px;
+  font-size: 24px;
+  line-height: 2;
+}
+
+[data-dpr="3"] body .layui-layer-msg .layui-layer-content {
+  padding: 24px 50px;
+  font-size: 36px;
+  line-height: 2;
+}

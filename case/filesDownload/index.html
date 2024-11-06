@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>各类文件下载</title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <style>
+            body {
+                width: 1200px;
+                margin: 0 auto;
+                overflow: hidden;
+            }
+
+            p {
+                background: #f8f8f8;
+                padding: 3px 12px;
+                position: relative;
+                margin-bottom: 13px;
+                color: #363333;
+                width: 60%;
+            }
+
+            p::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 4px;
+                height: 100%;
+                background: #6ba5c6;
+            }
+
+            .tips {
+                font-size: 14px;
+                color: #727272;
+            }
+
+            .cont {
+                width: 800px;
+                margin: 100px auto;
+                background: #f3f3f3;
+                height: auto;
+                padding: 40px 0;
+            }
+
+            .files {
+                display: flex;
+                flex-direction: column;
+
+            }
+
+            .files .item {
+                margin-left: 30px;
+                line-height: 40px;
+            }
+
+            .item a {
+                font-size: 14px;
+                font-weight: bold;
+                line-height: 42px;
+            }
+
+            .item button {
+                border: none;
+                padding: 6px 15px;
+                text-align: center;
+                background: #a15e5e;
+                color: #ffffff;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="cont">
+            <div class="files">
+                <div class="item">
+                    <p>案例一：jpg类型，ownload属性</p>
+                    <a title="但只是get请求，鉴权无法实现" href="/material/img/bg12.jpg" download>下载jpg</a>
+                </div>
+                <div class="item">
+                    <p>案例二：jpg类型，图片转化blob</p>
+                    <button onclick="downloadFile()">下载jpg</button>
+                </div>
+            </div>
+        </div>    
+        <script src="/tool/axios.min.js"></script>
+        <!-- <script src="/config.js"></script>  -->
+        <script src="index.js"></script>
+    </body>  
+
+</html> 

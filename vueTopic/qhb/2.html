@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <link rel="stylesheet" href="css/style.css" />
+        <meta name="hotcss" content="max-width=750" />
+        <meta name="hotcss" content="design-width=750" />
+        <script src="js/hotcss.js"></script>
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            <div class="page-bg">
+                <div class="timer-top">
+                    <img class="icon-tx" src="images/icon-tx.jpg" alt="">
+                    <span class="score"></span>
+                    <div class="text">
+                        <p>时间</p>
+                        <h4 class="time_out">30.00</h4>
+                    </div>
+                    <img class="icon-yy" src="images/icon-yinyue.png" alt="">
+                </div>
+                <canvas id="canvas"></canvas>
+            </div> 
+            <div class="pup-bg hidden page-0">
+                <div class="pup-box pup-center" >
+                    <div class="pup-content">  
+                        <img class="lottery-img" src="images/baoxiang.png" alt="">
+                    </div>  
+                </div>
+            </div>
+
+            <div class="pup-bg hidden page-1">
+                <div class="pup-box pup-center">
+                    <div class="pup-content">
+                        <div class="lottery">
+                            <img class="gift-img" src="images/gift1.png" alt="" srcset="">
+                        </div> 
+                        <div class="sub">
+                            <span>一等奖</span>
+                            <p>价值100元</p>
+                        </div>
+                        <div class="btns">
+                            <a href="#" class="detail">查看奖品详情</a>
+                            <a href="#" class="again">继续抽奖</a>
+                            <a href="#" class="back">返回首页</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pup-bg hidden page-2"> 
+                <div class="pup-box1">
+                    <div class="pup-content"> 
+                        <div class="fail-img"> 
+                            <img class="fali" src="images/fail2.png" alt="" srcset="">
+                            <p class="fail-tip">很遗憾！与奖品擦肩而过</p>
+                        </div>   
+                        <div class="btns"> 
+                            <a href="#" class="again" onclick="hiddenDialog(3)">继续抽奖</a>
+                            <a href="1.html" class="back">返回首页</a>
+                        </div>  
+                    </div> 
+                </div>
+            </div>
+
+            <div class="pup-bg hidden page-2">
+                <div class="pup-box1">
+                    <div class="pup-content">
+                        <div class="fail-img">  
+                            <img class="fali" src="images/noprize.png" alt="" srcset="">
+                            <p class="fail-tip">很遗憾！与奖品擦肩而过</p>
+                        </div>
+                        <div class="btns">
+                            <a href="#" class="again" onclick="hiddenDialog(3)">继续抽奖</a>
+                            <a href="1.html" class="back">返回首页</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body> 
+    <script src="/tool/vue2.6.12.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/money.js"></script> 
+    <script src="js/index.js"></script>
+    <script src="js/requestNextAnimationFrame.js"></script>
+   
+    <script>
+        var game = new Game("#canvas")
+
+        $(".lottery-img").click(function(){
+            showDialog(1) 
+            hiddenDialog(0)
+        })
+    </script>
+
+</html>

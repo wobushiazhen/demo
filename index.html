@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阿珍的主页</title>
+    <meta name="description" content="链接，demo" />
+    <meta name="keywords" content="链接，demo" />
+    <link rel="stylesheet" href="public/css/reset.css">
+    <link rel="stylesheet" href="public/css/pc_base.css">
+    <link rel="stylesheet" href="public/iconfont/iconfont.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+    <script src="tool/jquery-2.0.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/layui.js"></script>
+    <script src="/tool/axios.min.js"></script>
+</head>
+
+<body>
+    <script src="/public/js/common.js"></script>
+    <script>
+        fetch(baseurl + '/auth/getToken')
+            .then(response => response.json())
+            .then(data => {
+                if (getCookie('uToken')) return
+                setCookie('uToken', data.token, { expires: 1 })
+            }).catch(error => console.error('Error:', error));
+
+
+        // 最强UUID+时间戳 
+        function generateUniqueID() {
+            function generateUUID() {
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            }
+            let timestamp = new Date().getTime().toString(36); // 将时间戳转换为36进制字符串
+            let uuid = generateUUID();
+            return timestamp + '-' + uuid;
+        }
+          
+        // 机器id
+        if (!getCookie('device-uuid')) {  
+            setCookie('device-uuid', generateUniqueID(), { expires: new Date().getMonth() + 2 })
+        }
+
+ 
+    </script>
+    <div class="main">
+        <!-- 写入代码 -->
+        <link rel="stylesheet" href="index/style.css">
+        <div class="pc-wrap">
+            <!-- <div class="pc-header">
+                    <div class="header-inner">
+                        <div class="inner-l">
+                            <div class="inner-l-text">
+                                <p>azhen知识库</p>
+                                <i class="iconfont icon-zhishiku"></i>
+                            </div>
+                            <div class="inner-l-search">
+                                <i class="iconfont icon-sousuo"></i>
+                                <input type="text" placeholder="资源/教程">
+                            </div>
+                        </div>
+                        <div class="inner-r">
+                            <ul class="layui-nav" lay-filter="">
+                                <li class="layui-nav-item layui-this"><a href="">测试题</a></li>
+                                <li class="layui-nav-item"><a href="">摸鱼软件</a></li>
+                                <li class="layui-nav-item"><a href="">知识库</a></li>
+                                <li class="layui-nav-item">
+                                    <a href="javascript:;">工具</a>
+                                    <dl class="layui-nav-child"> 
+                                        <dd><a href="">ppt</a></dd>
+                                        <dd><a href="">破解</a></dd>
+                                        <dd><a href="">音视频</a></dd>
+                                    </dl>
+                                </li>
+                                <li class="layui-nav-item"><a href="">社区</a></li>
+                            </ul>
+                        </div> 
+                    </div> 
+                </div> -->
+
+            <div class="pc-cont">
+                <!-- css -->
+                <div class="cont1">
+                    <div class="cont-top">
+                        <i class="iconfont icon-weibiaoti22"></i>
+                        <div class="cont-title">
+                            <p class="mtitle">css/css3</p>
+                            <span class="subtitle">不懂写了什么样式</span>
+                        </div>
+                    </div>
+                    <div class="cont-link">
+                        <ul class="link-ul">
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="case/cssLoading/index.html">加载loading效果</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="/case/phoneModel/index.html?mlink=/case/scrollPass/">移动端滚动穿透，你造么</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" href="#">reset.css重置样式文件</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                                <div class="code hidden">
+                                    <pre id="demo1" lay-skin="notepad">
+/* 盒模型规则 */
+*,*::before,*::after {
+    box-sizing: border-box;  
+}
+                                                    
+/* 移除默认外边距 */
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,figure,blockquote,dl,dd {
+    margin: 0;
+}
+                                                    
+/* 移除默认内边距 */
+ul,ol {
+    padding: 0;
+}
+
+/* 移除列表样式 */
+ul,ol {
+    list-style: none;
+}
+                                                    
+/* 移除锚文本装饰 */
+a {
+    text-decoration: none;
+}
+                                                    
+/* 移除按钮和输入边框 */
+button,input {
+    border: none;
+    outline: none;
+}
+                                                    
+/* 移除图片用户代理样式 */
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+                                                    
+/* 移除默认表格间距 */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+                                                    
+/* 设置默认字体样式 */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+}
+</pre>
+                                </div>
+
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" href="#">移动端媒体查询+rem单位响应式布局</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                                <div class="code hidden">
+                                    <pre id="demo2" lay-skin="notepad">
+@charset "utf-8";
+@media only screen and (min-width:320px) {
+    html {
+        font-size: 42.6px
+    }
+    body {
+        font-size: 12px
+    }
+}
+    
+@media only screen and (min-width:360px) {
+    html {
+        font-size: 48px
+    }
+    body {
+        font-size: 11.52px
+    }
+}
+    
+@media only screen and (min-width:375px) {
+    html {
+        font-size: 50px
+    }
+    body {
+        font-size: 12px
+    }
+}
+    
+@media only screen and (min-width:384px) {
+    html {
+        font-size: 51.2px
+    }
+    body {
+        font-size: 12.288px
+    }
+}
+    
+@media only screen and (min-width:393px) {
+    html {
+        font-size: 52.4px
+    }
+    body {
+        font-size: 12.576px
+    }
+}
+    
+@media only screen and (min-width:414px) {
+    html {
+        font-size: 55.2px
+    }
+    body {
+        font-size: 13.248px
+    }
+}
+    
+@media only screen and (min-width:480px) {
+    html {
+        font-size: 64px
+    }
+    body {
+        font-size: 15.36px
+    }
+}
+    
+@media only screen and (min-width:540) {
+    html {
+        font-size: 72px
+    }
+    body {
+        font-size: 17.28px
+    }
+}
+    
+@media only screen and (min-width:640px) {
+    html {
+        font-size: 85.33333px
+    }
+    body {
+        font-size: 20.48px
+    }
+}  
+    
+@media only screen and (min-width:720px) {
+    html {
+        font-size: 96px
+    }
+    body {
+        font-size: 23.04px
+    }
+}
+    
+@media only screen and (min-width:750px) {
+    html {
+        font-size: 100px
+    }
+    body {
+        font-size: 24px
+    }
+}
+    
+body {
+    background: #f6f6f6;
+}
+    
+.main {
+    max-width: 750px;
+    min-width: 320px;
+    min-height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+} 
+// 页面的布局使用rem单位 
+.header{
+    height:1.1rem;
+    width:100%;
+    text-align: center;
+}
+    /* 底部安全距离 */
+.safe-area {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+    
+/* 在 iPhone X 及以上设备上使用安全距离 */
+@media only screen and (min-device-width: 375px) and (min-device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+    body {
+        padding-bottom: constant(safe-area-inset-bottom);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+    
+/* 在 iPad Pro 上使用安全距离 */
+@media only screen and (min-device-width: 1024px) and (min-device-height: 1366px) and (-webkit-device-pixel-ratio: 2) {
+    body {
+        padding-bottom: constant(safe-area-inset-bottom);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}  
+</pre>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="case/cssLoading/index.html">移动端scss+vw单位响应式布局</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                                <div class="code hidden">
+                                    <pre id="demo6" lay-skin="notepad">
+// 需要在scss文件下使用
+$designWidth: 750;
+    @function px2vw($px) { 
+    @return ($px / $designWidth) * 100vw;
+}
+                                    
+/*page*/
+html,
+body {
+    position: relative;
+    height: 100%;
+    width: 100vw;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: PingFang SC, Helvetica Neue, Hiragino Sans GB, Segoe UI, Microsoft YaHei, \\5FAE\8F6F\96C5\9ED1,
+    sans-serif;
+    margin: 0 auto;
+    padding: 0;
+    background: #ffffff;
+}
+                                    
+.m-page {
+    width: 100vw;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+} 
+// 元素单位都使用px2vw(xx)
+</pre>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="case/cssLoading/index.html">移动端hotcss.js+scss+rem单位响应式布局</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                                <div class="code hidden">
+                                    <pre id="demo7" lay-skin="notepad">
+// hotcss.js  
+(function (window, document) {
+"use strict";
+//给hotcss开辟个命名空间，别问我为什么，我要给你准备你会用到的方法，免得用到的时候还要自己写。
+var hotcss = {};
+(function () {
+    //根据devicePixelRatio自定计算scale
+    //可以有效解决移动端1px这个世纪难题。
+    var viewportEl = document.querySelector('meta[name="viewport"]'),
+    hotcssEl = document.querySelector('meta[name="hotcss"]'),
+    dpr = window.devicePixelRatio || 1,
+    maxWidth = 540,
+    designWidth = 0;
+    dpr = dpr >= 3 ? 3 : dpr >= 2 ? 2 : 1;
+
+    //允许通过自定义name为hotcss的meta头，通过initial-dpr来强制定义页面缩放
+    if (hotcssEl) {
+        var hotcssCon = hotcssEl.getAttribute("content");
+        if (hotcssCon) {
+            var initialDprMatch = hotcssCon.match(/initial\-dpr=([\d\.]+)/);
+            if (initialDprMatch) {
+                dpr = parseFloat(initialDprMatch[1]);
+            }
+            var maxWidthMatch = hotcssCon.match(/max\-width=([\d\.]+)/);
+            if (maxWidthMatch) {
+                maxWidth = parseFloat(maxWidthMatch[1]);
+            }
+            var designWidthMatch = hotcssCon.match(/design\-width=([\d\.]+)/);
+            if (designWidthMatch) {
+                designWidth = parseFloat(designWidthMatch[1]);
+            }
+        }
+    }
+    document.documentElement.setAttribute("data-dpr", dpr);
+    hotcss.dpr = dpr;
+
+    document.documentElement.setAttribute("max-width", maxWidth);
+    hotcss.maxWidth = maxWidth;
+
+    if (designWidth) {
+        document.documentElement.setAttribute("design-width", designWidth);
+    }
+    hotcss.designWidth = designWidth; // 保证px2rem 和 rem2px 不传第二个参数时, 获取hotcss.designWidth是undefined导致的NaN
+    var scale = 1 / dpr,
+    content =
+    "width=device-width, initial-scale=" +
+    scale +
+    ", minimum-scale=" +
+    scale +
+    ", maximum-scale=" +
+    scale +
+    ", user-scalable=no,viewport-fit=cover";
+
+    if (viewportEl) {
+        viewportEl.setAttribute("content", content);
+    } else {
+        viewportEl = document.createElement("meta");
+        viewportEl.setAttribute("name", "viewport");
+        viewportEl.setAttribute("content", content);
+        document.head.appendChild(viewportEl);
+    }
+})();
+
+hotcss.px2rem = function (px, designWidth) {
+    //预判你将会在JS中用到尺寸，特提供一个方法助你在JS中将px转为rem。就是这么贴心。
+    if (!designWidth) {
+        //如果你在JS中大量用到此方法，建议直接定义 hotcss.designWidth 来定义设计图尺寸;
+        //否则可以在第二个参数告诉我你的设计图是多大。
+        designWidth = parseInt(hotcss.designWidth, 10);
+    }
+
+    return (parseInt(px, 10) * 320) / designWidth / 20;
+};
+
+hotcss.rem2px = function (rem, designWidth) {
+    //新增一个rem2px的方法。用法和px2rem一致。
+    if (!designWidth) {
+        designWidth = parseInt(hotcss.designWidth, 10);
+    }
+        //rem可能为小数，这里不再做处理了
+        return (rem * 20 * designWidth) / 320;
+};
+
+hotcss.mresize = function () {
+    //对，这个就是核心方法了，给HTML设置font-size。
+    var innerWidth =document.documentElement.getBoundingClientRect().width || window.innerWidth;
+
+    if (hotcss.maxWidth && innerWidth / hotcss.dpr > hotcss.maxWidth) {
+        innerWidth = hotcss.maxWidth * hotcss.dpr;
+    }
+
+    if (!innerWidth) {
+        return false;
+    }
+    document.documentElement.style.fontSize = (innerWidth * 20) / 320 + "px";
+    hotcss.callback && hotcss.callback();
+};
+
+hotcss.mresize();
+//直接调用一次
+window.addEventListener("resize",function () {
+    clearTimeout(hotcss.tid);
+    hotcss.tid = setTimeout(hotcss.mresize, 33);
+},false);
+//绑定resize的时候调用
+window.addEventListener("load", hotcss.mresize, false);
+//防止不明原因的bug。load之后再调用一次。
+setTimeout(function () {  
+    hotcss.mresize();
+    //防止某些机型怪异现象，异步再调用一次
+}, 333);
+
+window.hotcss = hotcss;
+//命名空间暴露给你，控制权交给你，想怎么调怎么调。
+})(window, document);
+
+// 使用meta标签定义页面最大宽度<meta name="hotcss" content="max-width=750">
+// 使用meta标签定义设计稿宽度<meta name="hotcss" content="design-width=750">
+// 引入js文件 "js/hotcss.js"
+
+//在scss文件中使用
+@charset "utf-8";
+@function px2rem($px) {
+    @return (round(($px*320/$designWidth/20)*100))/100+rem; //rem计算结果保留两位小数
+    }
+$designWidth : 750;
+// 元素完全可以对照设计稿750宽度的大小来调整
+.m-page {
+    // overflow: hidden;
+    position: relative;
+    overflow-y: auto;
+    min-width: px2rem(320);
+    max-width: px2rem(750);
+    min-height: 100vh;
+    margin: 0 auto;
+}
+</pre>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="javascript:void(0)">移动端js动态设置根标签字体大小适配方案</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                                <div class="code hidden">
+                                    <pre id="demo8" lay-skin="notepad">
+// js
+var htmlWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+var htmlDom = document.getElementsByTagName("html")[0];
+if (htmlWidth > 750) {
+    htmlWidth = 750
+}
+htmlDom.style.fontSize = htmlWidth / 7.5 + "px";
+window.addEventListener("resize", function () {
+    var htmlDom = document.getElementsByTagName("html")[0];
+    var htmlWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+if (htmlWidth > 750) {
+    htmlWidth = 750
+}
+htmlDom.style.fontSize = htmlWidth / 7.5 + "px";
+});
+
+// css 可以自行换算rem单位用px/10，也可以安装px2rem vscode插件把字体大小设置为100
+.main {
+    margin: 0 auto;
+    width: 7.5rem;
+    min-width: 320px;
+    max-width: 750px;
+    overflow: hidden;
+    height: 100vh;
+    background: rgb(239, 239, 239);
+    color: #000;
+}
+img{
+    display: block;
+    max-width: 100%;
+}
+.top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .12rem .26rem;
+}
+.top i{
+    font-size: .33rem;
+}
+
+.top span{
+    font-size: .32rem;
+}
+
+                                        </pre>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank" href="javascript:void(0)">ios样式兼容</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                                <div class="code hidden">
+                                    <pre id="demo9" lay-skin="notepad">
+/* input通过其他标签代替时，设置宽高为0之后点击会有黑点，是因为input的背景和颜色没有去掉 */
+.suc-form .form-item .form-li input{
+    background: none;
+    border: none;
+}  
+
+/* button、input、a标签点击时出现半透明黑框 */
+button,input,a{
+    -webkit-tap-highlight-color:rgba(0,0,0,0)
+}
+                                        </pre>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="javascript:void(0)">align-self这个样式要提一下</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                                <div class="code hidden">
+                                    <pre id="democss1" lay-skin="notepad">
+<!-- 我在写页面过程中，遇到一个问题，父元素是一个flexbox 然后他的第二个子元素的高度比其他兄弟元素要高，
+    所以我在写第一个元素的时候他的高度莫名的对齐第二个元素，但是我第一个元素不能限定高度，要随着内容的高端变化而变化。
+    一时间不知道怎么办，我知道这是flex布局的原因，然后找到了 align-self:start 属性可以在flexbox中对齐开始位置，不会被其他flex元素影响。
+ -->
+.flex-container {
+    display: flex;
+    height: 100vh; /* 假设父容器有固定高度 */
+}
+
+.article-lnav {
+    width: 250px;
+    align-self: start; /* 这里是关键 */
+    border-radius: 3px;
+    background: #fbfbfb;
+}
+
+.article-lnav .lnav-ul {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.article-lnav .lnav-ul li {
+    height: 60px;
+    line-height: 60px;
+}
+
+<div class="flex-container">
+    <div class="article-lnav">
+        <!-- 这里的内容要随着内容多少而改变高度 -->
+        <ul class="lnav-ul">
+            <li>我的收藏</li>
+            <li>我的关注</li>
+            <li>客服与帮助</li>
+        </ul>
+    </div>
+    <div class="article-cnav">
+        这里高度最高
+    </div>
+    <div class="article-lnav">
+    </div>
+</div>
+                                        </pre>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- html -->
+                <div class="cont2">
+                    <div class="cont-top">
+                        <i class="iconfont icon-weibiaoti22"></i>
+                        <div class="cont-title">
+                            <p class="mtitle">html/html5</p>
+                            <span class="subtitle">你在写什么html</span>
+                        </div>
+                    </div>
+                    <div class="cont-link">
+                        <ul class="link-ul">
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank" href="/case/imgsLazy/">图片懒加载你真的懂吗</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="/case/phoneModel/index.html?mlink=/case/landscape/">手机横屏还是竖屏呢？我该怎么在h5在自如切换，还有滑底加载数据哦</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="case/checkboxControl/index.html">控制复选框选中数量，一些简单的原生操作</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="case/audioVisual/index.html">浏览器限制自动播放,音视频播放有技巧</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="case/audioVisual/selectCover.html">video选择封面</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank" href="javascript:void(0)">meta标签注解</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                                <div class="code hidden">
+                                    <pre id="demo10" lay-skin="notepad">
+/* meta 标签是页面的元数据信息 */
+/* 常见属性有 name content http-equiv charset */
+
+<!-- http文件头的类型为文本类型 content的值为超文本类型，限定字符集为utf-8  --> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> / <meta charset="UTF-8">
+
+<!-- 设置网页的过期时间，网页过期，需要重新上传至服务器，时间格式为GMT -->
+<meta http-equiv="expires" content="Wed, 20 Jun 2007 22:33:00 GMT">
+
+<!-- 设置视口，宽度为设备宽度，初始缩放比例为1.0 允许页面缩小的倍数为1.0，运行页面放大的倍数为1.0,不允许用户缩放页面-->
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+
+<!-- 为搜索引擎定义关键词 -->
+<meta name="keywords" content="">
+
+<!-- 设置网页描述 -->
+<meta name="description" content="">
+
+<!-- web页面在移动设备全屏运行 删掉了苹果的工具栏和菜单栏 -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<!-- web页面在移动设备状态栏背景颜色 默认是白色 -->
+<meta name=”apple-mobile-web-app-status-bar-style” content=black” />
+
+<!-- 禁用苹果手机将数字转化为拨号链接 -->
+<meta name="format-detection" content="telephone=no">
+
+<!-- 告诉浏览器此页面适合在移动设备上预览 -->  
+<meta name="applicable-device" content="mobile">
+
+<!-- 告诉IE浏览器，IE8/9以及以后的版本都会以最高版本IE来渲染界面 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+                                        </pre>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank" href="javascript:void(0)">script标签属性含义</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                                <div class="code hidden">
+                                    <pre id="demo11" lay-skin="notepad">
+/* script 属性 */ 
+/* 常见属性有 src type defer async charset */
+
+<!-- 外嵌js文件  -->  
+<script src="/public/js/common.js"></script> 
+ 
+<!-- 告诉浏览器此文件是纯文本形式的JS脚本 -->
+<script src="/public/js/common.js" type="text/javascript"></script>
+<script type="module">  // 现在浏览器支持ES6语法，自然包括import方式引入js文件
+    import * as THREE from './build/three.module.js'; 
+</script>  
+
+<!-- 浏览器会异步下载文件，且不会影响到后续的DOM渲染。如果有多个script标签添加了defer属性，则会按顺序执行script  -->
+<script src="/public/js/common.js"  defer></script>
+   
+<!-- 浏览器会异步下载文件，会按谁先加载完就先执行script  -->
+<script src="/public/js/common.js" async></script>
+
+<!-- defer和async的区别 --> 
+<!-- defer和async都属于异步加载，defer会比async稳定 -->
+<!-- defer是延迟执行（推迟解释，当前html页面解析完成后执行）js，async是当前js文件加载完成后执行j -->
+
+<!-- 字符编码属性，可选。默认是utf-8编码，主要表示通过src属性指定的代码的字符集  -->
+<script src="/public/js/common.js" charset="gbk-8"></script>
+                                        </pre>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- js -->
+                <div class="cont3">
+                    <div class="cont-top">
+                        <i class="iconfont icon-weibiaoti22"></i>
+                        <div class="cont-title">
+                            <p class="mtitle">javascript</p>
+                            <span class="subtitle">javascript是世界上最好的语言</span>
+                        </div>
+                    </div>
+                    <div class="cont-link">
+                        <ul class="link-ul">
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank" href="/case/echarts/">可视化大屏和原生echarts</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank" href="/case/tableStrong/">原生封装强大的表格组件</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank" href="case/filesDownload/">文件下载各有不同</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank" href="case/pageLink/">页码换页翻页、Switch开关</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank" href="case/websocket/index.html">new
+                                        WebSocket，轻松建立一个聊天室（启动node）</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank" href="case/debounce/">优化方案一：防抖节流</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" href="javascript:void(0)">玩转cookie</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                                <div class="code hidden">
+                                    <pre id="demo3" lay-skin="notepad">
+// 认识cookie
+var now = new Date();
+var days = 7; // 设置为您想要的过期天数
+now.setDate(now.getDate() + days);
+var expiryDate = now.toUTCString(); //要是uct格式日期。
+document.cookie = 'a=3423; expires=' + expiryDate + '; path=/';
+document.cookie = 'b=3423; expires=' + expiryDate + '; path=/';
+document.cookie = 'c=3423; expires=' + expiryDate + '; path=/';
+document.cookie = 'd=3423; expires=' + expiryDate + '; path=/';
+
+// 获取cookie
+function getCookie(name) {
+    if (!name) return null;
+        const arr = document.cookie.split('; ');
+        let result = null;
+        arr.forEach((item) => {
+            const [cookieName, value] = item.split('=');
+            if (cookieName === name) result = decodeURIComponent(value);
+        });
+    return result;
+}
+const a = getCookie('a');
+console.log(a);
+
+// 设置cookie
+function setCookie(name, value, options = {}) {
+    if (!name) return;
+    let cookieString = `${name}=${value}`;
+    if (options.expires) {
+        const expires = options.expires;
+        if (expires instanceof Date) {
+            cookieString += `; expires=${expires.toUTCString()}`;
+        } else {
+            const days = parseInt(expires);
+            if (!isNaN(days)) {
+                const expirationDate = new Date();
+                expirationDate.setDate(expirationDate.getDate() + days);
+                cookieString += `; expires=${expirationDate.toUTCString()}`;
+            }
+        }
+    }
+    if (options.path) {
+        cookieString += `; path=${options.path}`;
+    }
+    document.cookie = cookieString;
+}
+setCookie('azhen', '666', { expires: 7, path: '/' });
+
+// 删除cookie
+function delCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+}
+delCookie('azhen')
+                                        </pre>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" href="javascript:void(0)">mockjs知多少，加持nodejs与后端分手</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                                <div class="code hidden">
+                                    <pre id="demo4" lay-skin="notepad">
+// 引入 https://cdn.bootcdn.net/ajax/libs/Mock.js/1.0.0/mock-min.js
+let allData = [] 
+var Random = Mock.Random;
+// 自定义生肖数据并和随机年份对应
+Random.extend({
+    zodiac: function (year) {
+        var startYear = 1900; // 假设生肖的起始年份为1900年
+        var zodiacList = ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'];
+        var index = (year - startYear) % 12;
+        return zodiacList[index];
+    }
+});
+// 生成10条mock数据 
+for (var i = 0; i < 10; i++) {
+    var year = Mock.mock('@datetime("yyyy")');
+    allData.push(Mock.mock({
+        "no|1-10": 10,
+        name: "@cname",
+        id: '@id',
+        city: "@city",
+        "sex|1": ['男', '女'],
+        datetime: '@datetime("yyyy")',
+        zodiac: '@zodiac(' + year + ')'
+    })
+)} 
+// Random 方法生成一个邮箱 console.log(Random.email()); // 自定义Random 方法
+Random.extend({
+    constellation: function () {
+        var constellations = ['白羊座', '金牛座', '双子座', '巨蟹座', '狮子座', '处女座', '天秤座', '天蝎座', '射手座', '摩羯座', '水瓶座', '双鱼座']
+        return this.pick(constellations)
+    } 
+})  
+console.log(Random.constellation()); 
+console.log(allData);
+</pre>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- 微信小程序 -->
+                <div class="cont4">
+                    <div class="cont-top">
+                        <i class="iconfont icon-weibiaoti22"></i>
+                        <div class="cont-title">
+                            <p class="mtitle">微信小程序</p>
+                            <span class="subtitle">狗都不写小程序</span>
+                        </div>
+                    </div>
+                    <div class="cont-link">
+                        <ul class="link-ul">
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="case/swiper_c1/index.html">自定义tabbar</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                                <div class="code hidden">
+                                    <pre id="demo12" lay-skin="notepad">
+<!-- 自定义tabbar -->
+// app.json 文件,设置tabbar custom
+"tabBar": {
+    "custom": true,
+    "selectedColor": "#EB9E9E", 
+    "list": [
+        {
+            "pagePath": "pages/index/index",  
+            "text": "知识库",
+            "iconPath": "/static/images/more.png",
+            "selectedIconPath": "/static/images/more-selected.png"
+        },
+        {
+            "pagePath": "pages/mySquare/mySquare",
+            "text": "摸鱼广场",
+            "iconPath": "/static/images/target.png",
+            "selectedIconPath": "/static/images/target-selected.png"
+        },
+        {
+            "pagePath": "pages/community/community",
+            "text": "社区",
+            "iconPath": "/static/images/user.png",
+            "selectedIconPath": "/static/images/user-selected.png"
+        }
+    ]
+},
+
+// 创建一个文件夹为 custom-tab-bar 在此文件夹新建component
+/custom-tab-bar/index.json 文件
+{
+"component": true,
+}
+
+/custom-tab-bar/index.wxml 文件 循环tabbar
+<view class="tab-bar"> 
+    <view class="tab-bar-border"></view>
+    <view wx:for="{{list}}" wx:key="index" class="tab-bar-item" data-path="{{item.pagePath}}" data-index="{{index}}"
+        bindtap="switchTab">
+        <image class="tabs-icon" src="{{selected == index ? item.selectedIconPath : item.iconPath}}"></image>
+        <view class="tabs-text" style="color: {{selected == index ? selectedColor : color}}">{{item.text}}</view>
+    </view>
+</view>
+
+/custom-tab-bar/index.js  tabbar数据、选中样式和跳转tabbar页面
+Component({
+    data: {
+        selected: 0,
+        color: "#4C4848",
+        selectedColor: "#EB9E9E",
+        list: [
+            {
+                pagePath: "/pages/index/index",
+                text: "知识库",
+                iconPath: "/static/images/more.png",
+                selectedIconPath: "/static/images/more-selected.png"
+            },
+            {
+                pagePath: "/pages/mySquare/mySquare",
+                text: "摸鱼广场",
+                iconPath: "/static/images/target.png",
+                selectedIconPath: "/static/images/target-selected.png"
+            },
+            {
+                pagePath: "/pages/community/community",
+                text: "社区",
+                iconPath: "/static/images/user.png",
+                selectedIconPath: "/static/images/user-selected.png"
+            }
+        ]
+    },
+    methods: {
+        switchTab(e) {
+            const data = e.currentTarget.dataset
+            const url = data.path
+            this.setData({
+                selected:data.index
+            })
+            wx.switchTab({url})
+        }
+    }
+})
+
+/custom-tab-bar/index.wxss 文件 设置tabbar样式 至底部
+.tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 115rpx;
+    background: rgb(255, 255, 255);
+    display: flex;
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-bottom: constant(safe-area-inset-bottom);
+    justify-content: space-around;
+}
+
+.tab-bar-border {
+    width: 100%;
+    border-top: 1rpx solid #cfcfcf;
+    position: absolute;
+}
+
+.tab-bar-item {
+    padding-top: 10rpx;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab-bar-item .tabs-icon {
+    width: 50rpx;
+    height: 50rpx;
+}
+ 
+.tab-bar-item .tabs-text {
+    margin-top: 10rpx;
+    font-size: 22rpx;
+    text-align: center;
+}
+
+<!-- 注意事项，自定义tabbar会出现点击两次tab项才选中激活的问题 -->
+// 需要在每个tabbar页面触发 getTabbar() 然后修改selected值
+data:{
+    selected: 0,
+}
+onShow: function () {
+    if (typeof this.getTabBar === 'function' &&
+        this.getTabBar()) {
+        this.getTabBar().setData({
+            selected: 0 // 控制哪一项是选中状态
+        })
+    }
+}
+</pre>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="/case/phoneModel/index.html?mlink=/case/swiper_c2/">自定义navigationBar</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                                <div class="code hidden">
+                                    <pre id="demo13" lay-skin="notepad">
+<!-- 通过 wx.getSystemInfoSync() 和 wx.getMenuButtonBoundingClientRect() 获取系统信息和右上角胶囊信息，一般写在全局app.js 文件 -->
+// app.js 文件
+App({
+    onLaunch: function (options) {
+        const that = this;
+        // 获取系统信息 
+        const systemInfo = wx.getSystemInfoSync();
+        // 胶囊按钮位置信息
+        const menuButtonInfo = wx.getMenuButtonBoundingClientRect();
+        // 导航栏高度 = 状态栏高度 + 44
+        that.globalData.navBarHeight = systemInfo.statusBarHeight + 44;
+        that.globalData.menuRight = systemInfo.screenWidth - menuButtonInfo.right;
+        that.globalData.menuTop = menuButtonInfo.top;
+        that.globalData.menuHeight = menuButtonInfo.height;
+    },
+    // 数据都是根据当前机型进行计算，这样的方式兼容大部分机器
+    globalData: {
+        navBarHeight: 0, // 导航栏高度
+        menuRight: 0, // 胶囊距右方间距（方保持左、右间距一致）
+        menuTop: 0, // 胶囊距底部间距（保持底部间距一致）
+        menuHeight: 0, // 胶囊高度（自定义内容可与胶囊高度保证一致）
+    }
+})
+
+<!-- 自定义navigationBar -->
+// .json 文件 设置自定义
+{
+    "navigationStyle": "custom"
+}
+
+// index.js 自定义navigationBar的文件
+const app = getApp()
+Page({
+    data: {
+        selected: 0,
+        navBarHeight: app.globalData.navBarHeight,
+        menuRight: app.globalData.menuRight,
+        menuTop: app.globalData.menuTop,
+        menuHeight: app.globalData.menuHeight,
+    },
+    onShow: function () {
+        if (typeof this.getTabBar === 'function' &&this.getTabBar()) {
+            this.getTabBar().setData({
+                selected: 0 // 控制哪一项是选中状态
+            })  
+        }
+    }
+})
+
+// index.wxml 文件 主要navBarHeight的高度和要对齐右上角胶囊 
+<view class="banner">
+    <image class="banner-img" src="/static/images/indexBanner.png"></image>
+    <view class="nav-bar" style="height:{{navBarHeight}}px;line-height: {{navBarHeight}}px;">
+        <input class="search" placeholder-class="placeholder-search" placeholder="输入关键词"
+            style="height:{{menuHeight}}px;  line-height:{{menuHeight}}px; left:{{menuRight}}px; top:{{menuTop}}px;"></input>
+    </view>
+</view>
+
+// index.wxss 文件
+.nav-bar{
+    position: relative;
+    width: 100%;
+}
+
+.search{
+    width: 350rpx;
+    background: rgb(255, 255, 255,.6);
+    padding-left: 20rpx;
+    border-radius: 10rpx;
+    border: 1rpx solid rgb(240, 150, 150);
+    position: absolute;
+    color: rgb(146, 66, 66);
+}
+
+.placeholder-search{
+    color: rgb(160, 73, 73);
+}
+
+.banner-img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 318rpx;
+}  
+
+.banner{
+    width: 100%;
+    position: relative;
+}
+</pre>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- swiper -->
+                <div class="cont5">
+                    <div class="cont-top">
+                        <i class="iconfont icon-weibiaoti22"></i>
+                        <div class="cont-title">
+                            <p class="mtitle">插件swiper</p>
+                            <span class="subtitle">swiper版本兼容真是离谱</span>
+                        </div>
+                    </div>
+                    <div class="cont-link">
+                        <ul class="link-ul">
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="case/swiper_c1/index.html">swiper像弹幕那样平滑怎么做呢</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="/case/phoneModel/index.html?mlink=/case/swiper_c2/">swiper的slide宽高不一样，有些内容看不到，是不是很恼火</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- git -->
+                <div class="cont6">
+                    <div class="cont-top">
+                        <i class="iconfont icon-weibiaoti22"></i>
+                        <div class="cont-title">
+                            <p class="mtitle">git操作</p>
+                            <span class="subtitle">其实git看似很难，其实一点也不简单</span>
+                        </div>
+                    </div>
+                    <div class="cont-link">
+                        <ul class="link-ul">
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="case/swiper_c1/index.html">swiper像弹幕那样平滑怎么做呢</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="/case/phoneModel/index.html?mlink=/case/swiper_c2/">swiper的slide宽高不一样，有些内容看不到，是不是很恼火</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- vue3 -->
+                <div class="cont7">
+                    <div class="cont-top">
+                        <i class="iconfont icon-weibiaoti22"></i>
+                        <div class="cont-title">
+                            <p class="mtitle">vue系列</p>
+                            <span class="subtitle">无情的小vuevue</span>
+                        </div>
+                    </div>
+                    <div class="cont-link">
+                        <ul class="link-ul">
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="http://39.104.18.107/vue3-common/">先看看自己写的垃圾组件</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- 语义化 -->
+                <div class="cont7">
+                    <div class="cont-top">
+                        <i class="iconfont icon-weibiaoti22"></i>
+                        <div class="cont-title">
+                            <p class="mtitle">语义化词</p>
+                            <span class="subtitle">也许你英语很好，但是简洁并通用的词在编程世界里更合适</span>
+                        </div>
+                    </div>
+                    <div class="cont-link">
+                        <ul class="link-ul">
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank" href="/case/semantic/index.html">日积月累的...</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="cont8">
+                    <div class="cont-top">
+                        <i class="iconfont icon-weibiaoti22"></i>
+                        <div class="cont-title">
+                            <p class="mtitle">git</p>
+                            <span class="subtitle">免费无敌，分布式版本控制系统（内容管理系统），安全</span>
+                        </div>
+                    </div>
+                    <div class="cont-link">
+                        <ul class="link-ul">
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank" href="/case/semantic/index.html">步骤一：安装，下载，git基本信息配置查看</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="pc-rfixed">
+                    <ul class="fixed-ul">
+                        <li>
+                            <a href="#">
+                                <i class="iconfont icon-github"></i>
+                                <span>github</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="iconfont icon-yijianfankui" style="font-size: 24px;"></i>
+                                <span>关于我们</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="iconfont icon-liuyan" style="font-size: 28px;"></i>
+                                <span>提供信息</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" onclick="scrollTop1()">
+                                <i class="iconfont icon-zhiding" style="font-size: 20px;"></i>
+                                <span> 置顶</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script>
+            $('.pc-wrap').prepend(c_header()) 
+        </script>
+    </div>
+
+    <script src="index/index.js"></script>
+</body>
+
+</html>

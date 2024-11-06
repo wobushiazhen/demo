@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>vue分页组件</title>
+        <style>
+            .page {
+                font-weight: 900;
+                height: 40px;
+                text-align: center;
+                color: #888;
+                margin: 20px auto 0;
+                background: #f2f2f2;
+            }
+
+            .article {
+                width: 80%;
+                margin: 0 auto;
+            }
+
+            .pagelist {
+                font-size: 0;
+                background: #fff;
+                height: 50px;
+                line-height: 50px;
+            }
+
+            .pagelist span {
+                font-size: 14px;
+            }
+
+            .pagelist .jump {
+                border: 1px solid #ccc;
+                padding: 5px 8px;
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-left: 5px;
+            }
+
+            .pagelist .bgprimary {
+                cursor: default;
+                color: #fff;
+                background: #337ab7;
+                border-color: #337ab7;
+            }
+
+            .jumpinp input {
+                width: 55px;
+                height: 26px;
+                font-size: 13px;
+                border: 1px solid #ccc;
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
+                border-radius: 4px;
+                text-align: center;
+            }
+
+            .ellipsis {
+                padding: 0px 8px;
+            }
+
+            .jumppoint {
+                margin-left: 30px;
+            }
+
+            .pagelist .gobtn {
+                font-size: 12px;
+            }
+
+            .pagelist .jump.disabled {
+                pointer-events: none;
+                background: #ddd;
+            }
+
+            .switch {
+                width: 100%;
+                margin: 0 auto;
+            }
+
+            .sw-icon {
+                display: block;
+                /* background: #0052d9; */
+                background: #c0bfbf;
+                width: 46px;
+                height: 22px;
+                border-radius: 11px;
+                position: relative;
+                cursor: pointer;
+                box-shadow: 0 0 2px 1px rgb(219, 219, 219);
+                transition: all .2s ease-in;
+            }
+
+            .sw-icon::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                transform: translate(30%, -50%);
+                width: 13px;
+                height: 13px;
+                border-radius: 50%;
+                background: #f7f7f7;
+                transition: all .2s ease-in;
+            }
+
+            .sw-icon.is-checked {
+                background: #0052d9;
+            }
+
+            .sw-icon.is-checked::after {
+                background: #f7f7f7;
+                transform: translate(160%, -50%);
+                width: 16px; 
+                height: 16px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="app">
+            <div class="article" style="padding: 20px;">
+                收录了叶圣陶先生的散文精品数十篇。这些作品内容丰富，题材各异，构思精巧，文笔精巧、语言幽默、内蕴深厚、风格恬淡，充分显示了叶圣陶先生的文学功底及丰富的人生阅历，从一个侧面反映了作者的思想感情及创作风格，非常值得一读。叶圣陶是20世纪中国一位杰出的作家、教育家和出版家，又是中国现代儿童文学创作的先行者。作为散文家，他早期和周作人、朱自清共同成为文学研究会散文创作的中坚，后来又成为开明派散文的代表，其散文被一九三五年出版的《中国新文学大系》选录的篇数仅次于周作人、鲁迅和朱自清。
+                收录了叶圣陶先生的散文精品数十篇。这些作品内容丰富，题材各异，构思精巧，文笔精巧、语言幽默、内蕴深厚、风格恬淡，充分显示了叶圣陶先生的文学功底及丰富的人生阅历，从一个侧面反映了作者的思想感情及创作风格，非常值得一读。叶圣陶是20世纪中国一位杰出的作家、教育家和出版家，又是中国现代儿童文学创作的先行者。作为散文家，他早期和周作人、朱自清共同成为文学研究会散文创作的中坚，后来又成为开明派散文的代表，其散文被一九三五年出版的《中国新文学大系》选录的篇数仅次于周作人、鲁迅和朱自清。
+            </div>
+            <div>
+                <div class="page" v-show="show">
+                    <div class="pagelist">
+                        <span class="jump" :class="{disabled:pstart}" @click=" current_page -- ">上一页</span>
+                        <span v-show="current_page > 5" class="jump" @click="jumpPage(1)">1</span>
+                        <span class="ellipsis" v-show="efont">...</span>
+                        <span class="jump" v-for="num in indexs" :class="{bgprimary:current_page==num}"
+                            @click="jumpPage(num)">{{num}}</span>
+                        <span class="ellipsis" v-show="ebehind">...</span>
+
+                        <span :class="{disabled:pend}" class="jump" @click=" current_page ++ ">下一页</span>
+                        <span v-show="current_page < pages-4" class="jump" @click="jumpPage(pages)">{{pages}}</span>
+
+                        <span class="jumppoint">跳转到：</span>
+                        <span class="jumpinp"><input type="text" v-model="changePage"></span>
+                        <span class="jump gobtn" @click="jumpPage(changePage)">GO</span>
+                    </div>
+                </div>
+            </div>
+            <div class="switch">
+                <input type="hidden" v-model="isSwitch">
+                <span :class="{'sw-icon':true,'is-checked':isSwitch}" @click="isSwitch=!isSwitch"></span>
+            </div>
+        </div>
+  
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+        <script>
+            var newlist = new Vue({
+                el: '#app',
+                data: {
+                    current_page: 1, //当前页
+                    pages: 20, //总页数 
+                    changePage: '',//跳转页
+                    nowIndex: 0,
+                    isSwitch: false
+                },
+                computed: {
+                    show: function () {
+                        return this.pages && this.pages != 1
+                    },
+                    pstart: function () {
+                        return this.current_page == 1;
+                    },
+                    pend: function () {
+                        return this.current_page == this.pages;
+                    },
+                    efont: function () {
+                        if (this.pages <= 7) return false;
+                        return this.current_page > 5
+                    },
+                    ebehind: function () {
+                        if (this.pages <= 7) return false;
+                        var nowAy = this.indexs;
+                        return nowAy[nowAy.length - 1] != this.pages;
+                    },
+                    indexs: function () {
+
+                        var left = 1,
+                            right = this.pages,
+                            ar = [];
+                        if (this.pages >= 7) {
+                            if (this.current_page > 5 && this.current_page < this.pages - 4) {
+                                left = Number(this.current_page) - 3;
+                                right = Number(this.current_page) + 3;
+                            } else {
+                                if (this.current_page <= 5) {
+                                    left = 1;
+                                    right = 7;
+                                } else {
+                                    right = this.pages;
+
+                                    left = this.pages - 6;
+                                }
+                            }
+                        }
+                        while (left <= right) {
+                            ar.push(left);
+                            left++;
+                        }
+                        return ar;
+                    },
+                },
+                methods: {
+                    jumpPage: function (id) {
+                        this.current_page = id;
+                    },
+                },
+
+            })
+        </script>
+
+    </body>
+
+</html>

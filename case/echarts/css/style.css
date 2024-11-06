@@ -1,0 +1,23 @@
+.app {
+  min-width: 320px;
+  max-width: 750px;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0px auto;
+  background: #EBEBEB;
+}
+
+.charts-t {
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 56px;
+}
+
+#myCharts, #myCharts1 {
+  display: block;
+  width: 660px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 50px;
+}

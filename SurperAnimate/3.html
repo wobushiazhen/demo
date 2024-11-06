@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>视差滚动那点事</title>
+    <meta name="description" content="How to create a parallax scrolling effect with jQuery, HTML and CSS">
+    <meta name="author" content="Richard Shepherd, Smashing Magazine">
+    <link rel="stylesheet" href="https://www.jq22.com/demo/jquery-sc-150122205139/js/reset.css">
+    <link rel="stylesheet" href="https://www.jq22.com/demo/jquery-sc-150122205139/js/style.css">
+</head>
+
+<body>
+    <div id="main" role="main">
+        <section id="first" class="story" data-speed="8" data-type="background" style="background-position: 50% 0px;">
+            <div class="smashinglogo" data-type="sprite" data-offsety="100" data-xposition="50%" data-speed="-2"
+                style="background-position: 50% 100px;">
+                <div
+                    style="position:absolute; bottom:0; left:50%; padding:10px; color:#FFF; height:200px; font-size:42px">
+                    ▼</div>
+            </div>
+            <article>
+                <img src="https://www.jq22.com/demo/jquery-sc-150122205139/images/tutorial-title.png" alt="tutorial-title" width="711" height="242">
+                <p><a href="#">版权信息 </a>地址神马的</p>
+            </article>
+        </section>
+        <section id="second" class="story" data-speed="4" data-type="background"
+            style="background-position: 50% -25px;">
+            <article style="color:#bf1c02">
+                <h2>美食</h2>
+                <p>古老的伊斯兰文明，优越的地理环境和富饶的物产资源，为清真饮食文化的扎根生长，打下了良好的物质基础，哺育和造就了宁夏的清真饮食文化体系。</p>
+                <p>因此，百花齐放，百家争鸣，继承和发扬民族传统，是宁夏清真小吃的显著特点。</p>
+                <p>世界上目前有三大菜系：东方菜系方菜系和伊斯兰菜系。回族美食兼收并蓄东、伊两大菜系之优点。我国的回族美食由其清真品质所决定讲究品质高洁，选料考究，肉食选取活体宰杀，面食以油炸为主，营养搭配合理，特色鲜明。目前已风靡全国，堪称中国食林奇葩。</p>
+                <p>宁夏是我国回族聚居最多的省份，也是唯一的一个省级回族自治区。由于受伊斯兰文化影响，宁夏当地的饮食有着独具特色的民族风俗习惯。而清真食品已在全国范围内得到普遍发展。</p>
+                <p>银川的回族饮食，兼具中原传统和穆斯林的双重风味，是回族和中华文明融合的结果，这里有着正宗的清真食品和清真菜肴，同时还许多独特回族风味小吃，其品种之多，味道之精美，都充分显示出了回族人民的聪明才智。</p>
+                <p>辣辣英网经政府扶持...依托..背景...采集了银川...庞大的信息库....为您打造银川第一美食信息平台..带领本地市民走向信息化生活</p>
+            </article>
+        </section>
+
+        <section id="third" class="story" data-speed="6" data-type="background" data-offsety="250"
+            style="background-position: 50% 50px;">
+            <div class="photograph" data-type="sprite" data-offsety="1250" data-xposition="25%" data-speed="2"
+                style="background-position: 25% 650px;"></div>
+            <article style="background:#C9F !important; color: #606">
+                <h2>玩乐</h2>
+                <div class="textbox">
+                    <p>辣辣英网,根据商圈、休闲娱乐商户分类系统,为你提供银川1603家娱乐场所商户,包含银川地区娱乐场所商户的电话、地址、周边地图、公交驾乘、点评等...</p>
+                    <p>辣辣英网,根据商圈、休闲娱乐商户分类系统,为你提供银川1603家娱乐场所商户,包含银川地区娱乐场所商户的电话、地址、周边地图、公交驾乘、点评等...</p>
+                </div>
+            </article>
+        </section>
+
+        <section id="fourth" class="story" data-speed="8" data-type="background" data-offsety="250"
+            style="background-position: 50% -25px;">
+            <article
+                style="color:#333; background:#29c6d9; padding:20px; box-shadow: 0 0 25px rgba(0,0,0,0.3); border: 1px solid rgba(150,150,150,0.1); ">
+                <h2>旅游</h2>
+                <div class="textbox">
+                    <p>银川市人文景观独具特色。浓郁的回乡风情，雄浑的大漠风光，秀丽的塞上水色，古老的黄河文明，神秘的西夏文化，构成了银川多姿多彩的旅游资源。悠久的历史，给银川留下了许多珍贵的文化遗产，珍存了古城池、清真寺、佛塔、古长城等60多处名胜古迹，以及高山、大漠、黄河、草原等多种自然景观，呈现出田园如织、沟渠纵横的水乡景色与大漠孤烟、长河落日的塞北苍凉交相辉映的奇异景观，孕育出奇特、古老、雄浑、秀丽、浩瀚、神秘的多重旅游风貌，荣获中国优秀旅游城市称号。远古时期刻凿的贺兰山岩画见证了原始社会的人类迁徙历史；灵武水洞沟古人类文化遗址是中华史前文明的缩影；神秘奇特的西夏王陵被海外誉为"东方的金字塔"；华夏西部影视城——镇北堡诞生了《红高粱》等上百部影视片，使中国电影从这里走向了世界。灿烂的人文景观，独特的民族饮食文化，鲜明的回乡都市风采，使银川当之无愧地成为中国回族之乡。
+                    </p>
+                </div>
+            </article>
+            <video controls width="640" data-type="video" data-offsety="2400" data-speed="1.5"
+                style="top:933.3333333333333px;">
+                <source src="video/mov_bbb.ogv" type="video/ogg">
+                <source src="http://www.w3school.com.cn/example/html5/mov_bbb.ogg" type="video/MP4">
+                <source src="video/mov_bbb.webm" type="video/webm">
+            </video>
+        </section>
+        <section id="five" class="story" data-speed="10" data-type="background" data-offsety="250"
+            style="background-position: 50% 50px;">
+            <div class="photograph" data-type="sprite" data-offsety="2250" data-xposition="25%" data-speed="2"
+                style="background-position: 25% 650px;"></div>
+            <article style="background:#FC3; color:#066">
+                <h2>家政</h2>
+                <div class="textbox">
+                    <p>辣辣英网,根据商圈、休闲娱乐商户分类系统,为你提供银川1603家娱乐场所商户,包含银川地区娱乐场所商户的电话、地址、周边地图、公交驾乘、点评等...</p>
+                    <p>辣辣英网,根据商圈、休闲娱乐商户分类系统,为你提供银川1603家娱乐场所商户,包含银川地区娱乐场所商户的电话、地址、周边地图、公交驾乘、点评等...</p>
+                </div>
+            </article>
+        </section>
+        <section id="theend" class="story" data-speed="8" data-type="background" data-offsety="250"
+            style="background-position: 50% -150px;">
+            <div class="byebye" data-type="sprite" data-offsety="-2200" data-xposition="50%" data-speed="-2"
+                style="background-position: 50% 0px;"></div>
+        </section>
+    </div>
+    <script src="https://www.jq22.com/demo/jquery-sc-150122205139/js/jquery-1.6.1.min.js"></script>
+    <script src="https://www.jq22.com/demo/jquery-sc-150122205139/js/script.js"></script>
+</body>
+
+</html>

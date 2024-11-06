@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浏览器插件</title>
+    <link rel="stylesheet" href="/public/css/reset.css">
+    <link rel="stylesheet" href="/public/css/pc_base.css">
+    <link rel="stylesheet" href="/public/css/article.css">
+    <link rel="stylesheet" href="/public/iconfont/iconfont.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+    <script src="/tool/jquery-2.0.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/layui.js"></script>
+</head>
+
+<body>
+    <script src="/public/js/common.js"></script>
+    <div class="main">
+        <div class="pc-wrap"></div>
+        <script>$('.pc-wrap').prepend(c_header('tool'))</script>
+        <div class="article-cont">
+            <div class="article-wrap">
+                <div class="detail-cont">
+                    <h5 class="dc-title"></h5>
+                    <div class="dc-main" style="display: none;">
+                        <p class="dc-desc">描述文字 </p>
+                        <img src="https://ts2.cn.mm.bing.net/th?id=OIP-C.XSAXWsFSRXvLoTRZFvnrHQHaHa&w=119&h=104&c=7&bgcl=141c18&r=0&o=6&cb=13&pid=13.1"
+                            class="dc-avatar" alt="" srcset="">
+                        <span class="dc-author"></span>
+                        <p class="dc-content"></p>
+                        <div class="dc-img">
+                            <img src="/material/img/bg13.jpg" alt="">
+                        </div>
+                        <div class="dc-tags">
+                            <p class="dc-date">
+                                2022-03-16 09:02:35
+                            </p>
+                            <span class="ll">浏览</span>
+                            <i id="dtdz" class="iconfont icon-dianzan"></i><span class="dz">点赞</span>
+                        </div>
+                    </div>
+                    <div class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"
+                        style="width: 100%; font-size: 60px; text-align: center;"></div>
+                </div>
+            </div>
+            <div class="article-fixed">
+
+            </div>
+        </div>
+    </div>
+    <script src="/tool/axios.min.js"></script>
+    <script src="/public/js/common.js"></script>
+    <script>
+        const bpaid = getUrlString('bpaid');
+        const bqaname = getUrlString('bpaname');
+        const duuid = getCookie('device-uuid')
+        $('.detail-cont .dc-title').text(bqaname)
+        var dcFill;
+
+        function getCurrentArticle(bpaid, duuid, callback) {
+            requestAxios('POST', { bpaid, duuid }, '/article/getCurrentArticle')
+                .then((response) => {
+                    dcFill = response.article;
+                    const isLiked = response.isLiked;
+                    $('.layui-icon.layui-icon-loading').hide();
+                    $('.dc-main').show();
+
+                    if (callback) {
+                        callback(dcFill, isLiked);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+        
+        getCurrentArticle(bpaid, duuid, (article, isLiked) => {
+            $('.detail-cont .dc-desc').text(article.bpa_keyword);
+            $('.detail-cont .dc-author').text(article.bpa_author);
+            $('.detail-cont .dc-content').html(article.bpa_content);
+            $('.detail-cont .dc-date').text(formattedDateString(article.bpa_datetime));
+            $('.detail-cont .dc-tags .dz').text('点赞 ' + article.bpa_like);
+            $('.detail-cont .dc-tags .ll').text('浏览 ' + article.bpa_viewers);
+            if (isLiked) {
+                $('#dtdz').css({ color: '#369d0d', fontWeight: '800' });
+            } else {
+                $('#dtdz').css({ color: '#000', fontWeight: 'normal' });
+            }
+        });
+
+        // 文章点赞
+        function getLikes() {
+            requestAxios('POST', { bpaid, duuid }, '/article/getArticleLikes')
+                .then((response) => {
+                    if (response.status == 200) {
+                        $('.detail-cont .dc-tags .dz').text('点赞 ' + response.bpa_like);
+                        if (response.message === "Like added") {
+                            $('#dtdz').css({ color: '#369d0d', fontWeight: '800' });
+                            layer.msg('点赞成功', { icon: 6, time: 1500 });
+                        } else if (response.message === "Like removed") {
+                            $('#dtdz').css({ color: '#000', fontWeight: 'normal' });
+                            layer.msg('取消点赞', { icon: 5, time: 1500 });
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
+        $("#dtdz").click(function () {
+            getLikes()
+        })
+    </script>
+</body>
+
+</html>

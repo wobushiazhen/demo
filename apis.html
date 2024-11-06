@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>摸鱼软件</title>
+        <meta name="description" content="摸鱼软件，等你哦" />  
+        <meta name="keywords" content="摸鱼软件，等你哦" />
+        <link rel="stylesheet" href="public/css/reset.css">
+        <link rel="stylesheet" href="public/css/pc_base.css">
+        <link rel="stylesheet" href="public/iconfont/iconfont.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/layui.js"></script>
+    </head>
+
+    <body>
+        <script src="public/js/common.js"></script>
+        <div class="main">
+            <div class="pc-wrap"> 
+                <!-- 写入代码 -->
+                <link rel="stylesheet" href="catchFish/style.css">
+                <div class="cf-cont">
+                    摸鱼软件，等你哦
+                    <div>
+                        <button id="startRecording">开始录音</button>
+                        <button id="stopRecording" disabled>停止录音</button>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                $(document).ready(function () {
+                    const startRecordingButton = $('#startRecording');
+                    const stopRecordingButton = $('#stopRecording');
+                    let mediaRecorder;
+                    let audioChunks = [];
+
+                    startRecordingButton.on('click', startRecording);
+                    stopRecordingButton.on('click', stopRecording);
+
+                    async function startRecording() {
+                        // 获取音频流
+                        const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+ 
+                        // 创建录像实例
+                        mediaRecorder = new MediaRecorder(stream);
+                        mediaRecorder.ondataavailable = (event) => { 
+                            console.log(event);
+                            if (event.data.size > 0) {
+                                audioChunks.push(event.data);
+                            }   
+                        }; 
+ 
+                        mediaRecorder.onstop = () => {
+                            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                            const audioUrl = URL.createObjectURL(audioBlob);
+                            const audioElement = $('<audio controls></audio>').attr('src', audioUrl);
+                            $('body').append(audioElement);
+                        };
+
+                        startRecordingButton.prop('disabled', true);
+                        stopRecordingButton.prop('disabled', false);
+
+                        audioChunks = [];
+                        mediaRecorder.start();    
+                    }  
+
+                    function stopRecording() {
+                        if (mediaRecorder.state === 'recording') {
+                            mediaRecorder.stop();
+                        }
+
+                        startRecordingButton.prop('disabled', false);
+                        stopRecordingButton.prop('disabled', true);
+                    }
+                });
+            </script>
+            <script> $('.pc-wrap').prepend(c_header('catchFish'))</script>
+        </div>
+    </body>
+
+</html>

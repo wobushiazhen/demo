@@ -1,0 +1,138 @@
+.main {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.tableWrap {
+    margin: 150px auto 0;
+    padding: 21px;
+    border: 1px solid #e7e7e7;
+    /* max-width: 800px; */
+    min-width: 500px;  
+    overflow: hidden;
+}
+
+.table {
+    max-width: 800px;
+    min-width: 600px; 
+    width: 786.5px;     
+    margin: 0 auto;     
+    padding: 10px 14px; 
+    border: 1px solid #ccc; 
+    overflow: auto;   
+    position: relative;
+    padding-bottom: 100px;
+} 
+
+.tableMain {  
+    margin: 30px 0 15px 0;
+    border-color: #d2d2d2;
+    color: rgb(62, 62, 62);
+    max-width: 800px;
+    min-width: 600px;  
+    width: 756.5px;       
+    
+    position: relative;
+}
+
+.tableMain td,
+th {
+    padding: 8px 12px;
+    max-width: 320px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.tableMain .first_th {
+    padding: 10px 10px !important;
+}
+
+.tableMain .first_th .th_icon {
+    display: block; 
+    margin: 0 auto;
+    box-sizing: content-box;
+    width: 17px;
+    height: 17px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+  
+.tableMain .first_th .first_th_icon:checked{
+    border-color: rgb(81, 134, 177);
+    position: relative;
+}
+ 
+.tableMain .first_th .first_th_icon:checked::after{
+    content: '';
+    display: inline-block;
+    width: 75%; 
+    height: 3px; 
+    background: rgb(67, 136, 192);
+    border-radius: 3px;
+    position: absolute; 
+    top: 53%;   
+    left: 50%; 
+    transform: translate(-50%,-50%);
+}
+
+.tableMain td .th_icon {
+    display: block;
+    margin: 0 auto;
+    box-sizing: content-box;
+    width: 17px;
+    height: 17px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.tableMain tr:not(tr:nth-child(1)):hover {
+    background: rgb(248, 248, 248);
+}
+ 
+.tableMain .first_th:hover .th_icon {
+    border-color: rgb(81, 134, 177);
+}
+
+.tableMain tr td:first-child:hover .th_icon {
+    border-color: rgb(81, 134, 177);
+}
+
+.tableMain td .th_icon:checked {
+    border-color: rgb(81, 134, 177);
+    position: relative;
+}
+ 
+.tableMain td .th_icon:checked::after {
+    content: '';
+    display: inline-block;
+    width: 75%;
+    height: 3px;
+    background: rgb(67, 136, 192);
+    border-radius: 3px;
+    position: absolute;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+} 
+
+.thead { 
+    position: fixed;  
+    overflow: hidden;
+    max-width: 800px;
+    min-width: 500px;
+    width: 756.5px;
+    justify-content: space-between;
+    display: flex;
+}
+
+.tfoot {  
+    position: fixed;
+    overflow: hidden;
+    max-width: 800px;
+    min-width: 500px;
+    width: 756.5px;
+    justify-content: space-between;
+    display: flex;
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>防抖节流</title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+        <style>
+            .div-item {
+                margin: 50px auto;
+                width: 350px;
+                border: 1px solid #d7d6d6;
+            }
+
+            .div-item input {
+                padding: 8px 5px;
+            }
+
+            .move {
+                margin-top: 50px;
+                width: 90%;
+                height: 450px;
+                position: relative;
+            }  
+            .move::after{
+                content: "水印/防抖节流查看源码";
+                color: #cacaca;
+                position: absolute;
+                left: 50%;
+                top: 50%;  
+                font-size: 20px; 
+                transform: translate(-50%,-50%);
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="">
+            <div class="div-item">
+                <input id="form-input" type="text" placeholder="请输入验证码">
+            </div>
+
+            <div class="div-item move">
+
+            </div>
+        </div>
+        <script>
+
+            $("#form-input").on('input', function () {
+                debouncedAPI_get1(name = '100')
+            })
+
+            const getJIE = throttle(prinf,2000)
+
+            const debouncedAPI_get1 = dedounce(API_get1, 1000)
+
+            function API_get1(name) {
+                console.log(name);
+                $.ajax({
+                    type: "GET",
+                    url: "url: 'https://mobile.test-cignacmb.com/e/extend/ajax/WebsiteInsurancePolicy.php'",
+                    data: {},
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            }
+
+            $('.move').on('mousemove', function () {
+                getJIE()
+            })
+
+            function prinf() {
+                console.log('每隔两秒输出一次');
+            }
+
+            // 防抖 
+            function dedounce(func, delay) {
+                let timer = null;
+                return function () {
+                    let that_ = this; 
+                    let args = arguments
+                    clearTimeout(timer)
+                    timer = setTimeout(function () {
+                        func.apply(that_, args)
+                    }, delay)
+                } 
+            }
+
+            // 节流
+            function throttle(func, delay) {
+                let lastTime = 0
+                return function () {
+                    let args = arguments
+                    const now = new Date().getTime();
+                    if (now - lastTime >= delay) {
+                        func.apply(this, args);
+                        lastTime = now;
+                    }
+                }
+            }
+            
+        </script>
+    </body>
+
+</html>

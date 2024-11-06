@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <link rel="stylesheet" href="css/style.css" />
+        <meta name="hotcss" content="max-width=750" />
+        <meta name="hotcss" content="design-width=750" />
+        <script src="js/hotcss.js"></script>
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+        <style>
+        </style>
+    </head>
+ 
+    <body>
+        <div id="app">  
+            <section id="loadwarp" class="load" v-if="isLoading"> 
+                <div class="loader_wp"> 
+                    <i class="loader"></i><i class="progress">0%</i> 
+                </div> 
+            </section> 
+            <section class="m-page"> 
+                <div class="page-title">
+                    <img src="images/title.png" alt="" srcset="">
+                </div> 
+                <div class="fixed-right">
+                    <img src="images/fixed-icon.png" alt="">
+                </div>
+                <a href="2.html" class="page-btn">
+                    <img src="images/page-btn.png" alt="" srcset="">
+                </a> 
+                <div class="opport">
+                    <p class="attend">已有0人参加活动</p>
+                    <p class="numbers">您今天还有5次参与机会</p>
+                </div>
+            </section> 
+        </div>
+    </body>
+    <script src="/tool/vue2.6.12.js"></script>
+    <script>
+        var app = new Vue({
+            el:"#app",
+            data() {
+                return {
+                    progress: '0%', // 页面加载数据
+                    isLoading: true, // 页面加载数据
+                }
+            },
+            created() {
+               this.pageLoding();
+            },
+            methods: {
+                pageLoding(){
+                    const img = new Image();
+                    let count = 0;
+                    img.src = "images/bg.jpg"
+                    img.onload = () => {
+                        this.progress = "99%"
+                        setTimeout(() => {
+                            count = 1;
+                            this.loading();
+                        }, 1000);
+                    };
+                    this.loading = () => {
+                        if (count === 1) {
+                            this.progress = "100%";
+                            this.isLoading = false;
+                        }
+                    };
+                }
+            }
+        })
+    </script>
+
+</html>

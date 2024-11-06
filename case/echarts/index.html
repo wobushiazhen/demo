@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <script src="js/autofit.js"></script>
+    <link rel="stylesheet" href="https://m.cignacmb.com/public/css/m_base.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <body>
+        <div class="app">
+            <h5 class="charts-t">图例1</h5>
+            <section id="myCharts" style="width: 660px;height:400px;"></section>
+            <h5 class="charts-t">图例2</h5>
+            <section id="myCharts1" style="width: 720px;height:400px;"></section>
+
+        </div>
+        <script src="js/echarts.min.js"></script>
+
+        <script>
+            var myCharts = echarts.init(document.getElementById('myCharts'), 'dark');
+            var option = {
+                color: ['#ff7f50', '#87cefa', '#da70d6', '#32cd32', '#6495ed',
+                    '#ff69b4', '#ba55d3', '#cd5c5c', '#ffa500', '#40e0d0',
+                    '#1e90ff', '#ff6347', '#7b68ee', '#00fa9a', '#ffd700',
+                    '#6699FF', '#ff6666', '#3cb371', '#b8860b', '#30e0e0'],
+                title: {
+                    text: '保险类型占市场份额',
+                    x: 'right',
+                    textStyle: {
+                        color: '#544222',
+                    },
+                    subtext: "8月9日"
+                },
+                tooltip: {},
+                legend: {
+                    data: ['销量1']
+                },
+                xAxis: {
+                    data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+                    axisLabel: {
+                        fontSize: 20
+                    }
+                },
+                yAxis: {
+                    axisLabel: {
+                        fontSize: 18
+                    }
+                },
+                series: [
+                    {
+                        value: 2323, // 这是数据项的数据值（value）
+                        name: '销量1',
+                        type: 'bar',
+                        data: [5, 20, 36, 10, 10, 20],
+                        itemStyle: {
+                            normal: {
+                                //这里设置柱形图圆角 [左上角，右上角，右下角，左下角]
+                                barBorderRadius: [5, 5, 0, 0]
+                            }
+                        },
+                        visualMap: [
+                            {
+                                type: 'continuous',
+                                min: 0,
+                                max: 5000,
+                                dimension: 3, // series.data 的第四个维度（即 value[3]）被映射
+                                seriesIndex: 4, // 对第四个系列进行映射。
+                                inRange: {
+                                    // 选中范围中的视觉配置
+                                    color: ['blue', '#121122', 'red'], // 定义了图形颜色映射的颜色列表，
+                                    symbolSize: [30, 100] // 定义了图形尺寸的映射范围，
+                                },
+                                outOfRange: {
+                                    symbolSize: [30, 100]
+                                }
+                            }
+                        ],
+
+                    },
+                    {
+                        type: 'line',
+                        data: [5, 20, 36, 10, 10, 20]
+                    }
+
+
+                ]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myCharts.setOption(option);
+
+            // myCharts1   
+            var myCharts1 = echarts.init(document.getElementById('myCharts1'), 'dark');
+            // prettier-ignore
+            let dataAxis = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+            // prettier-ignore
+            let data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149];
+            let yMax = 500;
+            let dataShadow = [];
+            for (let i = 0; i < data.length; i++) {
+                dataShadow.push(yMax);
+            }
+            option1 = {
+                title: {
+                    text: '2023年度重疾险投保人数',
+                    subtext: new Date().toLocaleDateString()
+                },
+                xAxis: {
+                    data: dataAxis,
+                    boundaryGap: false,
+                    axisLabel: {
+                        inside: true,
+                        color: '#fff',
+                        fontSize: '12',
+                        formatter: function (value) {
+                            return value.split("").join("\n");
+                        }
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: true
+                    },
+                    z: 10
+                },
+                yAxis: {
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLabel: {
+                        color: '#999',
+                        fontSize: '12',
+                        margin: "25"
+                    }
+                },
+                tooltip: {
+                    show: true,
+                    type: 'line'
+                },
+                legend: {
+                    data: ['重疾险']
+                },
+                dataZoom: [
+                    {
+                        type: 'inside',
+                        xAxisIndex: [1, 2]
+                    }
+                ],
+                series: [
+                    {
+                        name: "重疾险",
+                        type: 'bar',
+                        showBackground: true,
+                        itemStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                { offset: 0, color: '#83bff6' },
+                                { offset: 0.5, color: '#188df0' },
+                                { offset: 1, color: '#188df0' }
+                            ])
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                    { offset: 0, color: '#2378f7' },
+                                    { offset: 0.7, color: '#2378f7' },
+                                    { offset: 1, color: '#83bff6' }
+                                ])
+                            }
+                        },
+                        data: data
+                    }
+                ]
+            };
+            // Enable data zoom when user click bar.
+            const zoomSize = 6;
+            myCharts1.on('click', function (params) {
+                console.log(params);
+                myCharts1.dispatchAction({
+                    type: 'dataZoom',
+                    startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
+                    endValue:
+                        dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
+                });
+            });
+            myCharts1.setOption(option1);
+
+            window.addEventListener('resize', function () {
+                myCharts.resize();
+                myCharts1.resize();
+            });
+        </script>
+    </body>
+
+
+    <script>
+        autofit.init({
+            dh: 1080,
+            dw: 1920,
+            renderDom: "body",
+            resize: true
+        })   
+    </script>
+
+</html>

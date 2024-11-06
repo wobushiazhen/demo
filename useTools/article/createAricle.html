@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浏览器插件</title>
+    <link rel="stylesheet" href="/public/css/reset.css">
+    <link rel="stylesheet" href="/public/css/pc_base.css">
+    <link rel="stylesheet" href="/public/css/article.css">
+    <link rel="stylesheet" href="/public/iconfont/iconfont.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+    <script src="/tool/jquery-2.0.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/layui.js"></script>
+    <style>
+        .layui-form-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .layui-input-inline {
+            width: 43%;
+        }
+
+        .layui-form-item .layui-inline {
+            display: flex;
+            align-items: center;
+        }
+
+        .layui-form-item .layui-input-block {
+            width: 70%;
+            margin-left: 0;
+            display: flex;
+        }
+
+        .layui-form-item .layui-form-label {
+            min-width: 140px;
+            text-align: right;
+        }
+
+        .layui-form-item .layui-form-label .red {
+            color: red;
+            margin-left: 10px;
+        }
+
+        .layui-form {
+            padding: 50px;
+        }
+
+        .layui-form-item.form-btn {
+            margin: 20px auto;
+            justify-content: center;
+        }
+
+        .layui-input-wrap {
+            display: flex;
+            justify-content: center;
+        }
+
+
+        #maincaptcha {
+            width: 140px;
+            height: 38px;
+            margin-left: 15px;
+        }
+
+        .captcha-img {
+            margin-left: 12px;
+            width: 140px;
+            height: 38px;
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="/public/js/common.js"></script>
+    <div class="main">
+        <div class="pc-wrap"></div>
+        <script>$('.pc-wrap').prepend(c_header('tool'))</script>
+        <div class="article-cont">
+            <div class="article-wrap">
+                <form class="layui-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">文章标题<span class="red">*</span></label>
+                        <div class="layui-input-block">
+                            <input type="text" name="bpa_name" lay-verify="required" placeholder="请输入"
+                                class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">副标题/文章<br />关键字</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="bpa_keyword" placeholder="请输入" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">内容/html代码<span class="red">*</span></label>
+                        <div class="layui-input-block">
+                            <textarea placeholder="请输入内容" name="bpa_content" lay-verify="required"
+                                class="layui-textarea"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">文章类型<span class="red">*</span></label>
+                        <div class="layui-input-block">
+                            <select name="bpa_types" lay-filter="aihao">
+                                <option value=""></option>
+                                <option value="0">桌面端</option>
+                                <option value="1">gitlab</option>
+                                <option value="2">gitee</option>
+                                <option value="3">github</option>
+                                <option value="4">Nginx</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+
+                        <div class="layui-inline">
+                            <label class="layui-form-label">发布日期(不选日期默认提交日期)</label>
+                            <div class="layui-input-inline layui-input-wrap">
+                                <div class="layui-input-prefix">
+                                    <i class="layui-icon layui-icon-date"></i>
+                                </div>
+                                <input type="text" name="bpa_datetime" id="bpa_datetime" lay-verify="date"
+                                    autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">图形验证码<span class="red">*</span></label>
+                        <div class="layui-input-wrap">
+                            <div class="layui-input-prefix">
+                                <i class="layui-icon layui-icon-vercode"></i>
+                            </div>
+                            <input lay-verify="required" type="text" name="captcha" value="" lay-verify="required"
+                                placeholder="验证码" lay-reqtext="请填写验证码" autocomplete="off" class="layui-input"
+                                lay-affix="clear">
+                            <!-- <img class="captcha-img" src="">  -->
+                            <div id="maincaptcha">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item form-btn">
+                        <div class="layui-input-block">
+                            <button type="button" id="form-submit" class="layui-btn">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/tool/axios.min.js"></script>
+    <script src="/public/js/common.js"></script>
+    <script>
+        layui.use(['form', 'laydate'], function () {
+            var form = layui.form;
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#bpa_datetime',
+                type: 'datetime',
+                done: function (value, date, endDate) {
+                    $('input[name="bpa_datetime"]').val(value)
+                }
+            })
+        })
+
+        function onGetCaptchaImg() {
+            getCaptchaImg().then((captcha) => {
+                $("#maincaptcha").empty()
+                if (captcha != '') {
+                    sessionStorage.setItem('createAricle_captcha_CODE', JSON.stringify(captcha.text));
+                    $("#maincaptcha").append(captcha.data)
+                }
+            })
+        }
+
+        $(document).ready(function () {
+            onGetCaptchaImg()
+        })
+
+        $("#maincaptcha").click(function () {
+            onGetCaptchaImg()
+        })
+
+        $("#form-submit").click(function () {
+            let name = $('input[name="bpa_name"]').val();
+            let keyword = $('input[name="bpa_keyword"]').val();
+            let content = $('textarea[name="bpa_content"]').val();
+            let types = $('select[name="bpa_types"]').val();
+            let datetime = $('input[name="bpa_datetime"]').val();
+            let captcha = $('input[name="captcha"]').val();
+
+
+            if (!name || name == '') {
+                layer.msg('文章标题不能为空', { icon: 5, time: 1500 });
+                return false;
+            }
+            if (!content || content == '') {
+                layer.msg('文章内容不能为空', { icon: 5, time: 1500 });
+                return false;
+            }
+
+            if (!types || types == '') {
+                layer.msg('请选择文章类型', { icon: 5, time: 1500 });
+                return false;
+            }
+
+            if (datetime == '') {
+                datetime = formattedDateString(new Date())
+            }
+            if (!captcha || captcha == '') {
+                layer.msg('请选择填写图像验证码', { icon: 5, time: 1500 });
+                return false;
+            }
+
+            console.log(sessionStorage.getItem('createAricle_captcha_CODE'));
+            console.log(captcha);
+  
+            if (JSON.parse(sessionStorage.getItem('createAricle_captcha_CODE')) != captcha) {
+                layer.msg('图形验证码错误', { icon: 5, time: 1500 });
+                return false;
+            }
+
+            requestAxios('POST', { name, keyword, content, types, datetime }, '/article/publish')
+                .then((response) => {
+                    console.log(response); 
+                    layer.msg('文章发布成功', { icon: 6, time: 1500 });
+                    window.location.reload();  
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        })
+    </script>
+</body>
+
+</html>

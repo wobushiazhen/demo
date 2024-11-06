@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <title>图片预览</title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/layui.js"></script>
+        <style>   
+            .list {
+                position: fixed;
+                left: 50%;
+                top: 20%;
+                transform: translate(-50%);
+            }
+
+            .list ul {
+                display: flex;
+            }
+
+            .list ul li {
+                margin: 10px;
+                cursor: pointer;
+                width: 200px;
+            }
+
+            .preview {
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                background: #000000b1;
+            }
+
+            .pvmain {
+                overflow: hidden;
+                width: 50%;
+                position: fixed;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                background-color: aliceblue;
+
+            }
+
+            .ptop {
+                background: #1f1f1f;
+                height: 10%;
+                width: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            .ptop .layui-icon-error{
+                height: 100%; 
+                display: block;  
+                font-size: 30px;  
+                color: #fff; 
+            }
+  
+            .pbottom {
+                width: 100%;
+                height: 10%;
+                position: absolute;
+                background: #1f1f1f;
+                bottom: 0;
+                left: 0;
+            }
+
+            .pimg img {
+                object-fit: fill;
+                width: 100%;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="pv-container">
+            <div class="list">
+                <ul>
+                    <li><img src="/material/img/bg11.jpg" alt=""></li>
+                    <li><img src="/material/img/bg12.jpg" alt=""></li>
+                    <li><img src="/material/img/bg13.jpg" alt=""></li>
+                    <li><img src="/material/img/bg14.jpg" alt=""></li>
+                    <li><img src="/material/img/bg15.jpg" alt=""></li>
+                </ul>
+            </div>
+            <div class="preview" style="display: none;">
+                <div class="pvmain">
+                    <div class="ptop">
+                        <i class="layui-icon-error"></i>
+                    </div>
+                    <div class="pimg">
+                        
+                    </div>
+                    <div class="pbottom">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(".list img").click(function () {
+                console.log($(this).attr('src'));
+                $('.preview').show()
+                $('.pimg').html(`<img src='${$(this).attr('src')}'>`)
+            })
+
+        </script>
+    </body>
+
+</html>

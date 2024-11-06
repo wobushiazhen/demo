@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Internationalization Example</title>
+    </head>
+
+    <body>
+        <h1 id="welcomeMessage">Welcome to our app!</h1>
+        <button id="changeLanguageButton">Change Language1</button>
+    </body>
+   
+</html>
+
+<script>
+    // 默认语言为英语
+        let currentLanguage = {};
+        function loadLanguageFile(language) {
+            console.log(language);     
+            return fetch(`./${language}.json`)
+                .then((response) => response.json())
+                .catch((error) => {
+                    console.error(`Failed to load ${language} language file: ${error}`);
+                    return {};
+                });
+        }
+
+        function setLanguage(language) {
+            loadLanguageFile(language)
+                .then((languageData) => {
+                    currentLanguage = languageData;
+                    updateUI();
+                });
+        }
+
+        function updateUI() {
+            // 更新页面文本
+            document.getElementById('welcomeMessage').textContent = currentLanguage.welcome;
+
+            // 更新按钮文本
+            document.getElementById('changeLanguageButton').textContent = currentLanguage.change_language;
+        }
+
+        // 根据用户首选语言自动设置默认语言
+        const userLanguage = navigator.language || navigator.userLanguage;
+        setLanguage(userLanguage);
+
+        // 切换语言按钮的点击事件
+        document.getElementById('changeLanguageButton').addEventListener('click', () => {
+            // 简单地切换到另一种语言
+            if (userLanguage === 'en') {
+                setLanguage('es');
+            } else {
+                setLanguage('en');
+            }
+        });
+
+</script>

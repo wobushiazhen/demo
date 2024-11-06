@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket 实时通信示例</title>
+    <script src="./hotcss.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <div>
+        <label for="messageInput">聊天室:</label>
+        <button id="connectBtn" onclick="connect()">上线</button>
+        <button id="disconnectBtn" onclick="disconnect()" disabled>下线</button>
+        <div class="fiexd-bg">
+            <button id="sendBtn" onclick="sendMessage()" disabled>发送</button>
+            <input class="send-input" type="text" id="messageInput" placeholder="请输入消息...">
+        </div>
+    </div>
+    <ul id="messages"></ul> <!-- 消息展示区域 -->
+    <script src="https://mobile.test-cignacmb.com/public/js/vconsole.js"></script>
+    <script>
+        new VConsole();
+    </script>
+    <script src="https://www.cignacmb.com/public/js/jquery.min.js"></script>
+    <script src="https://m.cignacmb.com/public/js/layer/layer.js"></script>
+    <script>
+        let socket; // 声明一个全局变量用来保存WebSocket实例
+        let userId; // 声明一个全局变量用来保存用户的唯一ID
+        const messagesKey = 'chatMessages'; // localStorage 存储消息的键
+        const userIdKey = 'chatUserId'; // localStorage 存储用户ID的键
+
+        // 生成唯一的用户ID
+        function generateUserId() {
+            return 'user_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // 从 localStorage 中恢复用户ID
+        function restoreUserId() {
+            userId = localStorage.getItem(userIdKey) || generateUserId();
+            localStorage.setItem(userIdKey, userId);
+        }
+
+        // 从 localStorage 中恢复消息
+        function restoreMessages() {
+            const messages = JSON.parse(localStorage.getItem(messagesKey)) || [];
+            const messagesContainer = document.getElementById('messages');
+            messagesContainer.innerHTML = ''; // 清空消息列表
+            messages.forEach(message => {
+                const messageElement = document.createElement('li');
+                messageElement.textContent = message.content;
+                if (message.sender === userId) {
+                    messageElement.classList.add('message-sent');
+                } else {
+                    messageElement.classList.add('message-received');
+                }
+                messagesContainer.appendChild(messageElement);
+            });
+        }
+
+        // 保存消息到 localStorage
+        function saveMessage(message) {
+            const messages = JSON.parse(localStorage.getItem(messagesKey)) || [];
+            // 检查消息是否已经存在
+            const exists = messages.some(msg => msg.content === message.content && msg.sender === message.sender && msg.timestamp === message.timestamp);
+            if (!exists) {
+                messages.push(message);
+                localStorage.setItem(messagesKey, JSON.stringify(messages));
+            }
+        }
+
+        // 连接WebSocket服务器函数 
+        function connect() { 
+            restoreUserId(); // 恢复用户ID
+            // socket = new WebSocket('ws://127.0.0.1:8550'); // 创建WebSocket连接
+            const host = window.location.hostname; // 获取当前页面的主机地址
+            const port = 8550; // WebSocket 服务器端口
+            socket = new WebSocket(`ws://${host}:${port}`); // 创建WebSocket连接
+            // 监听WebSocket的open事件，表示连接成功建立
+            socket.addEventListener('open', (event) => {
+                console.log('WebSocket 已连接');
+                layer.msg('用户' + userId + '已上线');
+                document.getElementById('connectBtn').disabled = true;
+                document.getElementById('disconnectBtn').disabled = false;
+                document.getElementById('sendBtn').disabled = false;
+            });
+            // 监听message事件，处理服务器发来的消息
+            socket.addEventListener('message', (event) => {
+                const messageData = JSON.parse(event.data); // 解析JSON格式的消息数据
+                const messageElement = document.createElement('li'); // 创建一个新的LI元素来显示消息
+                messageElement.textContent = messageData.content; // 设置消息内容
+
+                // 根据发送者ID决定消息的样式
+                if (messageData.sender === userId) {
+                    messageElement.classList.add('message-sent');
+                } else {
+                    messageElement.classList.add('message-received');
+                }
+
+                document.getElementById('messages').appendChild(messageElement); // 将消息添加到页面中
+                saveMessage(messageData); // 保存消息到 localStorage
+            });
+            // 监听close事件，表示连接已关闭
+            socket.addEventListener('close', (event) => {
+                console.log('连接已关闭');
+                // 调整按钮状态
+                document.getElementById('connectBtn').disabled = false;
+                document.getElementById('disconnectBtn').disabled = true;
+                document.getElementById('sendBtn').disabled = true;
+            });
+        }
+        // 发送消息函数
+        function sendMessage() {
+            const input = document.getElementById('messageInput'); // 获取消息输入框
+            const message = input.value; // 获取输入的消息内容
+            if (message.trim()) { // 如果消息不为空
+                const data = {
+                    type: 'text', // 消息类型为文本
+                    content: message, // 消息内容
+                    sender: userId, // 发送者ID
+                    timestamp: new Date().getTime() // 添加时间戳
+                };
+                socket.send(JSON.stringify(data)); // 将消息转换为JSON字符串并发送
+                input.value = ''; // 清空输入框
+                saveMessage(data); // 保存消息到 localStorage
+
+                setTimeout(function () {
+                    const messageList = document.getElementById('messages');
+                    messageList.scrollTop = messageList.scrollHeight;
+                }, 50)
+            }
+        }
+
+        // 使用 MutationObserver 监听消息列表的变化
+        const messageList = document.getElementById('messages');
+        const observer = new MutationObserver(function (mutations) {
+            console.log(mutations);
+
+            mutations.forEach(function (mutation) {
+                if (mutation.type === 'childList') {
+                    // 当子节点发生变化时，滚动到消息列表的底部
+                    messageList.scrollTop = messageList.scrollHeight;
+                }
+            });
+        });
+        console.log(observer);
+
+        const config = { childList: true, subtree: true };
+
+        // 断开WebSocket连接函数
+        function disconnect() {
+            if (socket && socket.readyState === WebSocket.OPEN) { // 确保WebSocket连接是打开状态才执行关闭操作
+                socket.close();
+            }
+        }
+        // 初始化页面时禁用发送和断开连接按钮
+        document.getElementById('sendBtn').disabled = true;
+        document.getElementById('disconnectBtn').disabled = true;
+
+        // 恢复用户ID和消息
+        restoreUserId();
+        restoreMessages(); 
+    </script>
+</body>
+
+</html>

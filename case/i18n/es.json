@@ -1,0 +1,12 @@
+{
+    "welcome": "Welcome to our app!",
+    "nav_links": [
+        "Home",
+        "Personal Insurance",
+        "Group Insurance",
+        "Customer Service",
+        "About Us",
+        "Information Disclosure"
+    ],   
+    "change_language": "Change Language"
+}

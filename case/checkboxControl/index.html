@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="/public/css/pc_base.css">
+        <style>
+            .box {
+                background: #ededed;
+                margin: 0 auto;
+                font-size: 25px;
+
+            }
+
+            .box-p {
+                background: #d25f5f;
+                height: 155px;
+                width: 350px;
+                cursor: pointer;
+                margin: 0 auto;
+            }
+
+            .box-btn {
+                background: #5fa6d2;
+                width: 60px;
+                cursor: pointer;
+                line-height: 24px;
+            }
+
+            .form-ul {
+                margin-top: 100px;
+                background: #e9e9e9;
+                display: flex;
+                list-style: none;
+            }
+
+            .form-ul li {
+                width: 25%;
+                height: 35px;
+                line-height: 35px;
+                text-align: center;
+                cursor: pointer;
+            }
+
+            .selected {
+                background: #000;
+                color: #fff;
+            }
+
+            .semain {
+                margin: 12px auto 0;
+                padding: 20px 0;
+                width: 1200px;
+                border-top: 1px solid #000;
+            }
+
+            .nav-hide {
+                display: none;
+            }
+
+            .nav-show {
+                display: show;
+            }
+
+            .form-hobby label {
+                font-size: 22px;
+                color: #868686;
+                margin-right: 12px;
+                cursor: pointer;
+            }
+
+            .form-hobby input {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+  
+    <body>
+        <section id="loadwarp" class="load">
+            <div class="loader_wp">
+                <i class="loader"></i>
+                <div class="progress">0%</div>
+            </div>
+        </section>
+        <div class="box">
+            <p class="box-p">
+                pbtn
+                <button class="box-btn">btn</button>
+            </p>
+        </div>
+        <div class="box1">
+            <ul class="form-ul">
+                <li class="selected" data-inx="1">item1</li>
+                <li data-inx="2">item2</li>
+                <li data-inx="3">item3</li>
+                <li data-inx="4">item4</li>
+            </ul>
+        </div>
+
+        <div class="semain cont1">
+            <div class="form-hobby">
+                <label for="c">唱</label> <input id="c" type="checkbox" /><br />
+                <label for="t">跳</label> <input id="t" type="checkbox" /><br />
+                <label for="rap">rap</label> <input id="rap" type="checkbox" />
+            </div>
+        </div>
+        <div class="semain cont2 nav-hide">
+            内容二
+        </div>
+        <div class="semain cont3 nav-hide">
+            内容三
+        </div>
+        <div class="semain cont4 nav-hide">
+            内容四
+        </div>
+    </body>  
+
+    <script src="/public/js/common.js"></script>
+    <script>
+        let pbtn = document.querySelector('.box-p')
+        let btn = document.querySelector('.box-btn')
+        pbtn.addEventListener('click', function () {
+            console.log(111);
+        }, true)
+
+        btn.addEventListener('click', function (e) {
+            // e.stopPropagation()  // 事件冒泡 
+            console.log(222);
+        }, true)
+
+        document.querySelector('.form-ul').addEventListener('click', function (event) {
+            // 检查点击的是否是 li 元素
+            if (event.target.tagName === 'LI') {
+                // 获取点击的 li 元素的 data 属性
+                const inx = event.target.dataset.inx;
+
+                // 移除之前可能存在的背景颜色
+                document.querySelectorAll('.form-ul li').forEach(li => li.classList.remove('selected'));
+
+                // 为点击的 li 元素添加背景颜色
+                event.target.classList.add('selected');
+
+                // 隐藏所有的 .semain 元素
+                var allsemain = document.querySelectorAll('.semain')
+
+                // 根据点击的 li 元素的 data 属性显示对应的 .semain 元素  
+                allsemain.forEach((i) => {
+                    i.classList.add('nav-hide');
+                    if (inx == 1) {
+                        allsemain[0].classList.remove('nav-hide');
+                    }
+                    if (inx == 2) {
+                        allsemain[1].classList.remove('nav-hide');
+                    }
+                    if (inx == 3) {
+                        allsemain[2].classList.remove('nav-hide');
+                    }
+                    if (inx == 4) {
+                        allsemain[3].classList.remove('nav-hide');
+                    }
+                });
+            }
+        });
+
+        let hobbies = document.querySelectorAll('.form-hobby input[type="checkbox"]')
+        let length = 0;
+        const maxSelection = 2; // 设置最大选择数量
+        document.querySelector('.form-hobby').addEventListener('click', function (event) {
+            let target = event.target;
+            // 检查点击的元素是否是 checkbox
+            if (target.type === 'checkbox') {
+                // 检查 checkbox 是否被选中
+                if (target.checked) {
+                    if (length >= maxSelection) {
+                        console.log('亲，只能选择' + maxSelection + '项');
+                        target.checked = false; // 取消当前点击的 checkbox
+                    } else {
+                        length += 1;
+                        // 这里可以执行其他操作，例如添加到已选列表等
+                    }
+                } else {
+                    if (length > 0) {
+                        length -= 1;
+                    }
+                }
+                console.log('选中的数量:', length);
+            }
+        });
+    </script>
+
+</html>

@@ -1,0 +1,57 @@
+.banner{  
+    height: 380px;
+    width: 100%;   
+    background-size: 100% 380px; 
+}
+  
+.content{
+    max-width: 1360px; 
+    margin: 66px auto 200px;  
+}
+
+.content .t { 
+    font-size: 24px;
+}
+
+.nav-btns{
+    width: 100%;
+    overflow: hidden;
+}  
+.nav-btns .nav-btn-ul{
+    display: flex;   
+    justify-content: space-between;  
+    margin-top: 56px; 
+}
+.nav-btn-ul li{   
+    cursor: pointer;
+    text-align: center;
+    background: #f0f0f0; 
+    padding: 18px 45px;
+    border-radius: 16px; 
+    color: #1e1e1e;
+} 
+.nav-btn-ul li.active{
+    color: #0a59ed;
+    border-radius: 1px;
+}
+.nav-btn-ul li p{ 
+    font-size: 20px;
+    text-align: center;  
+}   
+
+.ys-list{ 
+    margin-top: 80px;
+}
+
+.list-ol img{ 
+    width: 320px;  
+    border-radius: 15px;
+    height: auto; 
+}
+.list-ol{
+    width: 100%; display: flex; 
+}
+.list-ol li{ 
+    cursor: pointer;
+    margin-right: 22px;
+}

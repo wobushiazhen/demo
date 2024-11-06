@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="hotcss.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <ul class="friend-ul">
+
+    </ul>
+    <script src="https://www.cignacmb.com/public/js/jquery.min.js"></script>
+   
+    <script> 
+        let socket; // 声明一个全局变量用来保存WebSocket实例
+        let userId; // 声明一个全局变量用来保存用户的唯一ID
+        const messagesKey = 'chatMessages'; // localStorage 存储消息的键
+        const userIdKey = 'chatUserId'; // localStorage 存储用户ID的键
+
+        // 生成唯一的用户ID
+        function generateUserId() {
+            return 'user_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // 从 localStorage 中恢复用户ID 
+        function restoreUserId() {
+            userId = localStorage.getItem(userIdKey) || generateUserId();
+            localStorage.setItem(userIdKey, userId);
+        }
+        restoreUserId()
+        console.log(userId);
+        var flisthtml = '' 
+
+        $.ajax({
+            method: 'GET',
+            url: 'http://'+window.location.hostname+':8550/getFriendList',
+            success: function (res) { 
+                res.forEach(i => {
+                    flisthtml += `<li>
+                        <a href="index.html?uid=${i.id}">  
+                            <img src="${i.avatar}" class="fu-avatar">
+                            <span>${i.nickname}</span>   
+                            <p>${i.msgs ? i.msgs[i.msgs.length - 1] : ''}</p>    
+                        </a>
+                    </li>`
+                });
+                console.log(flisthtml);
+                $('.friend-ul').append(flisthtml);
+            }
+        })
+    </script>
+
+</body>
+
+</html>

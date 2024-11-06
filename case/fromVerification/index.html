@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>表单类型各种校验</title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+    </head>
+    <style>
+        .from-container,
+        .step {
+            min-width: 1200px;
+            width: 1200px;
+            margin: 20px auto;
+        }
+
+        .step .t {
+            font-weight: bold;
+            line-height: 38px;
+            font-size: 20px;
+        }
+
+        .form-item {
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-item label {
+            margin-right: 15px;
+            color: #1d1c1c;
+            width: 120px;
+            line-height: 18px;
+        }
+
+        .form-item>span {
+            color: rgb(206, 11, 11);
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .form-item:last-child {
+            margin-bottom: 0px;
+        }
+
+        .fm-text input {
+            border: 1px solid #ccc;
+            padding: 8px 12px;
+        }
+    </style>
+
+    <body>
+        <div class="fromverifi">
+            <div class="step">
+                <p class="t">表单各类型校验</p>
+            </div>
+            <div class="from-container">
+                <div class="form-item fm-text">
+                    <label for="name">姓名</label>
+                    <input type="text" id="name" name="name" class="input-text">
+                    <span id="name_reg"></span>
+                </div>
+
+                <div class="form-item fm-text">
+                    <label for="age">年龄</label>
+                    <input type="text" id="age" maxlength="2" name="age" class="input-text">
+                    <span id="age_reg"></span>
+                </div>
+
+                <div class="form-item fm-text">
+                    <label for="phone">手机号</label>
+                    <input type="text" id="phone" maxlength="11" name="phone" class="input-text">
+                    <span id="phone_reg"></span>
+                </div>
+
+                <div class="form-item fm-text">
+                    <label for="email">邮箱</label>
+                    <input type="text" id="email" name="email" class="input-text">
+                    <span id="email_reg"></span>
+                </div>
+
+                <div class="form-item fm-text">
+                    <label for="IDnumber">身份证号</label>
+                    <input type="text" id="IDnumber" maxlength="18" name="IDnumber" class="input-text">
+                    <span id="IDnumber_reg"></span>
+                </div>
+
+                <div class="form-item fm-text">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" minlength="8" name="password" class="input-text">
+                    <span id="password_reg"></span>
+                </div>
+
+                <div class="form-item fm-text"> 
+                    <label for="cfpassword">确认密码</label>
+                    <input type="cfpassword" id="cfpassword" minlength="8" name="cfpassword" class="input-text">
+                    <span id="cfpassword_reg"></span>
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+            // name
+            $('#name').on('blur', function () {
+                let name = $(this).val().trim()
+                // rule: 中文2-16个字 可以包含·           
+                let nameReg = /^(?:[\u4e00-\u9fa5]{2,16}|[\u4e00-\u9fa5]{1,16}·[\u4e00-\u9fa5]{1,16})$/;
+                if (!nameReg.test(name)) {
+                    $('#name_reg').text('请输入合法姓名')
+                }
+            })
+
+            $('#age').on('blur', function () {
+                let age = $(this).val().trim()
+                console.log(age);
+                // rule: 0-60周岁                            
+                // let ageReg = /^[0]$|^([1-5][0-9]|60|1|2|3|4|5|6|7|8|9)$/;
+                let ageReg = /^([1-5]\d|60|[0-9])$/;
+                if (ageReg.test(age)) {
+                    $('#age_reg').text('')
+                } else {
+                    $('#age_reg').text('年龄小于60')
+                }
+            })
+
+            $('#phone').on('blur', function () {
+                let phone = $(this).val().trim()
+                console.log(phone);
+                let phoneReg = /^(1[3456789]\d{9})$/;
+                if (phoneReg.test(phone)) {
+                    $('#phone_reg').text('')
+                } else {
+                    $('#phone_reg').text('电话有误')
+                }
+            })
+
+            $('#email').on('blur', function () {
+                let email = $(this).val().trim()
+                console.log(email);
+                // let emailReg = /^([a-zA-Z0-9])+@([a-zA-Z0-9])+\.([a-zA-Z0-9])+$/;
+                let emailReg = /^([a-z0-9A-Z]+[a-z0-9A-Z._-]+@([a-z0-9A-Z])+\.+[a-z]{2,})$/;
+                if (emailReg.test(email)) {
+                    $('#email_reg').text('')
+                } else {
+                    $('#email_reg').text('邮箱格式有误')
+                }
+            })
+
+            $('#IDnumber').on('blur', function () {
+                let IDnumber = $(this).val().trim()
+                console.log(IDnumber);
+                let IDnumberReg1 = /^([1-8][0-9])+(\d{4})+([19|20]{2})+(\d{2})+((0\d)|1[0-2])+([0|1|2]\d|3[0-1])+(\d{4}|\d{3}X)$/;
+                let IDnumberReg2 = /^$/;
+                if (IDnumber.length == 15) {
+
+                } else if (IDnumber.length == 18) {
+                    // 获取出生日期和性别  
+                    let info = u_log.getBirthdayByID(IDnumber)
+                    $('#IDnumber_reg').text(u_log.getProvinceById(IDnumber) + ' | ' + info.birthday + ' | ' + info.sex)
+                } else {
+                    $('#IDnumber_reg').text('身份证号不符合规则')
+                }
+                if (IDnumberReg1.test(IDnumber)) {
+                } else {
+                    $('#IDnumber_reg').text('身份证号格式有误')
+                }
+            })
+
+            $('#password').on('blur', function () {
+                let password = $(this).val().trim()
+                console.log(password);
+                // ?=.* 可以看做必须包含           
+                let passwordReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}$/;
+                if (passwordReg.test(password)) {
+                    $('#password_reg').text('')
+                } else {
+                    $('#password_reg').text('密码长度大于8小于20且含有数字英文大小写')
+                }
+            })
+            $('#cfpassword').on('blur', function () {
+                let cfpassword = $(this).val().trim()
+                let password = $("#password").val().trim()
+                if(!password){
+                    $('#cfpassword_reg').text('请输入您的密码') 
+                }
+                console.log(cfpassword);
+                // ?=.* 可以看做必须包含           
+                let cfpasswordReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}$/;
+                // if (cfpasswordReg.test(cfpassword)) {
+                //     $('#cfpassword_reg').text('')   
+                // } else {
+                //     $('#cfpassword_reg').text('密码长度大于8小于20且含有数字英文大小写')
+                // }
+            })
+
+        </script>
+        <script src="utils_log.js"></script>
+    </body>
+
+</html>
