@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Document</title><script defer="defer" src="./app2.js"></script></head><body><p>右键查看源码</p><script>function transformCollection(num) {
+            const caption = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+            const unit = ['', '十', '百', '千', '万'];
+ 
+            let number = num.toString(); 
+            let numLength = number.length;
+            let result = '';
+            let lastWasZero = false; // 标记上一位是否为零
+
+            for (let i = 0; i < numLength; i++) {
+                let digit = parseInt(number[i]);
+                let position = numLength - i - 1;
+
+                if (digit !== 0) {
+                    if (lastWasZero) {
+                        result += caption[0]; // 处理连续的零
+                    }
+                    result += caption[digit] + unit[position];
+                    lastWasZero = false;
+                } else {
+                    // 处理末尾的零weew
+                    if (position === 0 || (position === 4 && numLength > 4)) {
+                        result += caption[digit] + unit[position];
+                    }
+                    lastWasZero = true;
+                }
+            }
+
+            // 处理特殊情况，例如 10 应该转换为 十
+            if (num >= 10 && num < 20) {
+                result = result.replace('一十', '十');
+            }
+
+            // 去除末尾的零
+            result = result.replace(/零+$/, '');
+            return result;
+        }
+
+        console.log(transformCollection(56416)); // 五万六千四百一十六 
+        console.log(transformCollection(44));    // 十  
+        console.log(transformCollection(1011));  // 一千零一 
+        console.log(transformCollection(20001)); // 一万</script></body></html>

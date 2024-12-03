@@ -6,7 +6,7 @@ const customRoutes = [
   {
     path: '/login',
     meta: { requiresAuth: false },
-  }, 
+  },
   {
     path: '/home', 
     meta: { requiresAuth: false },
@@ -15,6 +15,8 @@ const customRoutes = [
     path: '/404',
     meta: { requiresAuth: false },
   },
+
+  { path: "/:pathMatch(.*)", redirect: "/404", name: "notMatch", hidden: true }
 ]
 
 // 合并自动生成的路由和手动配置的路由

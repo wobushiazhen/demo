@@ -1,0 +1,75 @@
+/* 盒模型规则 */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* 移除默认外边距 */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+figure,
+blockquote,
+dl,
+dd { 
+    margin: 0;
+    padding: 0;
+}
+
+/* 移除默认内边距 */
+ul,
+ol {
+    padding: 0;
+}
+
+/* 移除列表样式 */
+ul,
+ol {
+    list-style: none;
+}
+
+/* 移除锚文本装饰 */
+a {
+    text-decoration: none; 
+    color: #000;
+}
+
+/* 移除按钮和输入边框 */
+button,
+input {
+    border: none;
+    outline: none;
+}
+
+/* 移除图片用户代理样式 */
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* 移除默认表格间距 */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* 设置默认字体样式 */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+}
+
+.layui-btn-primary:hover {
+    border-color: #333;
+}

@@ -54,8 +54,7 @@
                 var table = layui.table;
                 // 渲染 
 
-                requestAxios('GET', '', baseUrl + '/interview/question').then(res => {
-                    console.log(res);  
+                requestAxios('GET', '', '/interview/question').then(res => {
                     table.render({
                         elem: '#ID-table-demo-filter',
                         data: res,

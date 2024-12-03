@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=none">
+    <title>Document</title>
+    <link rel="stylesheet" href="./webpack.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+    <link rel="stylesheet" href="/public/css/pc_base.css">
+</head>
+ 
+<body>
+    <div class="editor">
+
+    </div>
+    <div class="submit-editor">
+        <button type="button" id="submitEditor">提交本次修改</button>
+        <button type="button" id="submitAddEdtior">提交一个新问题</button>
+    </div>
+
+    <div class="fixed-right">
+        <h2>所有记录</h2>
+        <div class="record">
+
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/layui.js"></script>
+    <script src="/tool/axios.min.js"></script>
+    <script src="/tool/jquery-2.0.3.min.js"></script>
+    <script src="https://www.jq22.com/demo/jquery-notebook-master/src/js/jquery.notebook.js"></script>
+    <script src="/public/js/common.js"></script>
+
+    <script>
+
+        let timestamp = 5000;
+        let tiems = 5;
+        let tiemr = null
+        let conwontime = true;
+        // 编辑器初始化
+        $(document).ready(function () {
+            const keywords = getUrlString('keywords')
+            let eid = getUrlString('e')
+
+            requestAxios('POST', { eid: eid }, '/editor/showdetails').then(res => {
+                $('.editor').append(res.editor.ehtml)
+                console.log(res);
+
+                $('.editor').notebook({
+                    autoFocus: true,
+                    placeholder: '还没有记录，请更新'
+                });
+
+                // 清空现有的记录
+                $('.record').empty();
+
+                // 添加新的记录
+                res.records.forEach((record, index) => {
+                    const encodedEhtml = encodeURIComponent(record.ehtml);
+                    $('.record').append(`<p class="record-item" data-ehtml="${encodedEhtml}">记录${index + 1} - ${formattedDateString(record.etime)}</p>`);
+                });
+
+                // 点击记录时更新编辑器内容
+                $('.record-item').on('click', function () {
+                    const encodedEhtml = $(this).data('ehtml');
+                    const decodedEhtml = decodeURIComponent(encodedEhtml);
+                    $('.editor').empty();
+                    $('.editor').append(decodedEhtml);
+                });
+            })
+        });
+
+        $('#submitEditor').click(function () {
+            if (!conwontime) return false;
+
+            clearTimeout(tiemr);
+            tiems = 5; // 重置倒计时时间
+            tiemr = setInterval(function () {
+                if (tiems > 0) {
+                    tiems--;
+                    conwontime = false;
+                    $('#submitEditor').text(tiems + 's后提交');
+                } else {
+                    $('#submitEditor').text('提交本次修改');
+                    conwontime = true;
+                }
+            }, 1000);
+
+            const keywords = getUrlString('keywords')
+            let eid = getUrlString('e')
+            let ehtml = $('.editor').html()
+            let nowtiem = formattedDateString(new Date())
+            let ename = $('.editor .editor-title').html()
+            
+            requestAxios('POST', { eid, ehtml, etime: nowtiem, ename }, '/editor/addRecord').then(res => {
+                if (res.status == 200) {
+                    $('.record').empty();
+                    // 添加新的记录
+                    res.records.forEach((record, index) => {
+                        const encodedEhtml = encodeURIComponent(record.ehtml);
+                        $('.record').append(`<p class="record-item" data-ehtml="${encodedEhtml}">记录${index + 1} - ${formattedDateString(record.etime)}</p>`);
+                    });
+                }
+            })
+        })
+
+        // 最强UUID+时间戳 
+        function generateUniqueID(num) {
+            function generateUUID() {
+                return 'xxxx'.replace(/[xy]/g, function (c) {
+                    var r = Math.random() * num | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(num);
+                });
+            }
+            let timestamp = new Date().getTime().toString(num); // 将时间戳转换为36进制字符串
+            let uuid = generateUUID();
+            return uuid;
+        }
+
+        $('#submitAddEdtior').click(function () {
+            if (!conwontime) return false;
+
+            clearTimeout(tiemr);
+            tiems = 5; // 重置倒计时时间
+            tiemr = setInterval(function () {
+                if (tiems > 0) {
+                    tiems--; 
+                    conwontime = false;
+                    $(this).text(tiems + 's后提交');
+                } else {
+                    $(this).text('提交一个新问题');
+                    conwontime = true;
+                }
+            }, 1000);  
+
+            requestAxios('POST', {
+                eid: generateUniqueID(4),
+                ename: $('.editor .editor-title').text(),
+                ehtml: $('.editor').html(),
+                etime: formattedDateString(new Date()),
+                tiems: 1,
+                author: navigator.appVersion
+            }, '/editor/add').then(res => {
+                console.log(res);
+                if (res.status === 200) { 
+                    layer.msg('success')
+                    setInterval(function () {
+                        window.location.reload();
+                    }, 3000) 
+                }
+            })
+        })
+        
+    </script>
+</body>
+
+</html>

@@ -27,6 +27,10 @@
             align-items: center;
         }
 
+        .layui-form-item .layui-input-inline {
+            width: 213px;
+        }
+
         .layui-form-item .layui-input-block {
             width: 70%;
             margin-left: 0;
@@ -50,6 +54,10 @@
         .layui-form-item.form-btn {
             margin: 20px auto;
             justify-content: center;
+        }
+
+        #uploadImg {
+            margin-left: 12px;
         }
 
         .layui-input-wrap {
@@ -80,7 +88,7 @@
         <script>$('.pc-wrap').prepend(c_header('tool'))</script>
         <div class="article-cont">
             <div class="article-wrap">
-                <form class="layui-form">
+                <form class="layui-form" id="uploadForm" target="frameName">
                     <div class="layui-form-item">
                         <label class="layui-form-label">文章标题<span class="red">*</span></label>
                         <div class="layui-input-block">
@@ -119,7 +127,6 @@
                     </div>
 
                     <div class="layui-form-item">
-
                         <div class="layui-inline">
                             <label class="layui-form-label">发布日期(不选日期默认提交日期)</label>
                             <div class="layui-input-inline layui-input-wrap">
@@ -129,6 +136,24 @@
                                 <input type="text" name="bpa_datetime" id="bpa_datetime" lay-verify="date"
                                     autocomplete="off" class="layui-input">
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-upload layui-inline">
+                            <label class="layui-form-label">发布日期(不选日期默认提交日期)</label>
+                            <label for="label-file" style="width: 100%;height: 100%;">
+                                <div class="layui-upload-drag" style="display: block;" id="ID-upload-demo-drag">
+                                    <i class="layui-icon layui-icon-upload"></i>
+                                    <div>点击上传，将图片文件拖拽到此处</div>
+                                    <div class="layui-hide" id="ID-upload-demo-preview">
+                                        <hr> <img src="" alt="上传成功后渲染" style="max-width: 100%">
+                                    </div>
+                                    <input type="file" hidden id="label-file" placeholder="上传图片">
+                                </div>
+                            </label>
+                            <button id="uploadImg" type="button" class="layui-btn">上传图片</button>
+
                         </div>
                     </div>
 
@@ -143,25 +168,27 @@
                                 lay-affix="clear">
                             <!-- <img class="captcha-img" src="">  -->
                             <div id="maincaptcha">
-
                             </div>
                         </div>
                     </div>
 
                     <div class="layui-form-item form-btn">
                         <div class="layui-input-block">
-                            <button type="button" id="form-submit" class="layui-btn">立即提交</button>
+                            <button type="button" type="submit" id="form-submit1" class="layui-btn">立即提交</button>
                             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                         </div>
                     </div>
                 </form>
+                <iframe src="" frameborder="0" name="frameName"></iframe>
             </div>
         </div>
     </div>
     <script src="/tool/axios.min.js"></script>
     <script src="/public/js/common.js"></script>
     <script>
-        layui.use(['form', 'laydate'], function () {
+        var uploadFiles = null;
+        layui.use(['form', 'upload', 'laydate'], function () {
+            var upload = layui.upload;
             var form = layui.form;
             var laydate = layui.laydate;
             laydate.render({
@@ -171,7 +198,71 @@
                     $('input[name="bpa_datetime"]').val(value)
                 }
             })
+            // uploadFiles = upload.render({
+            //     elem: '#ID-upload-demo-drag',
+            //     url: baseurl + '/file/images/upload', // 实际使用时改成您自己的上传接口即可。
+            //     accept: "images",
+            //     headers: {
+            //         authorization: getCookie('uToken')
+            //     },
+            //     auto: false,
+            //     bindAction: "#uploadImg",  
+            //     done: function (res) {
+            //         let imgUrl = res.files.file
+            //         $('#ID-upload-demo-preview').removeClass('layui-hide')
+            //           .find('img').attr('src', location.origin + "/node-demo/" + imgUrl);
+            //     },
+
+            //     error: function () {
+            //         layer.msg('上传失败');
+            //     }
+            // }); 
         })
+
+        $('#uploadImg').click(function () {
+            var formData = new FormData();
+            let files = $('#label-file')[0].files
+
+            if (!files || files.length === 0) {
+                layer.msg('请选择图片', { icon: 5, time: 1500 });
+                return false;
+            } 
+
+            for (let i = 0; i < files.length; i++) {
+                formData.append('file', files[i]);
+            }
+
+            console.log(formData);
+
+            axiosRequest('POST', formData, '/file/images/upload').then(function (response) {
+                let imgUrl = response.files.file
+                console.log(imgUrl);
+                $('#ID-upload-demo-preview').removeClass('layui-hide')
+                    .find('img').attr('src', location.origin + "/node-demo/" + imgUrl);
+            })
+        })
+
+        function axiosRequest(method = "GET", formData, url) {
+            return axios({
+                method,
+                data: formData,
+                url: baseurl + url,
+                processData: false,
+                contentType: false,
+                // withCredentials:true, // 跨域请求时发送Cookie
+                headers: {
+                    authorization: getCookie("uToken"),
+                    // "Content-Type": "application/json",
+                },
+            })
+                .then((res) => {
+                    return res.data;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    // showErrorLayerMsg(err.response.status || 500)
+                });
+        }
 
         function onGetCaptchaImg() {
             getCaptchaImg().then((captcha) => {
@@ -191,7 +282,7 @@
             onGetCaptchaImg()
         })
 
-        $("#form-submit").click(function () {
+        $("#form-submit1").click(function () {
             let name = $('input[name="bpa_name"]').val();
             let keyword = $('input[name="bpa_keyword"]').val();
             let content = $('textarea[name="bpa_content"]').val();
@@ -199,11 +290,11 @@
             let datetime = $('input[name="bpa_datetime"]').val();
             let captcha = $('input[name="captcha"]').val();
 
-
             if (!name || name == '') {
                 layer.msg('文章标题不能为空', { icon: 5, time: 1500 });
                 return false;
             }
+
             if (!content || content == '') {
                 layer.msg('文章内容不能为空', { icon: 5, time: 1500 });
                 return false;
@@ -217,6 +308,7 @@
             if (datetime == '') {
                 datetime = formattedDateString(new Date())
             }
+
             if (!captcha || captcha == '') {
                 layer.msg('请选择填写图像验证码', { icon: 5, time: 1500 });
                 return false;
@@ -224,7 +316,7 @@
 
             console.log(sessionStorage.getItem('createAricle_captcha_CODE'));
             console.log(captcha);
-  
+
             if (JSON.parse(sessionStorage.getItem('createAricle_captcha_CODE')) != captcha) {
                 layer.msg('图形验证码错误', { icon: 5, time: 1500 });
                 return false;
@@ -232,9 +324,11 @@
 
             requestAxios('POST', { name, keyword, content, types, datetime }, '/article/publish')
                 .then((response) => {
-                    console.log(response); 
+                    console.log(response);
                     layer.msg('文章发布成功', { icon: 6, time: 1500 });
-                    window.location.reload();  
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 1500);
                 })
                 .catch((error) => {
                     console.error('Error:', error);

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!--<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />-->
+    <title></title>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        body,
+        html {
+            background: #fafafa;
+            margin: 0;
+        }
+
+        .con {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            height: 90px;
+            line-height: 90px;
+            background: #403c3a;
+        }
+
+        .logo {
+            width: 75px;
+            height: 75px;
+            border-radius: 8px;
+        }
+
+        .logo img {
+            height: 100%;
+        }
+
+        .search {
+            width: 500px;
+            height: 50px;
+            line-height: 50px;
+            background: #ffffff;
+            border-radius: 25px;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            opacity: 0.9;
+        }
+
+        #input_search {
+            height: 48px;
+            width: 350px;
+            border: none;
+            border-bottom-left-radius: 25px;
+            border-top-left-radius: 25px;
+            padding-left: 20px;
+            outline: none;
+        }
+
+        #input_btn {
+            width: 130px;
+            height: 50px;
+            border-radius: 25px;
+            border: none;
+            background: #2facfe;
+            color: #FFFFFF;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+
+        .nav {
+            padding: 0;
+        }
+
+        .nav li {
+            list-style: none;
+            display: inline-block;
+            margin: 0 20px;
+        }
+
+        .nav li a {
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+        .attr {
+            width: 500px;
+            height: 40px;
+            padding-left: 20px;
+        }
+
+        .chinese,
+        .english {
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background: #2facfe;
+            color: #FFFFFF;
+            margin: 25px 10px;
+        }
+
+        .banner {
+            position: relative;
+            width: 100%;
+            height: 600px;
+        }
+
+        .text {
+            width: 40%;
+            height: 300px;
+            position: absolute;
+            left: 30%;
+            top: 150px;
+            background: rgba(64, 60, 58, 0.5);
+            color: #FFFFFF;
+            padding: 10px;
+        }
+
+        .text_div {
+            border: 4px solid #FFFFFF;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        .text_div div {
+            font-size: 35px;
+            font-weight: 600;
+            margin: 40px auto;
+        }
+
+        .text_div div span {
+            font-size: 50px;
+            color: #2FACFE;
+        }
+
+        .text_div p {
+            font-size: 25px;
+        }
+
+        #myChart {
+            margin: 50px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="clearfix">
+        <div class="con">
+            <div class="logo float-left">
+                <img src="https://www.jq22.com/demo/jqueryi18next201905111236/img/logo.jpg" data-i18n="alt[logo]" />
+            </div>
+            <div class="btn-group float-right">
+                <button class="chinese">中文</button>
+                <button class="english">English</button>
+            </div>
+            <ul class="nav float-right">
+                <li><a href="#" data-i18n-html="nav.home"></a></li>
+                <li><a href="#" data-i18n-html="nav.page1"></a></li>
+                <li><a href="#" data-i18n="nav.page2"></a></li>
+                <li><a href="#" data-i18n="nav.page3"></a></li>
+                <li><a href="#" data-i18n="nav.page4"></a></li>
+                <li><a href="#" data-i18n="nav.page5"></a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="banner">
+        <!--<img src="img/img.png" class="w-100"/>-->
+        <div class="search">
+            <input type="text" name="input_search" id="input_search" data-i18n="[placeholder]nav.input" />
+            <input data-i18n="[value]nav.button" type="button" value="" id="input_btn" />
+        </div>
+        <div class="text">
+            <div class="text_div">
+                <div data-i18n-html="website.title"></div>
+                <p data-i18n-html="website.describe"></p>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="con">
+            <canvas id="myChart"></canvas>
+            <!--<input class="attr" data-i18n="[placeholder]input.placeholder;[alt]input.placeholder" />
+				<div class="label">
+					<span data-i18n-html="label"></span>
+				</div>-->
+        </div>
+    </div>
+    <!-- <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script> -->
+    <!-- <script src="https://cdn.bootcss.com/i18next/1.11.2/i18next.min.js"></script> -->
+    <script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+    <!--国际化-->
+    <script src="https://cdn.bootcss.com/i18next/1.11.2/i18next.min.js"></script>
+    <!--图表-->
+    <script src="https://cdn.bootcss.com/Chart.js/2.7.3/Chart.js"></script>
+    <!--背景渐变-->
+    <script src="https://cdn.bootcss.com/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script>
+        $(function () {
+            /*
+             *存cookie(cookieName--字段名   cookieValue--字段值   cookieDates--有效时间)
+             * */
+            function saveCookie(cookieName, cookieValue, cookieDates) {
+                var d = new Date();
+                d.setDate(d.getDate() + cookieDates);
+                document.cookie = cookieName + "=" + cookieValue + ";expires=" + d.toGMTString();
+            }
+            //取cookie
+            function getCookie(cookieName) {
+                var cookieStr = unescape(document.cookie);
+                var arr = cookieStr.split("; ");
+                var cookieValue = "";
+                for (var i = 0; i < arr.length; i++) {
+                    var temp = arr[i].split("=");
+                    if (temp[0] == cookieName) {
+                        cookieValue = temp[1];
+                        break;
+                    }
+                }
+                return cookieValue;
+            }
+
+            function lang(language) {
+                $.i18n.init({
+                    lng: language, //指定语言 
+                    resGetPath: 'https://www.jq22.com/demo/jqueryi18next201905111236/locales/' + language + '/translation.json',//语言文件的路径
+                    ns: {
+                        namespaces: ['translation', 'message'],
+                        defaultNs: 'translation' //默认使用的，不指定namespace时 
+                    }
+                }, function (err, t) {
+                    $('[data-i18n]').i18n(); // 通过选择器集体翻译
+                    $('[data-i18n-html]').each(function () {
+                        var date_name = $(this).attr("data-i18n-html");
+                        $(this).html($.t(date_name));
+                    });
+                    var month = new Array($.t("month.January"), $.t("month.February"), $.t("month.March"), $.t("month.April"), $.t("month.May"), $.t("month.June"), $.t("month.July"));
+                    chart(month);
+                    //					var temp = $.t("nav.home"); //通过t函数获得某个翻译的值
+                    $.t("message:app.child", {
+                        count: '1'
+                    }); //使用namespace，并将count替换成1，其值为1 child
+                    $.t("message:app.child_plural", {
+                        count: '2'
+                    }); //将count替换成2，其值为2 children
+                });
+            }
+            var langType = getCookie("language") || "zh";
+            lang(langType);
+            $(".chinese").click(function () {
+                lang("zh");
+                saveCookie("language", "zh", 1);
+            });
+            $(".english").click(function () {
+                lang("en");
+                saveCookie("language", "en", 1);
+            });
+            function chart(month) {
+                var ctx = document.getElementById("myChart").getContext('2d');
+                var myNewChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: month,
+                        datasets: [
+                            {
+                                fillColor: "#ff0000",
+                                strokeColor: "#ff0000",
+                                fillColor: "rgba(220,220,220,0.5)",
+                                strokeColor: "rgba(220,220,220,0.8)",
+                                highlightFill: "rgba(220,220,220,0.75)",
+                                highlightStroke: "rgba(220,220,220,1)",
+                                label: "2016年",
+                                data: [65, 59, 90, 81, 56, 55, 40]
+                            },
+                            {
+                                fillColor: "green",
+                                strokeColor: "green",
+                                label: "2017年",
+                                data: [28, 48, 40, 19, 96, 27, 100]
+                            },
+                            {
+                                fillColor: "#000000",
+                                strokeColor: "#000000",
+                                label: "2018年",
+                                data: [13, 55, 40, 19, 23, 27, 64]
+                            },
+                            {
+                                fillColor: "#99FFFF",
+                                strokeColor: "#99FFFF",
+                                label: "2019年",
+                                data: [98, 11, 52, 19, 65, 20, 77]
+                            }
+                        ]
+                    }
+                });
+            }
+            $('.banner').backstretch([
+                "https://www.jq22.com/demo/jqueryi18next201905111236/img/b1.png",
+                "https://www.jq22.com/demo/jqueryi18next201905111236/img/b2.png",
+                "https://www.jq22.com/demo/jqueryi18next201905111236/img/b3.png",
+                "https://www.jq22.com/demo/jqueryi18next201905111236/img/b4.png",
+            ], {
+                fade: 1000,
+                duration: 2000
+            });
+        })
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animated Tag Example</title>
+<style>
+  /* 定义关键帧动画 */
+  @keyframes slideInFromRight {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* 应用动画到span元素 */
+  .animated-tag {
+    animation: slideInFromRight 1s ease-out forwards;
+    background-color: #4CAF50; /* 绿色背景 */
+    color: white; /* 白色文字 */
+    padding: 10px 20px; /* 内边距 */
+    border-radius: 5px; /* 圆角边框 */
+    display: inline-block; /* 行内块级元素 */
+    margin: 20px; /* 外边距 */
+    cursor: pointer; /* 鼠标悬停时显示指针 */
+  }
+</style>
+</head>
+<body>
+
+<!-- 带有动画的标签 -->
+<span class="animated-tag">滑动进入的标签</span>
+
+</body>
+</html>

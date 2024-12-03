@@ -26,7 +26,6 @@
                 setCookie('uToken', data.token, { expires: 1 })
             }).catch(error => console.error('Error:', error));
 
-
         // 最强UUID+时间戳 
         function generateUniqueID() {
             function generateUUID() {
@@ -39,13 +38,31 @@
             let uuid = generateUUID();
             return timestamp + '-' + uuid;
         }
-          
+
         // 机器id
-        if (!getCookie('device-uuid')) {  
+        if (!getCookie('device-uuid')) {
             setCookie('device-uuid', generateUniqueID(), { expires: new Date().getMonth() + 2 })
         }
 
- 
+        requestAxios('GET', '', '/editor/show/title').then(res => {
+            console.log(res);
+            let whtml = ``
+            res.forEach(item => {
+                whtml += `
+                    <li class="link-item">
+                        <div class="top">
+                            <i class="link-icon"></i>
+                            <a class="link-item-a" target="_blank"
+                                href="case/webpack/1.html?keywords=${item.ename}&e=${item.eid}">${item.ename}</a>
+                            <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                        </div>
+                    </li>
+                `
+            });
+
+            $('.cont9 .link-ul').append(whtml)
+        })
+
     </script>
     <div class="main">
         <!-- 写入代码 -->
@@ -107,6 +124,14 @@
                                     <i class="link-icon"></i>
                                     <a class="link-item-a" target="_blank"
                                         href="/case/phoneModel/index.html?mlink=/case/scrollPass/">移动端滚动穿透，你造么</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank"
+                                        href="/case/cssAnimation/2.html">flex、grid布局中最后一行居左</a>
                                     <i class="link-icon2 iconfont icon-arrowrightdl"></i>
                                 </div>
                             </li>
@@ -757,7 +782,7 @@ button,input,a{
 <!-- 告诉浏览器此文件是纯文本形式的JS脚本 -->
 <script src="/public/js/common.js" type="text/javascript"></script>
 <script type="module">  // 现在浏览器支持ES6语法，自然包括import方式引入js文件
-    import * as THREE from './build/three.module.js'; 
+    // import * as THREE from './build/three.module.js';  
 </script>  
 
 <!-- 浏览器会异步下载文件，且不会影响到后续的DOM渲染。如果有多个script标签添加了defer属性，则会按顺序执行script  -->
@@ -829,6 +854,13 @@ button,input,a{
                                 <div class="top">
                                     <i class="link-icon"></i>
                                     <a class="link-item-a" target="_blank" href="case/debounce/">优化方案一：防抖节流</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li>
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i>
+                                    <a class="link-item-a" target="_blank" href="case/orientation/">横屏竖屏切换</a>
                                     <i class="link-icon2 iconfont icon-arrowrightdl"></i>
                                 </div>
                             </li>
@@ -1207,6 +1239,21 @@ Page({
                         </ul>
                     </div>
                 </div>
+                <!-- webpack -->
+                <div class="cont9">
+                    <div class="cont-top">
+                        <i class="iconfont icon-weibiaoti22"></i>
+                        <div class="cont-title">
+                            <p class="mtitle">webpack</p>
+                            <span class="subtitle">静态模块打包工具，把内容压缩、转译、打包（前端工程化）</span>
+                        </div>
+                    </div>
+                    <div class="cont-link">
+                        <ul class="link-ul">
+
+                        </ul>
+                    </div>
+                </div>
                 <!-- swiper -->
                 <div class="cont5">
                     <div class="cont-top">
@@ -1237,37 +1284,7 @@ Page({
                         </ul>
                     </div>
                 </div>
-                <!-- git -->
-                <div class="cont6">
-                    <div class="cont-top">
-                        <i class="iconfont icon-weibiaoti22"></i>
-                        <div class="cont-title">
-                            <p class="mtitle">git操作</p>
-                            <span class="subtitle">其实git看似很难，其实一点也不简单</span>
-                        </div>
-                    </div>
-                    <div class="cont-link">
-                        <ul class="link-ul">
-                            <li class="link-item">
-                                <div class="top">
-                                    <i class="link-icon"></i>
-                                    <a class="link-item-a" target="_blank"
-                                        href="case/swiper_c1/index.html">swiper像弹幕那样平滑怎么做呢</a>
-                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
-                                </div>
 
-                            </li>
-                            <li class="link-item">
-                                <div class="top">
-                                    <i class="link-icon"></i>
-                                    <a class="link-item-a" target="_blank"
-                                        href="/case/phoneModel/index.html?mlink=/case/swiper_c2/">swiper的slide宽高不一样，有些内容看不到，是不是很恼火</a>
-                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
                 <!-- vue3 -->
                 <div class="cont7">
                     <div class="cont-top">
@@ -1312,6 +1329,7 @@ Page({
                     </div>
                 </div>
 
+                <!-- git -->
                 <div class="cont8">
                     <div class="cont-top">
                         <i class="iconfont icon-weibiaoti22"></i>
@@ -1325,7 +1343,8 @@ Page({
                             <li class="link-item">
                                 <div class="top">
                                     <i class="link-icon"></i>
-                                    <a class="link-item-a" target="_blank" href="/case/semantic/index.html">步骤一：安装，下载，git基本信息配置查看</a>
+                                    <a class="link-item-a" target="_blank"
+                                        href="/case/semantic/index.html">步骤一：安装，下载，git基本信息配置查看</a>
                                     <i class="link-icon2 iconfont icon-arrowrightdl"></i>
                                 </div>
                             </li>
@@ -1363,10 +1382,11 @@ Page({
                 </div>
             </div>
         </div>
-        <script>
-            $('.pc-wrap').prepend(c_header()) 
-        </script>
     </div>
+
+    <script>
+        $('.pc-wrap').prepend(c_header())
+    </script>
 
     <script src="index/index.js"></script>
 </body>

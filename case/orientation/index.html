@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/public/css/pc_base.css">
+
+    <script src="https://www.cignacmb.com/public/js/jquery.min.js"></script>
+    <script src="https://mobile.test-cignacmb.com/public/js/vconsole.js"></script>
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .main-contain {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        font-size: 20px;
+        text-align: center;
+        line-height: 45px;
+        overflow: hidden;
+    }
+
+    .c-header {
+        background: #f0f0f0;
+        height: 58px;
+    }
+
+    .c-cont {
+        width: 100%;
+        flex: 1;
+        display: flex;
+        background: #004cb6;
+        color: #fff;
+        overflow: hidden;
+    }
+
+    .section1 {
+        width: 34%;
+        background: #000;
+    }
+
+    .section2 {
+        width: 66%;
+        background: #001058;
+    }
+
+    .c-footer {
+        height: 100px;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.509);
+    }
+
+    .box-block {
+        height: 100%;
+        padding: 50px 20px;
+        overflow-y: auto;
+    }
+
+    .box-block .item {
+        width: 100%;
+        height: 400px;
+        background: #456423;
+    }
+
+    .box-block .item:nth-child(2n) {
+        background: #fff;
+    }
+
+    /* 样式监听竖屏横屏方向 */
+    @media screen and (orientation: landscape) {
+        /* html {
+            transform: rotate(-90deg);
+            transform-origin: left top;
+            width: 100vh;
+            overflow-x: hidden;
+            position: absolute;
+            top: 100%;
+            left: 0; 
+        } */
+    }
+</style>
+
+<body>
+    <section id="loadwarp" class="load">
+        <div class="loader_wp">
+            <i class="loader"></i>
+            <div class="progress">0%</div>
+        </div>
+    </section>
+    <div class="main-contain" id="main-contain">
+
+        <div class="c-header">
+            <input type="text" class="headerSearch" oninput="onSearch()" placeholder="您想找什么？">
+        </div>
+        <div class="c-cont">
+            <div class="section1">
+                左边
+            </div>
+            <div class="section2">
+                <div class="box-block">
+                    <div class="item">
+                        <p>1</p>
+                    </div>
+                    <div class="item">
+                        <p>2</p>
+                    </div>
+                    <div class="item">
+                        <p>3</p>
+                    </div>
+                    <div class="item">
+                        <p>4</p>
+                    </div>
+                    <div class="item">
+                        <p>5</p>
+                    </div>
+                    <div class="item">
+                        <p>6</p>
+                    </div>
+                    <div class="item">
+                        <p>7</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="c-footer">
+            底部
+        </div>
+    </div>
+    <script src="/public/js/common.js"></script>
+    <script type="module" src="orientation.js"></script>
+
+    <script>  
+        const xScreen = new ScreenFACE()
+        console.log(xScreen);
+
+        new VConsole();
+        // window.onload = orientationChange 
+        // addEventListener('resize', orientationChange)
+
+        // js检测
+
+        // function orientationChange() {
+        //     if (window.orientation == 0) {
+        //         console.log('竖屏');
+        //     } else if (window.orientation == 90) {
+        //         console.log('横屏');
+        //     } else if (window.orientation == -90) {
+        //         console.log('竖屏');
+        //     } else if (window.orientation == 180) {
+        //         console.log('横屏');
+        //     }
+        // }
+
+        // function orientationChange() {
+        //     let screetOrientation = screen.orientation.angle
+        //     console.log(screetOrientation);
+        //     if (screetOrientation == 0) {
+        //         console.log('竖屏');
+        //     } else if (screetOrientation == 90) {
+        //         console.log('横屏');
+        //     } else if (screetOrientation == -90) {
+        //         console.log('竖屏');
+        //     } else if (screetOrientation == 180) {
+        //         console.log('横屏');
+        //     }
+        // }
+
+        //    
+
+        
+
+        // xScreen.lock({ 
+        //     mode: 'portrait',
+        //     $wrapper: document.getElementById('main-contain'),
+        //     zIndex: 302,
+        // })  
+    </script>
+</body>
+
+</html>

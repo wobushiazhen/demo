@@ -30,12 +30,12 @@
         <script>
             var obj1 = { a: 1, q: { ss: "sss" }, c: undefined }
             var o1 = { msg: '你干嘛哟啊', b: 123, a: 2 }
-            // Object.assign()   目标对象,源对象...
+            // Object.assign() 将一个或者多个源对象属性和值复制到目标对象并返回修改后的目标对象   目标对象,源对象...
             var obj2 = Object.assign(o1, obj1)
-            obj2.a = 3
+            obj2.a = 3 
             obj1.a = 6
-            console.log(o1);
-            o1.msg = '狗叫什么'
+            console.log(o1); 
+            o1.msg = '狗叫什么' 
             obj1.q.ss = 'qqqq'
             console.log(obj1, 'obj1');
             obj2.q.ss = 'zzzz' //如果 Object.assign(o1,obj1) 的改变值为一个对象或者引用类型数据，那原始值也会跟着改变。如果是基本数据类型则不会
@@ -45,7 +45,8 @@
             console.log(Object.keys(obj2));
             console.log(Object.values(obj2));
             console.log(Object.entries(obj2));
-            console.log(Object.hasOwn(obj1, 'a'));   
+            console.log(Object.hasOwn(obj1,'a'));   
+
         </script>
         <script>
             // 浅拷贝方法：
@@ -60,6 +61,15 @@
             let jb = JSON.parse(JSON.stringify(ob1))
             console.log(ob1);
             console.log(Object.is(ob1, cb));    
+            
+
+            // SEO 方案
+            // tdk
+            // title
+            // descirption
+            // keywords
+            // 标题副标题，段落，图片添加alt属性，h5标签，
+            // 加快页面加载速度，用内部链接，cdn，良好的dom结构，网站使用https协议，支持ipv6
         </script>
     </body>
 

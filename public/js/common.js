@@ -116,6 +116,7 @@ function getUrlString(name) {
   return str.get(name);
 }
 
+
 // 获取图像验证码
 function getCaptchaImg() {
   return (async () => {
@@ -129,30 +130,30 @@ function getCaptchaImg() {
 }
 
 // 请求封装
-function requestAxios(method = "GET", options = {}, url) {
+function requestAxios(method = "GET", data = {}, url) {
   return axios({
     method,
-    data: options,
+    data: data,
     url: baseurl + url,
     // withCredentials:true, // 跨域请求时发送Cookie
     headers: {
       authorization: getCookie("uToken"),
       // "Content-Type": "application/json",
     },
-
   })
     .then((res) => {
       return res.data;
     })
     .catch((err) => {
       console.log(err);
-      showErrorLayerMsg(err.response.status || 500)
+      // showErrorLayerMsg(err.response.status || 500)
     });
 }
 
 // header_search
 window.onload = function () {
   $("input[name='header_seach']").on("keydown", function (e) {
+    console.log(e);
     if (e.key === "Enter" || e.keyCode === 13) {
       e.preventDefault();
       console.log($(this).val());
@@ -168,7 +169,7 @@ window.onload = function () {
   if (!getCookie('uToken')) {
     layer.confirm('您还没有权限，请跳转到首页', { icon: 3 }, function () {
       window.location.href = '/';
-    }, function () { 
+    }, function () {
       window.location.reload()
     });
   }
