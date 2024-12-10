@@ -1,24 +1,17 @@
--- MySQL dump 10.13  Distrib 8.0.37, for Win64 (x86_64)
---
--- Host: localhost    Database: demo
--- ------------------------------------------------------
--- Server version	8.0.37
+/*
+Navicat MySQL Data Transfer
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+Source Server         : man
+Source Server Version : 80037
+Source Host           : localhost:3306
+Source Database       : demo
 
---
--- Table structure for table `browser_plugins_article_detail`
---
+Target Server Type    : MYSQL
+Target Server Version : 80037
+File Encoding         : 65001
 
+Date: 2024-10-14 16:34:23
+*/
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -34,7 +27,7 @@ CREATE TABLE `browser_plugins_article` (
   `bpa_viewers` int DEFAULT '1',
   `bpa_like` int DEFAULT '1',
   `bpa_types` enum('桌面端','gitlab','gitee','github','Nginx','Node.js','mysql','React','Go','PHP','Java','Vue.js','浏览器','安卓IOS','设计师','ACD','产品经理','运维','测试','后端','前端') DEFAULT NULL COMMENT '枚举文章类型',
-  `bpa_cover` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '0',
+  `bpa_cover` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
   `bpa_content` text COMMENT '文章内容',
   `bpa_datetime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`bpa_id`)
@@ -58,36 +51,26 @@ INSERT INTO `browser_plugins_article` VALUES ('8d7ecb6f-aac8-11ee-a4f6-040e3cdb1
 INSERT INTO `browser_plugins_article` VALUES ('8d7ecb9f-aac8-11ee-a4f6-040e3cdb1b58', '未来科技', '未来, 科技, 先进技术', '科技迷', '0', '0', 'github', '/material/img/bg15.jpg', '<h1>未来科技</h1>\r\n\r\n<p>未来科技是一个充满无限可能的领域，通过不断创新和突破，科技将改变我们的生活和工作方式。以下是一些未来科技的发展趋势。</p>\r\n\r\n<h2>人工智能</h2>\r\n<p>人工智能将继续发展，通过机器学习和深度学习技术，实现更智能的应用和服务，提高生产力和生活质量。</p>\r\n\r\n<h2>量子计算</h2>\r\n<p>量子计算将带来计算能力的革命性提升，解决传统计算机无法解决的复杂问题，推动科学研究和产业发展。</p>\r\n\r\n<h2>生物技术</h2>\r\n<p>生物技术将通过基因编辑和合成生物学等技术，实现对生命的深入理解和改造，提高医疗水平和生活质量。</p>\r\n\r\n<h2>总结</h2>\r\n<p>未来科技是一个充满无限可能的领域，通过不断创新和突破，科技将改变我们的生活和工作方式。人工智能、量子计算和生物技术等领域的突破，将推动社会的进步和发展。</p>', '2024-10-09 17:37:00');
 INSERT INTO `browser_plugins_article` VALUES ('b704f933-7d9e-4acb-95ac-990c4226fdcb', '2', '2', '阿珍', null, null, '', null, '2', '2024-10-12 00:00:00');
 INSERT INTO `browser_plugins_article` VALUES ('ddb58a64-156d-45a7-839e-6c24c474304e', '2', '2', '阿珍', null, null, '桌面端', null, '2', '2024-10-12 00:00:00');
-INSERT INTO `browser_plugins_article` VALUES ('eb0800d6-cca7-43fa-b199-bf2d9cd9535d', '435', '345', '阿珍', '1', '1', '桌面端', '0', '阿三哥', '2024-11-22 00:00:00');
 
-
+-- ----------------------------
+-- Table structure for `browser_plugins_article_detail`
+-- ----------------------------
 DROP TABLE IF EXISTS `browser_plugins_article_detail`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `browser_plugins_article_detail` (
-  `bpad_id` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
-  `bpa_name` varchar(250) COLLATE utf8mb4_general_ci NOT NULL,
+  `bpad_id` varchar(200) NOT NULL,
+  `bpa_name` varchar(250) NOT NULL,
   PRIMARY KEY (`bpad_id`),
   CONSTRAINT `fk_agsd1213235` FOREIGN KEY (`bpad_id`) REFERENCES `browser_plugins_article` (`bpa_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `browser_plugins_article_detail`
---
+-- ----------------------------
+-- Records of browser_plugins_article_detail
+-- ----------------------------
 
-LOCK TABLES `browser_plugins_article_detail` WRITE;
-/*!40000 ALTER TABLE `browser_plugins_article_detail` DISABLE KEYS */;
-/*!40000 ALTER TABLE `browser_plugins_article_detail` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `browser_plugins_article_likes`
---
-
+-- ----------------------------
+-- Table structure for `browser_plugins_article_likes`
+-- ----------------------------
 DROP TABLE IF EXISTS `browser_plugins_article_likes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `browser_plugins_article_likes` (
   `like_id` int NOT NULL AUTO_INCREMENT,
   `bpa_id` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
@@ -96,133 +79,30 @@ CREATE TABLE `browser_plugins_article_likes` (
   PRIMARY KEY (`like_id`),
   UNIQUE KEY `unique_like` (`bpa_id`,`device_uuid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=563343 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `browser_plugins_article_likes`
---
+-- ----------------------------
+-- Records of browser_plugins_article_likes
+-- ----------------------------
+INSERT INTO `browser_plugins_article_likes` VALUES ('563341', '8d7ecb30-aac8-11ee-a4f6-040e3cdb1b58', 'm25rwxar-8ace8a1d-5b29-4db4-97b6-f44178007767', '2024-10-14 11:24:08');
+INSERT INTO `browser_plugins_article_likes` VALUES ('563342', '8d7eca34-aac8-11ee-a4f6-040e3cdb1b58', 'm28hchwy-6f0c3971-a9ba-40a4-90b4-783a3e90943b', '2024-10-14 14:49:27');
 
-LOCK TABLES `browser_plugins_article_likes` WRITE;
-/*!40000 ALTER TABLE `browser_plugins_article_likes` DISABLE KEYS */;
-INSERT INTO `browser_plugins_article_likes` VALUES (563341,'8d7ecb30-aac8-11ee-a4f6-040e3cdb1b58','m25rwxar-8ace8a1d-5b29-4db4-97b6-f44178007767','2024-10-14 03:24:08'),(563342,'8d7eca34-aac8-11ee-a4f6-040e3cdb1b58','m28hchwy-6f0c3971-a9ba-40a4-90b4-783a3e90943b','2024-10-14 06:49:27');
-/*!40000 ALTER TABLE `browser_plugins_article_likes` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `editor`
---
-
-DROP TABLE IF EXISTS `editor`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `editor` (
-  `eid` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `ename` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `etime` datetime DEFAULT NULL,
-  `ehtml` longtext COLLATE utf8mb4_general_ci,
-  `times` int DEFAULT NULL,
-  `author` varchar(400) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `remark` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`eid`),
-  KEY `ename` (`ename`),
-  KEY `etime` (`etime`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
- 
---
--- Dumping data for table `editor`
---
-
-LOCK TABLES `editor` WRITE;
-/*!40000 ALTER TABLE `editor` DISABLE KEYS */;
-/*!40000 ALTER TABLE `editor` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `editor_record`
---
-
-DROP TABLE IF EXISTS `editor_record`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `editor_record` (
-  `erid` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `eid` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
-  `ename` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `etime` datetime DEFAULT NULL,
-  `ehtml` longtext COLLATE utf8mb4_general_ci,
-  PRIMARY KEY (`erid`),
-  KEY `fk-edi12gs` (`eid`),
-  KEY `fk-edname342423x` (`ename`),
-  KEY `fk-erkbka12` (`etime`),
-  CONSTRAINT `fk-edi12gs` FOREIGN KEY (`eid`) REFERENCES `editor` (`eid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `editor_record`
---
-
-LOCK TABLES `editor_record` WRITE;
-/*!40000 ALTER TABLE `editor_record` DISABLE KEYS */;
-/*!40000 ALTER TABLE `editor_record` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb3 */ ;
-/*!50003 SET character_set_results = utf8mb3 */ ;
-/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `before_insert_editor_record` BEFORE INSERT ON `editor_record` FOR EACH ROW BEGIN
-
-    DECLARE next_id INT;
-
-    SELECT AUTO_INCREMENT INTO next_id
-
-    FROM information_schema.TABLES
-
-    WHERE TABLE_SCHEMA = 'demo'
-
-    AND TABLE_NAME = 'editor_record';
-
-
-
-    SET NEW.erid = CONCAT('erid-', LPAD(next_id, 3, '0'));
-
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `interview_questions`
---
-
+-- ----------------------------
+-- Table structure for `interview_questions`
+-- ----------------------------
 DROP TABLE IF EXISTS `interview_questions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `interview_questions` (
   `subid` int NOT NULL AUTO_INCREMENT,
   `subname` varchar(255) NOT NULL,
   `subUnderstand` varchar(255) DEFAULT NULL,
-  `subtime` datetime DEFAULT NULL,  
+  `subtime` datetime DEFAULT NULL,
   `level` enum('熟悉','掌握','了解','较差') DEFAULT NULL,
   `subtype` enum('优化与安全','计算机网络','浏览器','html','html5','css','css3','javascript','typescript','vue2','vue3','react','photoshop','git','nodeJs','大屏可视化','小程序','webpack/vite','axios/ajax','插件库/组件库','微前端','低代码/无代码平台','rust','nestJS','桌面端electron','其他') DEFAULT NULL,
   PRIMARY KEY (`subid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `interview_questions`
---
-
-LOCK TABLES `interview_questions` WRITE;
-/*!40000 ALTER TABLE `interview_questions` DISABLE KEYS */;
+-- ----------------------------
+-- Records of interview_questions
+-- ----------------------------
 INSERT INTO `interview_questions` VALUES ('1', 'css3新特性', 'css3新特性添加了一些伪类标签，动画效果。。。。', '2024-06-04 10:31:04', null, null);
 INSERT INTO `interview_questions` VALUES ('2', 'Example Question', 'Understanding of basic JS concepts', '2024-06-04 10:33:42', null, null);
 INSERT INTO `interview_questions` VALUES ('3', 'TCP是什么啊', 'tcp是面向连接、提供可靠传输、基于字节流的一种运输层的传输层协议', '2024-09-19 10:23:06', '掌握', '计算机网络');
@@ -230,39 +110,15 @@ INSERT INTO `interview_questions` VALUES ('4', '什么是udp啊', 'udp是一种�
 INSERT INTO `interview_questions` VALUES ('5', 'js 事件冒泡是怎么回事啊', '是原本要监听的元素，事件却绑定在其父元素身上进行监听，通过事件冒泡，父元素可以监听到子元素触发的事件。简单来说，当一个dom元素接受事件监听的时候，他会把接受到的事件传给他的父级元素，知道window。addEventListener默认就是事件冒泡\n', '2024-09-20 10:59:02', '较差', 'javascript');
 INSERT INTO `interview_questions` VALUES ('6', 'js 事件委托呢', '事件委托就是利用了事件冒泡的原理，把触发的事件绑定在父元素身上，比如ul li绑定在ul身上通过e.target获取到li的值等。', '2024-09-20 11:10:13', '了解', 'javascript');
 
-
-/*!40000 ALTER TABLE `interview_questions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `subid_sequence`
---
-
+-- ----------------------------
+-- Table structure for `subid_sequence`
+-- ----------------------------
 DROP TABLE IF EXISTS `subid_sequence`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `subid_sequence` (
   `current_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `subid_sequence`
---
-
-LOCK TABLES `subid_sequence` WRITE;
-/*!40000 ALTER TABLE `subid_sequence` DISABLE KEYS */;
-INSERT INTO `subid_sequence` VALUES (1003);
-/*!40000 ALTER TABLE `subid_sequence` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2024-12-04 11:26:51
+-- ----------------------------
+-- Records of subid_sequence
+-- ----------------------------
+INSERT INTO `subid_sequence` VALUES ('1003');

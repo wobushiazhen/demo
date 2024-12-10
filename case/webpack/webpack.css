@@ -223,6 +223,10 @@
     overflow: hidden;
 }
 
+.record .record-item{
+    cursor: pointer;
+}
+
 .submit-editor {
     width: 1030px;
     margin: 0 auto;

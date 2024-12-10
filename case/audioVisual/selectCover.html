@@ -1,191 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" href="/public/css/reset.css">
-        <script src="/tool/jquery-2.0.3.min.js"></script>
-        <style>
-            .videoBox {
-                margin: 0 auto;
-                width: 1200px;
-                background: #62626232;
-                padding-bottom: 30px;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/public/css/reset.css">
+    <script src="/tool/jquery-2.0.3.min.js"></script>
+    <style>
+        .videoBox {
+            margin: 0 auto;
+            width: 1200px;
+            background: #62626232;
+            padding-bottom: 30px;
+        }
 
-            .videoBox>p {
-                line-height: 60px;
-                text-align: center;
-                font-weight: bold;
-                font-size: 18px;
-            }
+        .videoBox>p {
+            line-height: 60px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
 
-            .videoBox>span {
-                display: block;
-                text-align: center;
-            }
+        .videoBox>span {
+            display: block;
+            text-align: center;
+        }
 
-            .videoBox .video1 {
-                padding: 20px 0;
-                display: block;
-                margin: 0 auto;
-            }
+        .videoBox .video1 {
+            padding: 20px 0;
+            display: block;
+            margin: 0 auto;
+        }
 
-            #saveImg,
-            #startPlay,
-            #selectCover {
-                background: #383838;
-                cursor: pointer;
-                border: none;
-                display: block;
-                margin: 12px auto 12px;
-                color: #fff;
-                border-radius: 5px;
-                padding: 8px 30px;
-            }
+        #saveImg,
+        #startPlay,
+        #selectCover {
+            background: #383838;
+            cursor: pointer;
+            border: none;
+            display: block;
+            margin: 12px auto 12px;
+            color: #fff;
+            border-radius: 5px;
+            padding: 8px 30px;
+        }
 
-            .coverImg {
-                width: 238px;
-                margin: 0 auto;
-            }
-        </style>
-    </head>
+        .coverImg {
+            width: 238px;
+            margin: 0 auto;
+        }
+    </style>
 
-    <body>
+    <script>
+        var base = ''
+        if (window.location.host.indexOf("127.0.0.1") > -1) {
+            base = "http://127.0.0.1:7007";
+        } else {
+            base = "http://60.204.250.158:7007";
+        }
 
-        <div class="videoBox">
-            <p>选取封面</p>
-            <span>当前视频的帧数就是封面，可以拖动进度条改变</span>
-            <video width="600" class="video1" draggable controls>
-                <source src="https://www.cignacmb.com/d/file/vedio/video-img1.mp4" type="video/mp4" />
-            </video>
-            <div>
-                <button id="startPlay" data-status="1">开始播放</button>
-                <button id="selectCover">选取封面</button>
-            </div>
-            <div class="coverImg">
-                <img src="" style="width: 238px;">
-                <button style="display: none;" id="saveImg">保存图片</button>
-            </div>
+    </script>
+</head>
+
+<body>
+
+    <div class="videoBox">
+        <p>选取封面</p>
+        <span>当前视频的帧数就是封面，可以拖动进度条改变</span>
+        <video width="600" class="video1" draggable controls>
+            <source src="https://www.cignacmb.com/d/file/vedio/video-img1.mp4" type="video/mp4" />
+        </video>
+        <div>
+            <button id="startPlay" data-status="1">开始播放</button>
+            <button id="selectCover">选取封面</button>
         </div>
+        <div class="coverImg">
+            <img src="" style="width: 238px;">
+            <button style="display: none;" id="saveImg">保存图片</button>
+        </div>
+    </div>
 
-        <script>
-            $('#startPlay').click(function () {
-                let status = $(this).data('status')
-                if (status == 1) {
-                    $('.video1').get(0).play();
-                    $(this).data('status', '0').text('暂停播放')
-                } else {
-                    $('.video1').get(0).pause();
-                    $(this).data('status', '1').text('开始播放')
-                }
-            })
-
-            $('.video1').on('play', function () {
-                $('#startPlay').data('status', '0').text('暂停播放')
-            });
-
-            let currentTime = 0
-            $('.video1').on('pause', function () {
-                currentTime = $(this)[0].currentTime;
-                console.log(currentTime);
-                $('#startPlay').data('status', '1').text('开始播放')
-            });
-
-            $('.video1').on('timeupdate', function () {
-                currentTime = $('.video1')[0].currentTime;
-            });
-
-            $('#selectCover').click(function () {
-                getVideoBase64("https://www.cignacmb.com/d/file/vedio/video-img1.mp4", currentTime).then(res => {
-                    // const jsonData = JSON.stringify(res);
-                    const jsonData = res;
-                    // 发送buffer数据到后端     
-                    $.ajax({
-                        url: 'http://localhost:7002/captureFrame',
-                        method: 'POST',
-                        data: { jsonData },
-                        success: function (response) {
-                            console.log(response);
-                            // 根据后端返回的结果进行处理
-                        },
-                        error: function (error) {
-                            console.error(error);
-                        }
-                    });
-                    $('.coverImg img').prop('src', res)
-                    $('#saveImg').show()
-                })
-            });
-
-            $('#saveImg').click(function () {
-                if ($('.coverImg img').attr('src')) {
-                    const a = document.createElement('a')
-                    a.download = '你干嘛'
-                    a.href = $('.coverImg img').attr('src')
-                    a.click()
-                }
-            })
-
-            async function getVideoBase64(url, second = 1) {
-                return new Promise((resolve, reject) => {
-                    const video = document.createElement('video');
-                    video.height = 337;
-                    video.width = 600;
-                    video.setAttribute('crossOrigin', 'anonymous'); // Handle cross-origin
-                    video.setAttribute('src', url);
-                    video.setAttribute('muted', 'muted'); // Mute to prevent playback failure
-                    video.addEventListener('loadeddata', async () => {
-                        const canvas = document.createElement('canvas');
-                        const { width, height } = video;
-                        canvas.width = width;
-                        canvas.height = height;
-
-                        if (second) {
-                            video.currentTime = second;
-                            await video.play();
-                            await video.pause();
-                        }
-
-                        canvas.getContext('2d')?.drawImage(video, 0, 0, width, height);
-                        const base64Data = canvas.toDataURL('image/jpeg');
-                        resolve(base64Data);
-                    });
-
-                    video.addEventListener('error', (error) => {
-                        reject(error);
-                    });
-                });
+    <script>
+        $('#startPlay').click(function () {
+            let status = $(this).data('status')
+            if (status == 1) {
+                $('.video1').get(0).play();
+                $(this).data('status', '0').text('暂停播放')
+            } else {
+                $('.video1').get(0).pause();
+                $(this).data('status', '1').text('开始播放')
             }
+        })
 
-            function base64ToBlob(base64) {
-                const splitData = base64.split(',');
+        $('.video1').on('play', function () {
+            $('#startPlay').data('status', '0').text('暂停播放')
+        });
 
-                if (splitData.length === 2) {
-                    const contentType = splitData[0].match(/:(.*?);/)[1];
-                    const byteCharacters = atob(splitData[1]);
-                    const byteArrays = [];
+        let currentTime = 0
+        $('.video1').on('pause', function () {
+            currentTime = $(this)[0].currentTime;
+            console.log(currentTime);
+            $('#startPlay').data('status', '1').text('开始播放')
+        });
 
-                    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-                        const slice = byteCharacters.slice(offset, offset + 512);
-                        const byteNumbers = new Array(slice.length);
+        $('.video1').on('timeupdate', function () {
+            currentTime = $('.video1')[0].currentTime;
+        });
 
-                        for (let i = 0; i < slice.length; i++) {
-                            byteNumbers[i] = slice.charCodeAt(i);
-                        }
+        console.log(base + '/captureFrame');
 
-                        const byteArray = new Uint8Array(byteNumbers);
-                        byteArrays.push(byteArray);
+        $('#selectCover').click(function () {
+            getVideoBase64("https://www.cignacmb.com/d/file/vedio/video-img1.mp4", currentTime).then(res => {
+                // const jsonData = JSON.stringify(res);
+                const jsonData = res;
+                // 发送buffer数据到后端     
+                $.ajax({
+                    url: base + '/captureFrame',
+                    method: 'POST',
+                    data: { jsonData },
+                    success: function (response) {
+                        console.log(response);
+                        $('.coverImg img').prop('src', response)
+                        $('#saveImg').show()
+                        // 根据后端返回的结果进行处理
+                    },
+                    error: function (error) {
+                        console.error(error);
+                    }
+                });
+
+            })
+        });
+
+        $('#saveImg').click(function () {
+            if ($('.coverImg img').attr('src')) {
+                const a = document.createElement('a')
+                a.download = '你干嘛'
+                a.href = $('.coverImg img').attr('src')
+                a.click()
+            }
+        })
+
+        async function getVideoBase64(url, second = 1) {
+            return new Promise((resolve, reject) => {
+                const video = document.createElement('video');
+                video.height = 337;
+                video.width = 600;
+                video.setAttribute('crossOrigin', 'anonymous'); // Handle cross-origin
+                video.setAttribute('src', url);
+                video.setAttribute('muted', 'muted'); // Mute to prevent playback failure
+                video.addEventListener('loadeddata', async () => {
+                    const canvas = document.createElement('canvas');
+                    const { width, height } = video;
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    if (second) {
+                        video.currentTime = second;
+                        await video.play();
+                        await video.pause();
                     }
 
-                    return new Blob(byteArrays, { type: contentType });
-                } else {
-                    throw new Error('Invalid base64 format');
+                    canvas.getContext('2d')?.drawImage(video, 0, 0, width, height);
+                    const base64Data = canvas.toDataURL('image/jpeg');
+                    resolve(base64Data);
+                });
+
+                video.addEventListener('error', (error) => {
+                    reject(error);
+                });
+            });
+        }
+
+        function base64ToBlob(base64) {
+            const splitData = base64.split(',');
+
+            if (splitData.length === 2) {
+                const contentType = splitData[0].match(/:(.*?);/)[1];
+                const byteCharacters = atob(splitData[1]);
+                const byteArrays = [];
+
+                for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+                    const slice = byteCharacters.slice(offset, offset + 512);
+                    const byteNumbers = new Array(slice.length);
+
+                    for (let i = 0; i < slice.length; i++) {
+                        byteNumbers[i] = slice.charCodeAt(i);
+                    }
+
+                    const byteArray = new Uint8Array(byteNumbers);
+                    byteArrays.push(byteArray);
                 }
+
+                return new Blob(byteArrays, { type: contentType });
+            } else {
+                throw new Error('Invalid base64 format');
             }
-        </script>
-    </body>
+        }
+    </script>
+</body>
 
 </html>

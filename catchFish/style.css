@@ -1,8 +1,48 @@
-.cf-cont {  
+.cf-cont {
     width: 1160px;
-    min-width: 320px; 
+    min-width: 320px;
     margin: 0 auto;
-    padding: 42px 0 36px; 
+    padding: 42px 0 36px;
     flex: 1;
     /* overflow-y: hidden; */
-}  
+}
+
+.linkt {
+    line-height: 60px;
+    font-size: 18px;
+}
+
+.links {
+    width: 75%;
+    margin: 0 auto;
+    display: flex;
+    align-content: flex-start;
+    flex-flow: row wrap;
+}
+
+.itemlink {
+    width: 50%;
+    line-height: 30px;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+.itemlink a {
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-wrap: nowrap;
+}
+
+.itemlink span {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    color: #616161;
+    border-radius: 50%;
+    line-height: 28px;
+    text-align: center;
+    font-size: 16px;
+    border: 2px solid #a9a9a9;
+}

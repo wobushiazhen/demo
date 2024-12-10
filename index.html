@@ -45,7 +45,7 @@
         }
 
         requestAxios('GET', '', '/editor/show/title').then(res => {
-            console.log(res);
+            // console.log(res);
             let whtml = ``
             res.forEach(item => {
                 whtml += `
@@ -138,7 +138,7 @@
                             <li class="link-item">
                                 <div class="top">
                                     <i class="link-icon"></i>
-                                    <a class="link-item-a" href="#">reset.css重置样式文件</a>
+                                    <a class="link-item-a" href="javascript:;">reset.css重置样式文件</a>
                                     <i class="link-icon2 iconfont icon-arrowrightdl"></i>
                                 </div>
                                 <div class="code hidden">
@@ -201,7 +201,7 @@ body {
                             <li class="link-item">
                                 <div class="top">
                                     <i class="link-icon"></i>
-                                    <a class="link-item-a" href="#">移动端媒体查询+rem单位响应式布局</a>
+                                    <a class="link-item-a" href="javascript:;">移动端媒体查询+rem单位响应式布局</a>
                                     <i class="link-icon2 iconfont icon-arrowrightdl"></i>
                                 </div>
                                 <div class="code hidden">
@@ -725,7 +725,7 @@ button,input,a{
                             <li class="link-item">
                                 <div class="top">
                                     <i class="link-icon"></i>
-                                    <a class="link-item-a" target="_blank" href="javascript:void(0)">meta标签注解</a>
+                                    <a class="link-item-a" href="javascript:void(0)">meta标签注解</a>
                                     <i class="link-icon2 iconfont icon-arrowrightdl"></i>
                                 </div>
                                 <div class="code hidden">
@@ -768,7 +768,7 @@ button,input,a{
                             <li class="link-item">
                                 <div class="top">
                                     <i class="link-icon"></i>
-                                    <a class="link-item-a" target="_blank" href="javascript:void(0)">script标签属性含义</a>
+                                    <a class="link-item-a" href="javascript:void(0)">script标签属性含义</a>
                                     <i class="link-icon2 iconfont icon-arrowrightdl"></i>
                                 </div>
                                 <div class="code hidden">
@@ -1355,19 +1355,19 @@ Page({
                 <div class="pc-rfixed">
                     <ul class="fixed-ul">
                         <li>
-                            <a href="#">
+                            <a href="https://github.com/wobushiazhen/demo/">
                                 <i class="iconfont icon-github"></i>
                                 <span>github</span>
-                            </a>
+                            </a> 
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="javascript:;">
                                 <i class="iconfont icon-yijianfankui" style="font-size: 24px;"></i>
                                 <span>关于我们</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="javascript:;">
                                 <i class="iconfont icon-liuyan" style="font-size: 28px;"></i>
                                 <span>提供信息</span>
                             </a>
@@ -1385,9 +1385,36 @@ Page({
     </div>
 
     <script>
-        $('.pc-wrap').prepend(c_header())
-    </script>
+        $(document).ready(function () {
+            $('.pc-wrap').prepend(c_header());
 
+            requestAxios("get", "", '/indexSHOWLIST').then(res => {
+                let linkmus = []
+                var linkItems = $('.link-item .link-item-a');
+                linkItems.each(function (index, item) {
+                    if (item.href.indexOf('/') !== -1) {
+                        linkmus.push({ text: item.innerHTML, href: item.href })
+                    }
+                });
+                if (res.status == 200) {
+                    if (linkmus.length == res.total) {
+                        console.log($('.link-item .link-item-a').length);
+                    } else {
+                        setTimeout(() => {
+                            requestAxios("POST", linkmus, '/indexAddHSLIST').then(res => {
+                                if (res.status == 200) {
+                                    setCookie('indexLISTTOTAL', res.insertaffected, {
+                                        expires: '365',
+                                        path: "/"
+                                    })
+                                }
+                            });
+                        }, 20);
+                    }
+                }
+            });
+        });
+    </script>
     <script src="index/index.js"></script>
 </body>
 

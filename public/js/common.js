@@ -1,5 +1,6 @@
 
 // import { showErrorLayerMsg } from './errorStatus.js'
+
 // 加载
 (function () {
   function hideLoader() {
@@ -24,10 +25,10 @@ function c_header(activeItem = "test") {
                 <div class="inner-l-text">
                     <p>azhen知识库</p>
                     <i class="iconfont icon-zhishiku"></i>
-                </div>
+                </div> 
                 <div class="inner-l-search">
                     <i class="iconfont icon-sousuo"></i>
-                    <input type="text" name="header_seach" id="header_seach" placeholder="资源/教程">
+                    <input type="text" name="header_search" id="header_search" placeholder="资源/教程">
                 </div>
               </div>
               <div class="inner-r">    
@@ -131,6 +132,7 @@ function getCaptchaImg() {
 
 // 请求封装
 function requestAxios(method = "GET", data = {}, url) {
+  console.log(method, data, url);
   return axios({
     method,
     data: data,
@@ -151,18 +153,6 @@ function requestAxios(method = "GET", data = {}, url) {
 }
 
 // header_search
-window.onload = function () {
-  $("input[name='header_seach']").on("keydown", function (e) {
-    console.log(e);
-    if (e.key === "Enter" || e.keyCode === 13) {
-      e.preventDefault();
-      console.log($(this).val());
-      requestAxios("GET", "", baseurl + "/header_seach?sv=" + $(this).val()).then(res => {
-        console.log(res);
-      })
-    }
-  });
-};
 
 // 没有utoken，要跳回首页
 window.onload = function () {
@@ -173,4 +163,23 @@ window.onload = function () {
       window.location.reload()
     });
   }
+};
+
+window.onload = function () {
+  $("input[name='header_search']").on("keydown", function (e) {
+    console.log(e.keyCode);
+    if (e.key === "Enter" || e.keyCode === 13) {
+      e.preventDefault();
+      const keyword = e.target.value;
+      if(keyword){ 
+         location.href = `/searchpage.html?keyword=${encodeURIComponent(keyword)}`
+      }
+      // requestAxios("GET", {}, `/header_search?keyword=${encodeURIComponent(keyword)}`).then(res => {
+      //   console.log(res);
+      //   if (res && res != '') {
+      //     location.href = '/searchpage.html'
+      //   }
+      // });
+    }
+  });
 };

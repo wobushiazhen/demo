@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AZHEN知识库搜索页</title>
+    <meta name="description" content="查看你想要的页面哦" />
+    <meta name="keywords" content="知识库搜索页" />
+    <link rel="stylesheet" href="public/css/reset.css">
+    <link rel="stylesheet" href="public/css/pc_base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+    <script src="/tool/jquery-2.0.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/layui.js"></script>
+</head>
+
+<body>
+    <script src="/tool/axios.min.js"></script>
+    <script src="/public/js/common.js"></script>
+    <div class="main">
+        <div class="pc-wrap">
+            <!-- 写入代码 -->
+            <link rel="stylesheet" href="/catchFish/style.css">
+            <div class="cf-cont">
+                <div class="linkt">搜索结果</div>
+                <div class="links">
+                    <!-- <div class="itemlink">
+                        <span>1</span>
+                        <a href="/case/webpack/2.html" target="_blank">数字转换中文，带上 个十百千万</a>
+                    </div>
+                    <div class="itemlink">
+                        <span>2</span>
+                        <a href="/case/i18n/2.html" target="_blank">国际化方案i18n</a>
+                    </div> 
+                    <div class="itemlink">
+                        <span>3</span>
+                        <a href="" target="_blank">有钱花老年金</a>
+                    </div> -->
+                </div>
+
+                <div class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"
+                    style="width: 100%; font-size: 60px; text-align: center;"></div>
+            </div>
+        </div>
+        <script>
+            let keyword = getUrlString('keyword') || $('input[name="header_search"]').val()
+            $('.pc-wrap').prepend(c_header('')) 
+            if (keyword && keyword != '') {
+                $("input[name='header_search']").val(keyword)
+                requestAxios("GET", {}, `/header_search?keyword=${encodeURIComponent(keyword)}`).then(res => {
+                    $('.layui-icon.layui-icon-loading').hide();
+                    if (res == '') {
+                        $('.links').append('<div class="">未找到与 "' + keyword + '" 相匹配的结果</div>')
+                    } else {
+                        $('.links').append(res)
+                    }
+                });
+            } else {
+                
+            }
+        </script>
+    </div>
+</body>
+
+</html>
