@@ -1,6 +1,6 @@
 
 # demo
-前端、个人练习、学习记录网站，持续更新
+前端学习记录网站，持续更新
 
 前端 JavaScript +  jq + layui 
 后端 nodejs + express + mysql
