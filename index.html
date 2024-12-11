@@ -1193,8 +1193,8 @@ Page({
 })
 
 // index.wxml 文件 主要navBarHeight的高度和要对齐右上角胶囊 
-<view class="banner">
-    <image class="banner-img" src="/static/images/indexBanner.png"></image>
+<view class="banner"> 
+    <image class="banner-img" src="/case/calendar/images/you2-icon.png"></image>
     <view class="nav-bar" style="height:{{navBarHeight}}px;line-height: {{navBarHeight}}px;">
         <input class="search" placeholder-class="placeholder-search" placeholder="输入关键词"
             style="height:{{menuHeight}}px;  line-height:{{menuHeight}}px; left:{{menuRight}}px; top:{{menuTop}}px;"></input>
@@ -1354,11 +1354,11 @@ Page({
 
                 <div class="pc-rfixed">
                     <ul class="fixed-ul">
-                        <li>  
+                        <li>
                             <a target="_blank" href="https://github.com/wobushiazhen/demo/">
                                 <i class="iconfont icon-github"></i>
                                 <span>github</span>
-                            </a> 
+                            </a>
                         </li>
                         <li>
                             <a href="javascript:;">
@@ -1386,7 +1386,7 @@ Page({
 
     <script>
         $(document).ready(function () {
-            $('.pc-wrap').prepend(c_header());
+            $('.pc-wrap').prepend(c_header('test'));
 
             requestAxios("get", "", '/indexSHOWLIST').then(res => {
                 let linkmus = []

@@ -226,19 +226,22 @@
             if (!files || files.length === 0) {
                 layer.msg('请选择图片', { icon: 5, time: 1500 });
                 return false;
-            } 
+            }
 
             for (let i = 0; i < files.length; i++) {
                 formData.append('file', files[i]);
             }
 
-            console.log(formData);
-
             axiosRequest('POST', formData, '/file/images/upload').then(function (response) {
                 let imgUrl = response.files.file
                 console.log(imgUrl);
-                $('#ID-upload-demo-preview').removeClass('layui-hide')
-                    .find('img').attr('src', location.origin + "/node-demo/" + imgUrl);
+                if (location.origin.indexOf('127.0.0.1') != -1) {
+                    $('#ID-upload-demo-preview').removeClass('layui-hide')
+                        .find('img').attr('src', location.origin + "/node-demo/" + imgUrl);
+                } else {
+                    $('#ID-upload-demo-preview').removeClass('layui-hide')
+                        .find('img').attr('src', "http://60.204.250.158:8808/" + imgUrl);
+                }
             })
         })
 
@@ -269,7 +272,7 @@
                 $("#maincaptcha").empty()
                 if (captcha != '') {
                     sessionStorage.setItem('createAricle_captcha_CODE', JSON.stringify(captcha.text));
-                    $("#maincaptcha").append(captcha.data)
+                    $("#maincaptcha").append(captcha)
                 }
             })
         }
@@ -310,7 +313,7 @@
             }
 
             if (!captcha || captcha == '') {
-                layer.msg('请选择填写图像验证码', { icon: 5, time: 1500 });
+                layer.msg('请填写图像验证码', { icon: 5, time: 1500 });
                 return false;
             }
 
@@ -333,7 +336,7 @@
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-        })
+        });
     </script>
 </body>
 

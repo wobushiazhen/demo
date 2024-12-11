@@ -171,8 +171,8 @@ window.onload = function () {
     if (e.key === "Enter" || e.keyCode === 13) {
       e.preventDefault();
       const keyword = e.target.value;
-      if(keyword){ 
-         location.href = `/searchpage.html?keyword=${encodeURIComponent(keyword)}`
+      if (keyword) {
+        location.href = `/searchpage.html?keyword=${encodeURIComponent(keyword)}`
       }
       // requestAxios("GET", {}, `/header_search?keyword=${encodeURIComponent(keyword)}`).then(res => {
       //   console.log(res);
