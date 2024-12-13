@@ -1387,7 +1387,8 @@ Page({
     <script>
         $(document).ready(function () {
             $('.pc-wrap').prepend(c_header('test'));
-
+            console.log(111);
+            
             requestAxios("get", "", '/indexSHOWLIST').then(res => {
                 let linkmus = []
                 var linkItems = $('.link-item .link-item-a');
