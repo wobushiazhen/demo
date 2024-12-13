@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title></title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+        <style>
+            .main {
+                max-width: 1500px;
+                height: 100%;
+            }
+
+            #main-id {
+                height: 400px;
+                background: #000;
+                width: 100px;
+            }
+
+            .side-nav {
+                position: fixed;
+                right: 20%;
+                top: 10%;
+            }
+
+            .side-nav ul { 
+                width: 95px; 
+                border-left: 1.5px solid #cdcdcd;
+                /* background: #000; */
+            }
+
+            .side-nav ul li {
+                position: relative;
+                z-index: 10;
+                cursor: pointer;
+                font-size: .7rem;
+                padding: 8px 0;
+                padding-left: 8px;
+                
+            }
+
+            .side-nav ul li.active {
+                /* border-left: 1.5px solid #0b82be; */
+            }
+
+            .bg {
+                background: #0085f230;
+                width: 95px; 
+                height: 32.75px;
+                border-left: 1.5px solid #0b82be;
+                transform: translateY(-32.75px);
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="main">
+            <div class="cont">
+                <section id="语法">
+                    <p>属性被指定为下列关键字值中的任意一个。</p>
+                    <p>属性被指定为下列关键字值中的任意一个。</p>
+                    <p>属性被指定为下列关键字值中的任意一个。</p>
+                    <p>属性被指定为下列关键字值中的任意一个。</p>
+                    <p>属性被指定为下列关键字值中的任意一个。</p>
+                    <p>属性被指定为下列关键字值中的任意一个。</p>
+                    <p>属性被指定为下列关键字值中的任意一个。</p>
+                </section>
+                <section id="示例">
+                    <div>
+                        <div>Box 1</div>
+                        <div>Box 2</div>
+                        <div>Box 3</div>
+                    </div>
+                    <div>
+                        <div>Box 1</div>
+                        <div>Box 2</div>
+                        <div>Box 3</div>
+                    </div>
+                    <div>
+                        <div>Box 1</div>
+                        <div>Box 2</div>
+                        <div>Box 3</div>
+                    </div>
+                    <div>
+                        <div>Box 1</div>
+                        <div>Box 2</div>
+                        <div>Box 3</div>
+                    </div>
+                    <div>
+                        <div>Box 1</div>
+                        <div>Box 2</div>
+                        <div>Box 3</div>
+                    </div>
+                </section>
+                <section id="规范">
+                    11111
+                </section>
+                <section id="main-id">
+
+                </section>
+            </div>
+            <div class="side-nav">
+                <ul>
+                    <li class="active" data-inx="1"><a href="#语法">模块1</a></li>
+                    <li data-inx="2"><a href="#" >模块2</a></li>
+                    <li data-inx="3"><a href="#" >模块3</a></li>
+                    <li data-inx="4"><a href="#" >模块4</a></li>
+                </ul>    
+                <div class="bg">
+
+                </div>
+            </div>
+        </div>
+        <script>
+            $('.side-nav ul li').click(function () {
+                // $(this).addClass('active').siblings('li').removeClass('active')
+                console.log($(this).data('inx'));    
+            })
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flex布局中最后一行居左</title>
+    <style>
+        .boxs {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 300px);
+            margin-top: 20px;
+            grid-gap: 10px;
+        }
+
+        .item {
+            width: 300px;
+            height: 65px;
+            background: #a0a0a0;
+        }
+
+        .boxs2 {
+            width: 680px;
+            margin-top: 50px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .item1 {
+            width: 150px;
+            height: 100px;
+            margin: 10px;
+            background: #698775;
+        }
+
+        .item1:last-child {
+            margin-right: auto;
+        }
+
+        .container {
+            border: 1px solid #000;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .item2 {
+            width: 90px;
+            height: 70px;
+            margin: 10px;
+            background-color: yellowgreen;
+        }
+
+        .container::after {
+            content: '';
+            flex: auto;
+            /* 或者flex: 1 */
+        }
+
+        .boxs3 {
+            width: 800px;
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            flex-wrap: wrap;
+        }
+
+        .item3 {
+            height: 75px;
+            width: 220px;
+            display: table-cell;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        /* 选择最后一行的元素 */
+        .boxs3 .item3:nth-last-child(-n+3) {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 方法一 grid + grid-template-columns -->
+    <div class="boxs">
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+        <div class="item"></div>
+    </div>
+
+    <!-- 适合确定行数 设置最后一个元素 flex margin-right:auto -->
+    <div class="boxs2">
+        <div class="item1"></div>
+        <div class="item1"></div>
+        <div class="item1"></div>
+        <div class="item1"></div>
+        <div class="item1"></div>
+        <div class="item1"></div>
+    </div>
+
+    <!-- 适合确定内容宽度 flex 布局，在item的父元素添加一个伪元素，flex设置为1 -->
+    <div class="container">
+        <div class="item2"></div>
+        <div class="item2"></div>
+        <div class="item2"></div>
+        <div class="item2"></div>
+        <div class="item2"></div>
+        <div class="item2"></div>
+        <div class="item2"></div>
+        <div class="item2"></div>
+        <div class="item2"></div>
+        <div class="item2"></div>
+        <div class="item2"></div>
+        <div class="item2"></div>
+        <div class="item2"></div>
+    </div>
+
+    <!-- 适合确定item的列数 设置最后一行的元素 居左 nth-last-child(-n+3)-->
+    <div class="boxs3">
+        <div class="item3"></div>
+        <div class="item3"></div>
+        <div class="item3"></div>
+        <div class="item3"></div>
+        <div class="item3"></div>
+        <div class="item3"></div>
+        <div class="item3"></div>
+        <div class="item3"></div>
+        <div class="item3"></div>
+        <div class="item3"></div>
+        <div class="item3"></div>
+    </div>
+
+    <!-- 上下左右居中方式 -->
+    <style>
+        .align {
+            display: grid;
+            place-items: center;
+            /* 水平和垂直居中 */
+            height: 100vh;
+            /* 容器高度 */
+        } 
+
+    </style>
+    <div class="align">
+        <h1>center</h1>
+    </div>
+</body>
+
+</html>

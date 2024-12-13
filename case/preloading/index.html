@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+    <head lang="en">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>自适应手机布局</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="/public/css/reset.css" rel="stylesheet" type="text/css" />
+        <style>
+            html,
+            body {
+                overflow: hidden;
+            }
+
+            #layout {
+                width: 417px;
+                margin: 50px auto;
+                height: 845px;
+                position: relative;
+                background: url(images/bg.png) no-repeat center center;
+                background-size: 417px auto;
+                overflow: hidden;
+            }
+
+            .myIframe {
+                position: relative;
+                left: 50.08%;
+                top: 0%;
+                transform: translate(-50%, 89px);
+                background-size: 100% auto;
+                border-radius: 7px;
+                overflow-y: hidden;
+            }
+
+            ::-webkit-scrollbar {
+                width: 0px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="layout">
+            <iframe class="myIframe" id="myIframe" src="" width="375px" height="667px"></iframe>
+        </div>
+        <script>
+            let getParams = window.location.search
+            let params = new URLSearchParams(getParams)
+            console.log(params.get('mlink'));
+            document.querySelector('#myIframe').setAttribute('src', params.get('mlink'))
+        </script>
+
+        <script>
+            
+        </script>
+    </body>
+
+
+</html>

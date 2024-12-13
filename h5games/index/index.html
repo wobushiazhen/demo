@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>阿珍的主页</title>
+        <meta name="description" content="链接，demo" />
+        <meta name="keywords" content="链接，demo" />
+
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <link rel="stylesheet" href="/public/css/pc_base.css">
+        <link rel="stylesheet" href="/public/iconfont/iconfont.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+        <link rel="stylesheet" href="css/index.css">
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/layui.js"></script>
+    </head>
+
+    <body>
+        <div class="main">
+            <!-- 写入代码 -->
+            <div class="pc-games">
+                <div class="games-cont">
+                    <div class="banner" style="background: url(./images/banner.jpg);height: 480px;">
+                        
+                    </div>
+                    <div class="content">
+                        <p class="t">营销日历</p>
+                        <div class="nav-btns">
+                            <ul class="nav-btn-ul">
+                                <li class="active">
+                                    <p>火热</p>
+                                </li>
+
+                                <li>
+                                    <p>节日</p>
+                                </li>
+                                <li>
+                                    <p>儿童</p>
+                                </li>
+                                <li>
+                                    <p>问卷</p>
+                                </li>
+                                <li>
+                                    <p>营销</p>
+                                </li>
+                                <li>
+                                    <p>微信活动</p>
+                                </li>
+                                <li>
+                                    <p>门店活动</p>
+                                </li>
+                            </ul>
+                        </div> 
+                        <div class="ys-list" data-nav="1"> 
+                            <ol class="list-ol">
+                                <li><a href="/h5games/zww/games.html"><img src="images/zww.jpg" alt=""></a></li>
+                                <li><a href="/h5games/ggl/index.html"><img src="images/ggl.jpg" alt=""></a></li>
+                                <li><a href="/vueTopic/dati/1.html"><img src="images/dt.jpg" alt=""></a></li>
+                                <li><a href="/h5games/niudan/index.html"><img src="images/dt.jpg" alt=""></a></li>
+                            </ol> 
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <script>
+
+            $('.ys-list .list-ol li').mouseenter(function () {
+                let fileNameSrc = $(this).find('img').attr('src').replace('.jpg', '.gif')
+                $(this).find('img').attr('src', fileNameSrc)
+            })
+
+            $('.ys-list .list-ol li').mouseleave(function () {
+                let fileNameSrc = $(this).find('img').attr('src').replace('.gif', '.jpg')
+                $(this).find('img').attr('src', fileNameSrc)
+            })
+            
+        </script> 
+    </body>
+
+</html>

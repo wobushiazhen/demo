@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>抓娃娃游戏</title>
+		<meta name="keywords" content="抓娃娃游戏" />
+		<meta name="description" content="抓娃娃游戏" />
+		<link href="/favicon.ico" rel="Shortcut Icon" />
+		<link href="/favicon.ico" rel="Bookmark" />
+		<meta name="viewport"  
+			content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no,viewport-fit=cover">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="hotcss" content="max-width=750">
+		<meta name="hotcss" content="design-width=750">
+		<link rel="stylesheet" href="css/style.css">
+		<script src="js/hotcss.js"></script>
+	</head>
+
+	<body>
+		<div class="m-page">  
+			<section class="page-inner">
+				<div class="content">
+					<div class="top"> 
+						<div class="logo">
+							<img src="images/logo1.png" alt="">
+						</div> 
+						<div class="time">30s</div>
+						<div class="score-text">
+							分数：
+							<span class="socre">0</span>
+						</div>
+					</div>
+					<div class="game-inner">
+						<div class="hand" id="hand">
+							<img src="images/hand-zhu.png" id="zhuzi" class="zhuzi" alt="" srcset="">
+							<div class="circle"></div>
+							<div class="hang-img" id="hang_img">
+								<img class="gou-left" src="images/gou-left.png" alt="" srcset="">
+								<img class="gou-right" src="images/gou-right.png" alt="" srcset="">
+							</div>
+
+						</div>
+						<div class="xiaonuo-imgs" id="xiaonuo">
+							<img src="images/xiaonuo1.png" prize="1" class="xn1" alt="" srcset="">
+							<img src="images/xiaonuo2.png" prize="2" class="xn2" alt="" srcset="">
+							<img src="images/xiaonuo3.png" prize="3" class="xn3" alt="" srcset="">
+							<img src="images/xiaonuo4.png" prize="4" class="xn4" alt="" srcset="">
+							<img src="images/xiaonuo5.png" prize="5" class="xn5" alt="" srcset="">
+							<img src="images/xiaonuo6.png" prize="6" class="xn6" alt="" srcset="">
+							<img src="images/xiaonuo7.png" prize="7" class="xn7" alt="" srcset="">
+						</div>
+					</div>
+					<div class="bottom">
+						<div class="start">
+							<img src="images/start-btn.png" alt="">
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<!-- 挑战成功弹窗 -->
+		<div id="success-pup" class="success-layer" style="display: none;">
+			<div class="layer-close success-pup-close"></div>
+			<div class="success-layer-cont">
+				<div class="layer-cont-main">
+					<div class="top-img">
+						<img src="images/t-success.png" alt="" srcset="">
+					</div>
+					<div class="result">您的成绩为：<span class="result-score"></span></div>
+					<div class="result-tip">成绩须达到30分才能抽奖</div>
+					<div class="result-table">
+						<div class="bese">
+							<p>最佳成绩</p>
+							<span id="beseScore">30分</span>
+						</div>
+
+						<div class="opportunity">
+							<p>抽奖机会</p>
+							<span id="lotteryTimes">1次</span>
+						</div>
+					</div>
+					<div class="layer-btn success-btn">
+						立即抽奖
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 挑战失败弹窗 -->
+		<div id="fail-pup" class="fail-layer" style="display: none;">
+			<div class="layer-close fail-pup-close"></div>
+			<div class="fail-layer-cont">
+				<div class="layer-cont-main">
+					<div class="top-img">
+						<img src="images/t-fail.png" alt="" srcset="">
+					</div>
+					<div class="result">您的成绩为：<span class="result-score"></span></div>
+					<div class="result-tip">成绩须达到30分才能抽奖</div>
+					<div class="result-table">
+						<div class="bese">
+							<p>最佳成绩</p>
+							<span id="beseScore">30分</span>
+						</div>
+
+						<div class="opportunity">
+							<p>抽奖机会</p>
+							<span id="lotteryTimes">1次</span>
+						</div>
+					</div>
+					<div class="layer-btn fail-btn">
+						再玩一次
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 中奖弹窗 微信红包-->
+		<div id="lottery-pup" class="lottery-layer" style="display: none;">
+			<div class="layer-close lottery-pup-close"></div>
+			<div class="lottery-layer-cont">
+				<div class="layer-cont-main">
+					<div class="top-img">
+						<img src="images/t-lottery.png" alt="">
+					</div>
+					<div class="lottery-text">微信红包</div>
+					<div class="lottery-img">
+						<img id="lottery-pic" src="images/wx-hb.png" alt="">
+						<p class="lottery-p">
+							<span id="money" class="lottery-p-span">1.88</span>
+							<span style="padding-left: .1rem;">元</span>
+						</p>
+					</div>
+					<div class="dhm-cont">
+						<p class="dhm-t">您的兑换码</p>
+						<div class="dhm-text-bg">
+							<span id="cardPwd" class="clipboard-text">DfslfdnDK5d2</span>
+							<a class="dhm-btn" id="copy-cpwd" data-clipboard-text="DfslfdnDK5d2">复制兑换码</a>
+						</div>
+					</div>
+					<div class="dj-info">
+						<span class="t">兑换流程：</span><br />
+						<span class="i">1.关注招商信诺微信公众号</span><br />
+						<span class="i">2.回复“我要兑奖”，点击链接按流程兑换即可</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 中奖弹窗 其他奖品-->
+		<div id="other-pup" class="other-layer" style="display: none;">
+			<div class="layer-close lottery-pup-close"></div>
+			<div class="lottery-layer-cont">
+				<div class="layer-cont-main">
+					<div class="top-img">
+						<img src="images/t-lottery.png" alt="">
+					</div>
+					<div class="lottery-text">《招商信诺交通宝意外伤害保险（互联网专属）》</div>
+					<div class="lottery-img">
+						<!-- <img id="lottery-pic" src="images/jtb-img.png" alt=""> -->
+						<img id="lottery-pic" src="images/lihe-img.png" alt="">
+					</div>
+					<a href="javascript:;" class="layer-btn other-btn">立即领取</a>
+				</div>
+			</div>
+		</div>
+
+		<script src="/tool/jquery-2.0.3.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/layer.js"></script>
+		<script src="js/page.js"></script> 
+		<script>
+			var win_w = document.body.clientWidth,
+				timeMax = 30, // 游戏时间
+				time = 0,
+				geme_times = 2, // 游戏次数
+				is_gemes = false, // 是否在抓取中
+				game_timer = null,
+				grab_timer = null, // 爪子水平移动计时器 
+				socre = 0, // 分数
+				grab_width = getStyle(hand, 'width'), // 爪子宽度
+				tran_width = win_w - grab_width, // 爪子水平移动距离
+				move_width = tran_width, // 标记爪子水平移动距离
+				move_time = 2.5, // 爪子水平移动时间
+				grab_dir = 1, // 爪子水平移动方向              
+				grab_pos = 0,// 爪子水平移动偏移量          
+				sensiti = window.devicePixelRatio > 2 ? 0.3 : -0.1; // 勾到物品灵活度，值在0-1之间，越大灵活度越小
+			var prizeRanges = {
+				'xn1': { min: calculateLeftValue('.xn1'), max: calculateWidthValue('.xn1') },
+				'xn2': { min: calculateLeftValue('.xn2'), max: calculateWidthValue('.xn2') },
+				'xn3': { min: calculateLeftValue('.xn3'), max: calculateWidthValue('.xn3') },
+				'xn4': { min: calculateLeftValue('.xn4'), max: calculateWidthValue('.xn4') },
+				'xn5': { min: calculateLeftValue('.xn5'), max: calculateWidthValue('.xn5') },
+				'xn6': { min: calculateLeftValue('.xn6'), max: calculateWidthValue('.xn6') },
+				'xn7': { min: calculateLeftValue('.xn7'), max: calculateWidthValue('.xn7') },
+			};
+
+			// 获取元素距离
+			function calculateLeftValue(selector) {
+				var element = $(selector)[0];
+				if (element) {
+					var leftValue = element.getBoundingClientRect().left / 100 + sensiti;
+					return leftValue;
+				}
+			}
+
+			// 获取元素距离
+			function calculateWidthValue(selector) {
+				var element = $(selector)[0];
+				if (element) {
+					var rect = element.getBoundingClientRect();
+					var centerValue = (rect.left + rect.width / 2) / 100;
+					return centerValue;
+				}
+			}
+
+			// 爪子左右移动   
+			function grabMove() {
+				var handRect = hand.getBoundingClientRect();
+				var current_left = handRect.left;
+				var remaining_distance = grab_dir ? tran_width - current_left : current_left;
+				var remaining_time = (remaining_distance / tran_width) * move_time;
+				move_width = grab_dir ? tran_width : 0;
+				hand.style.cssText = css('transition: ' + remaining_time + 's linear;') + css('transform: translate3d(' + move_width + 'px, 0, 0);');
+				grab_dir = grab_dir ? 0 : 1;
+				clearTimeout(grab_timer);
+				grab_timer = setTimeout(arguments.callee, remaining_time * 1000);
+			}
+			setTimeout(grabMove, 4);  
+		</script>
+
+		<script>
+			// 其他中奖弹窗
+			function otherPup(content, text = "", img = "") {
+				$("#other-pup .lottery-text").html(text)
+				$("#other-pup #lottery-pic").attr('images/' + img + '.png')
+				layerIndex = layer.open({
+					type: 1,
+					title: false,
+					skin: "layui-nobg", //样式类名
+					shift: 2,
+					area: ["100%", "auto"],
+					scrollbar: false,
+					shade: 0.7,
+					closeBtn: 0,
+					shadeClose: false, //开启遮罩关闭
+					move: false, //禁止拖拽
+					content: content,
+				});
+			}
+
+			$('.start').click(function () {
+				// pagePup($("#fail-pup")); // 挑战失败  
+				// pagePup($("#success-pup")); // 挑战失败  
+				// pagePup($("#lottery-pup")); // 中奖微信红包
+				// otherPup($("#other-pup"),'保温杯','lihe-img'); // 其他奖品
+				// otherPup($("#other-pup"),'《招商信诺交通宝意外伤害保险（互联网专属）》','jtb-img'); // 其他奖品
+
+				if (geme_times > 0) {
+					startClaw(); // 开始抓取 
+					gameCountdown(); // 游戏倒计时
+				} else {
+					layer.msg('您今日机会已用完！')
+				}
+			})
+
+			// 挑战失败 在玩一次 模拟数据
+			$("#fail-pup .fail-btn").click(function () {
+				timeMax = 30;
+				$(".time").text(timeMax + 's'); // 显示倒计时
+				socre = 0;  
+				$('.socre').text(socre)
+				layer.closeAll();
+				if (geme_times > 0) {
+					// startClaw(); // 开始抓取   
+					gameCountdown(); // 游戏倒计时
+				} else {
+					layer.msg('您今日机会已用完！')
+				}
+			})
+
+			// 挑战成功 立即抽奖 模拟数据
+			$("#success-pup .success-btn").click(function () {
+				geme_times -= 1
+				timeMax = 30
+				layer.closeAll();
+				// gameCountdown(); // 游戏倒计时 
+				let index = parseInt(Math.random() * 3) + 1;
+				console.log(index);
+				if (index == 1) {
+					pagePup($("#lottery-pup")); // 中奖微信红包
+				} else if (index == 2) {
+					otherPup($("#other-pup"), '保温杯', 'lihe-img'); // 其他奖品
+				} else {
+					otherPup($("#other-pup"), '《招商信诺交通宝意外伤害保险（互联网专属）》', 'jtb-img');
+				}
+			})
+
+			// 倒计时
+			function gameCountdown() {
+				clearInterval(game_timer); // 清除之前的计时器
+				time = timeMax; // 重置时间
+				game_timer = setInterval(function () {
+					time--;
+					timeMax = time;
+					$(".time").text(time + 's'); // 显示倒计时
+					if (time <= 0) {
+						clearInterval(game_timer); // 倒计时结束时清除计时器
+						geme_times -= 1
+						if (socre >= 30) {
+							pagePup($("#success-pup"));
+						} else {
+							pagePup($("#fail-pup"));
+						}
+					}
+				}, 1000);
+			}
+
+			// 抓取物品动画、
+			function startClaw() {
+				if (is_gemes) {
+					return
+				}  
+				is_gemes = true
+				clearTimeout(grab_timer);
+				grab_dir = grab_dir ? 0 : 1;
+				grab_pos = hand.getBoundingClientRect().left;
+				$('#hand').css('transform', 'translate3d(' + grab_pos + 'px, 0, 0)'); // 保持当前位置
+				// 夹子巡航动作
+				function clawMove() {
+					if (is_gemes) {
+						noCatchAnimate()
+						setTimeout(function () {
+							// 检查是否碰撞
+							var collidedItem = checkCollision();
+							if (collidedItem == 'xn1' || collidedItem == 'xn2' || collidedItem == 'xn3') {
+								$('.zhuzi').css({
+									'transition': 'height 1s ease',
+									'height': '5.58rem' // 你可以根据需要调整这个高度
+								});
+							} else {
+								$('.zhuzi').css({
+									'transition': 'height 1.5s ease',
+									'height': '11.1rem' // 你可以根据需要调整这个高度
+								});
+							}
+							if (collidedItem) { // 抓到物品 
+								var grabbedItem = document.querySelector('.' + collidedItem);
+								// 抓取到的物品动画  
+								setTimeout(function () {
+									$('.gou-left').css({
+										'transition': 'transform 0.5s linear',
+										'transform': 'translateX(-1.5rem) translateY(0.06rem) rotate(-5deg)' // 返回原位
+									});
+									$('.gou-right').css({
+										'transition': 'transform 0.5s linear',
+										'transform': 'translateX(0.43rem) translateY(0.08rem) rotate(5deg)' // 返回原位
+									});
+
+									// 设置隐藏和抓到的物品定位到钩子处
+									if (grabbedItem) {
+										grabbedItem.style.cssText += 'opacity: 0; transition: .3s linear;';
+										var cloneItem = grabbedItem.cloneNode(true);
+										cloneItem.style.cssText += 'opacity: 1; transition: .3s linear;';
+										$('#hand').append(cloneItem);
+										cloneItem.style.cssText += 'position: absolute; left: 50%; bottom:-3rem;width: 2.56rem; height:3rem;transform: translate(-50%, 0);';
+									}
+
+									setTimeout(function () {
+										$('.zhuzi').css({
+											'transition': 'height 1.5s ease',
+											'height': '.85rem' // 你可以根据需要调整这个高度
+										});
+										
+										// 抓到物品后删除该物品
+										setTimeout(function () {
+											if (grabbedItem) {
+												socre += 10
+												$('.socre').text(socre)
+												cloneItem.remove()
+												grabbedItem.style.cssText += 'display:none; transition: .3s ease;';
+												grabbedItem.remove()
+											}
+											clearTimeout(grab_timer);
+											setTimeout(grabMove, 4);
+											noCatchAnimate()
+											is_gemes = false
+										}, 1300)
+									}, 500);
+								}, 1000);
+
+							} else { // 没有抓到物品
+								setTimeout(function () {
+									$('.zhuzi').css({
+										'transition': 'height 1.5s ease',
+										'height': '.85rem'
+									});
+									noCatchAnimate()
+								}, 1000);
+
+								setTimeout(function () {
+									clearTimeout(grab_timer);
+									setTimeout(grabMove, 4);
+									is_gemes = false
+								}, 2500)
+							}
+						}, 10);
+					}
+				}
+				clawMove(); // 默认开始移动
+			}
+
+			// 检测是否抓到物品，发返回物品名称 
+			function checkCollision() {
+				var handRect = document.getElementById('zhuzi').getBoundingClientRect();
+				var winWidth = window.innerWidth;
+				var handCenterX = (handRect.left) / 100;
+				for (var prize in prizeRanges) {
+					var range = prizeRanges[prize];
+					if (handCenterX >= range.min && handCenterX <= range.max) {
+						return prize;
+					}
+				}
+				return null;
+			}
+
+			// 恢复钩子初始状态
+			function noCatchAnimate() {
+				$('.gou-left').css({
+					'transition': 'transform 0.5s linear',
+					'transform': 'translateX(-1.71rem) translateY(0rem) rotate(0deg)' // 调整到合适的位置
+				});
+				$('.gou-right').css({
+					'transition': 'transform 0.5s linear',
+					'transform': 'translateX(0.64rem) translateY(0.02rem) rotate(0deg)' // 调整到合适的位置
+				});
+			}
+		</script>
+
+		<!--统计代码 START-->
+		<script src="/public/js/CountGW_m.js"></script>
+		<!--统计代码 END-->
+	</body>
+
+</html>

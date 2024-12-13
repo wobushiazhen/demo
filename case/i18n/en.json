@@ -1,0 +1,21 @@
+{
+    "welcome": "Welcome to our app!",
+    "nav_links": [
+        "Home",
+        "Personal Insurance",
+        "Group Insurance",
+        "Customer Service",
+        "About Us",
+        "Information Disclosure"
+    ],  
+    "path1": "home",   
+    "path2": "insurance products",
+    "path3": "Fuxiang Health Major Disease Insurance Product Plan",
+    "detail_h1": "Fuxiang Health Major Disease Insurance Product Plan",
+    "detail_title_ul": [
+        "Maximum compensation 4 times (severe illness+mild illness)",
+        "National Medical Resource Enjoyment",
+        "160 diseases guaranteed for life"
+    ], 
+    "change_language": "Change Language"
+}   

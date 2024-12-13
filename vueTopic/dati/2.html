@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>参与活动赢大奖</title>
+		<link rel="stylesheet" href="/public/css/reset.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+		<meta name="hotcss" content="max-width=750" />
+		<meta name="hotcss" content="design-width=750" />
+		<script src="/tool/vue2.6.12.js"></script>
+		<script src="js/hotcss.js"></script>
+		<script src="/tool/jquery-2.0.3.min.js"></script>
+		<style></style>
+	</head>
+
+	<body>
+		<div id="app">
+			<section class="m-page" id="page2">
+				<div class="inner-page">
+					<div class="dt-top">
+						<img src="images/icon-tx.jpg" class="icon-tx" alt="" srcset="">
+						<span class="grade">00</span>
+						<div class="dt-tiemr">
+							<span>时间</span>
+							<p class="countdown" ref="countdown">{{countdown}}.{{countdown1}}</p>
+						</div>
+						<img src="images/icon-yinyue.png" class="icon-yy" alt="">
+					</div>
+					<div class="dt-content" v-for="item,index in needData" :key="item.id" v-if="index+1 == currentT">
+						<div class="schedule">第{{currentT}}题 共10题</div>
+						<div class="subject">{{item.name}}</div>
+						<ul class="option-ul" @click.stop="onSelect(index,$event)" ref="refOptionUl">
+							<li class="option-item" v-for="i,inx in item.tk" :data-answer="i.answer">{{i.text}} <span
+									v-show="answerTips" class="answer-tips">{{i.answer=='true'?'√':'×'}}</span>
+							</li>
+						</ul>
+						<div class="dt-next see-btn" @click="onNext(currentT)">{{currentT==10 ? '提交':'下一题'}}</div>
+					</div>
+				</div>
+			</section>
+
+			<div class="pup-bg" @click="pup_bg=!pup_bg" :style="{display: pup_bg ? 'block' : 'none' }">
+				<!-- pup1 -->
+				<div class="pup-box pup-bottom" ref="pup1" @click.stop>
+					<div class="pup-content">
+						<p class="my-answer">我的答案：{{selectedAnswer}}</p>
+						<p class="yes-answer">正确答案：{{trueAnswer}}</p>
+						<div class="info">
+							<p>解析：</p>
+							<p>{{answerExplain}}</p>
+						</div>
+						<button class="see-btn" @click="pup_bg=!pup_bg">我知道了</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="pup-bg" :style="{display: !down&&!down1 ? 'block' : 'none' }">
+				<!-- pup1 -->
+				<div class="pup-box pup-center" style="width: 11.5rem;" ref="pup2">
+					<div class="pup-content">
+						<div class="topimg">
+							<img src="images/successCupImg.png" alt="" srcset="">
+							<div class="result-box">
+								<p class="score">您的成绩为：{{score}} 分</p>
+								<p class="time">达到该成绩用时：0秒</p>
+								<p class="beat">成功击败99%的用户</p>
+								<div class="result-table">
+									<div class="result-td">
+										<span>最佳成绩</span>
+										<p><span>999</span>分</p>
+									</div>
+									<div class="result-td">
+										<span>最佳用时</span>
+										<p><span>0</span>秒</p>
+									</div>
+									<div class="result-td">
+										<span>最佳排名</span>
+										<p>NO.<span>1</span></p>
+									</div>
+								</div>
+								<span>今天还有5次机会</span>
+							</div>
+							<button class="again-btn">再试一次</button>
+						</div>
+					</div>
+					<div class="other-btns">
+						<a class="phb" href="javascript:;">排行榜</a>
+						<a class="back-btn" href="1.html">返回首页</a>
+						<a class="follow" href="javascript:;">关注我们</a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</body>
+	<link href="js/questionData.json">
+	</link>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/layui.js"></script>
+	<script>
+		var app = new Vue({
+			el: "#app",
+			data() {
+				return {
+					pup_bg: false,
+					showResult: false,
+					trueAnswer: '',
+					selectedAnswer: '',
+					answerExplain: '',
+					listData: [],
+					needData: [],
+					currentT: 1,
+					score: 0,
+					answerTips: false,
+					countdownTime: 59,
+					countdownTime1: 5900,
+					down: true,
+					down1: true,
+					stop: true
+				};
+			},
+			created() {
+				fetch('/vueTopic/dati/js/questionData.json').then(response => response.json())
+					.then(data => {
+						this.listData = data.subject
+						this.changeSubject()
+					})
+			},
+			methods: {
+				onSelect(index, e) {
+					if (e.target.localName == 'li') {
+						this.answerTips = true
+						e.target.parentElement.querySelectorAll('li').forEach(element => {
+							element.classList.remove('active')
+						});
+						e.target.classList.add('active')
+						const trueOption = e.target.parentElement.querySelector('li[data-answer="true"]');
+						this.trueAnswer = trueOption.textContent;
+						this.selectedAnswer = e.target.textContent
+						this.answerExplain = this.needData[index].explain
+						if (e.target.dataset.answer == 'false') {
+							this.pup_bg = !this.pup_bg
+						}
+					}
+				},
+
+				closePup(currentT) {
+					this.pup_bg = !this.pup_bg
+				},
+
+				onNext(currentT) {
+					console.log(currentT);
+
+					const optionSelected = this.$refs.refOptionUl[0].querySelector('.active');
+
+					if (!optionSelected) {
+						layer.msg('请选择答案')
+						return;
+					}
+					this.answerTips = false
+					if (currentT < 10) {
+						this.currentT = currentT + 1
+					}
+					if (currentT == 10 && this.countdownTime != '0') {
+						this.down = false
+						this.down1 = false
+						this.stop = false
+					}
+
+					if (this.$refs.refOptionUl[0].querySelector('.active').dataset.answer == 'true') {
+						this.score += 10
+					}
+				},
+
+				changeSubject() {
+					const randomElements = [];
+					// 获取十个随机元素
+					for (let i = 0; i < 10; i++) {
+						const randomIndex = Math.floor(Math.random() * this.listData.length);
+						const randomElement = this.listData.splice(randomIndex, 1)[0]; // 从数组中移除随机元素
+						randomElements.push(randomElement);
+					}
+					this.needData = randomElements
+				},
+
+
+			},
+			mounted() {
+				// this.countdown()
+			},
+			computed: {
+				countdown() {
+					if (this.stop) {
+						setTimeout(() => {
+							if (this.countdownTime > 0) {
+								this.countdownTime -= 1;
+							} else {
+								this.down = false
+							}
+						}, 1000)
+						return Math.floor(this.countdownTime / 1).toString()
+					}
+				},
+
+				countdown1() {
+					if (this.stop) {
+						setTimeout(() => {
+							if (this.countdownTime1 > 100) {
+								this.countdownTime1 -= 1;
+							} else {
+								this.down1 = false
+							}
+						}, 10)
+						return (this.countdownTime1 % 100).toString().padStart(2, '0')
+					}
+
+				}
+			}
+		});
+	</script>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>百度地图调用</title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+        <style>
+            .step {
+                min-width: 1200px;
+                width: 1200px;
+                margin: 20px auto;
+            }
+
+            .step .t {
+                font-weight: bold;
+                line-height: 38px;
+                font-size: 20px;
+            }
+
+            .step .layui-elem-quote {
+                padding: 6px 15px;
+            }
+
+            .baiduMap {
+                margin-top: 30px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="step">
+            <p class="t">百度地图使用步骤</p>
+            <blockquote class="layui-elem-quote">
+                <a href="https://lbsyun.baidu.com/index.php" target="_blank" class="link-a">1、百度地图开放平台官网注册并成为开发者</a>
+            </blockquote>
+            <blockquote class="layui-elem-quote">
+                <a href="https://lbsyun.baidu.com/apiconsole/key#/home" target="_blank"
+                    class="link-a">2、控制台我的应用创建应用并配置白名单</a>
+            </blockquote>
+            <blockquote class="layui-elem-quote">
+                <a href="https://lbsyun.baidu.com/apiconsole/key#/home" target="_blank"
+                    class="link-a">3、获取访问应用AK（秘钥）</a>
+            </blockquote>
+            <blockquote class="layui-elem-quote">
+                <a href="https://lbs.baidu.com/index.php?title=jspopularGL/guide/helloworld" target="_blank"
+                    class="link-a">4、查看官网api并使用</a>
+            </blockquote>
+            <div class="baiduMap">
+                <div id="container" style="width: 600px; height: 480px;"></div>
+            </div>
+        </div>
+        <script src="https://api.map.baidu.com/api?v=1.0&&type=webgl&ak=unUv6xVEcjiasWn747f38yCZupIWxOfT"></script>
+        <script>
+            var map = new BMapGL.Map("container", {});
+            var point = new BMapGL.Point(110.91, 23.38);
+            map.centerAndZoom(point, 15);
+            map.enableScrollWheelZoom();  // 允许鼠标滚轮缩放
+            var scaleCtrl = new BMapGL.ScaleControl();  // 添加比例尺控件
+            map.addControl(scaleCtrl);
+            var zoomCtrl = new BMapGL.ZoomControl();  // 添加缩放控件
+            map.addControl(zoomCtrl);
+            var cityCtrl = new BMapGL.CityListControl();  // 添加城市列表控件
+            map.addControl(cityCtrl);
+            var marker = new BMapGL.Marker(point);  
+            map.addOverlay(marker)            
+            var opts = {
+                width: 200,     // 信息窗口宽度
+                height: 100,     // 信息窗口高度
+                title: "az你干嘛", // 信息窗口标题  
+                message: "" 
+            }
+            var infoWindow = new BMapGL.InfoWindow("地址：广西壮族自治区梧州市登俊路57号", opts);  // 创建信息窗口对象 
+            marker.addEventListener("click", function () { map.openInfoWindow(infoWindow, point); })
+        </script>
+    </body>
+
+</html>

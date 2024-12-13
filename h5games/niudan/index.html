@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <title>健康星期四-招商信诺</title>
+    <meta name="keywords" content="招商信诺" />
+    <meta name="description" content="参与打卡赢好礼" />
+    <link href="/favicon.ico" rel="Shortcut Icon" />
+    <link href="/favicon.ico" rel="Bookmark" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="hotcss" content="max-width=750">
+    <meta name="hotcss" content="design-width=750">
+    <link rel="stylesheet" type="text/css" href="/public/css/m_base.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="css/games_animate.css">
+    <script src="js/hotcss.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  </head>  
+
+  <body>
+    <div class="m-page" style="background: #E3F9FE;">
+      <div class="games-wrap">
+        <div class="top">
+          <a href="javascript:history.back();">
+            <img class="icon-back" src="images/icon-back.png" alt="">
+          </a>
+        </div>
+        <div class="niudan">
+          <div class="nd-cont">
+            <img class="nd-w1 n1" src="images/nd-hb1.png" alt="">
+            <img class="nd-w1 n2" src="images/nd-hb2.png" alt="">
+            <img class="nd-w1 n3" src="images/nd-jmq.png" alt="">
+            <img class="nd-w1 n4" src="images/nd-nm1.png" alt="">
+            <img class="nd-w1 n5" src="images/nd-nm2.png" alt="">
+            <img class="nd-w1 n6" src="images/nd-nm3.png" alt="">
+            <img class="nd-w1 n7" src="images/nd-nm4.png" alt="">
+            <img class="nd-w1 n8" src="images/nd-nm5.png" alt="">
+            <img class="nd-w1 n9" src="images/nd-pbq.png" alt="">
+            <img class="nd-w1 n10" src="images/nd-sheng1.png" alt="">
+            <img class="nd-w1 n11" src="images/nd-sheng2.png" alt="">
+            <img class="nd-w1 n12" src="images/nd-xj.png" alt="">
+            <img class="nd-w1 n13" src="images/nd-ydk.png" alt="">
+            <img class="nd-w1 n14" src="images/nd-zq1.png" alt="">
+            <img class="nd-w1 n15" src="images/nd-zq2.png" alt="">
+          </div>
+        </div>
+        <div class="hand">
+          <img src="images/game-handImg.png" alt="">
+        </div>
+
+        <div class="game-fixed-r">
+          <img src="images/fixed-wdjp.png">
+        </div>
+
+        <div class="game-btn"></div>
+      </div>
+    </div>
+
+    <!-- 通用提示 弹窗 -->
+    <div id="normal-pup" class="normal-layer" style="display: none;">
+      <div class="normal-layer-cont">
+        <div class="normal-top"></div>
+        <div class="cont-main">
+          <p class="normal-tips">
+            打卡成功后，每周四才可参与抽奖。</p>
+          <button class="layer-close normal-btn">知道了</button>
+        </div>
+      </div>
+      <div class="layer-close normal-close"></div>
+    </div>
+
+    <!-- 我的奖品 弹窗 -->
+    <div id="prize-pup" class="prize-layer" style="display: none;">
+      <div class="layer-close prize-close"></div>
+      <div class="prize-layer-cont">
+        <div class="prize-top">
+          <h3>我的奖品</h3>
+        </div>
+        <div class="cont-main">
+          <div class="prize-iframe">
+            <iframe id="piframe" src="../../campaign/20240715xnjkx/prize.html" frameborder="0"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 中奖 弹窗 -->
+    <div id="lottery-pup" class="lottery-layer" style="display: none;">
+      <div class="lottery-layer-cont" style="display: none;">
+        <div class="layer-close lottery-close"></div>
+        <div class="cont-main">
+          <p class="lottery-tips">深层按摩筋膜枪</p>
+          <button class="lottery-btn">立即领取</button>
+        </div> 
+      </div>     
+      <div class="view-gif" style="display: none;"> 
+        <img src="">
+      </div>    
+    </div> 
+
+    <script src="/public/js/layer/layer.js"></script>
+    <script src="js/com.js"></script>
+    <script>
+      let times = 12 // 游戏次数
+      $(".game-btn").html("立即抽奖(" + times + ")")
+      // 通用弹窗 
+      function normal(text) {
+        if (text) {
+          $("#normal-pup .normal-tips").text(text)
+        }
+        layer.open({ 
+          type: 1,
+          title: false,
+          skin: "layui-nobg", //样式类名
+          shift: 2,
+          area: ["100%", "auto"],
+          scrollbar: false,
+          shade: 0.7, 
+          closeBtn: 0,
+          shadeClose: true, //开启遮罩关闭
+          move: false, //禁止拖拽 
+          content: $("#normal-pup"),
+        });
+      }
+
+      // 中奖弹窗 
+      function lottery(prizeName) {
+        var gifSrc = "images/nd-open.gif"; 
+        $("#lottery-pup .view-gif img").attr("src", gifSrc + "?t=" + new Date().getTime()); // 强加载
+        $("#lottery-pup .view-gif").show(); 
+        $("#lottery-pup .lottery-layer-cont").hide();
+        setTimeout(function () {
+          $("#lottery-pup .view-gif").hide(); 
+          $("#lottery-pup .lottery-layer-cont").show();
+        }, 1500);  
+        
+        
+        if (prizeName) {
+          $("#normal-pup .normal-tips").text(prizeName);
+        }
+        layer.open({
+          type: 1,
+          title: false,
+          skin: "layui-nobg", //样式类名
+          shift: 2,
+          area: ["100%", "auto"],
+          scrollbar: false,
+          shade: 0.7,
+          closeBtn: 0,
+          shadeClose: true, //开启遮罩关闭 
+          move: false, //禁止拖拽 
+          content: $("#lottery-pup"),
+        });
+      } 
+
+      // 添加扭蛋动画
+      function addAnimationClasses() {
+        for (let i = 1; i <= 15; i++) {
+          $(`.n${i}`).addClass(`weiyi_${i}`);
+        }
+      }
+
+      // 删除扭蛋动画
+      function removeAnimationClasses() {
+        for (let i = 1; i <= 15; i++) {
+          $(`.n${i}`).removeClass(`weiyi_${i}`);
+        }
+      }
+
+      let canClick = true; // 点击禁用
+      $(".game-btn").click(function () {
+        if (canClick) {
+          if (times > 0) {
+            times -= 1
+            canClick = false;
+            $(".game-btn").html("立即抽奖(" + times + ")")
+            addAnimationClasses()
+            setTimeout(function () {
+              // 模拟测试 
+              let index = parseInt(Math.random() * 2)
+              if (index == 0) {
+                lottery('诺米币888')
+              }
+              if (index == 1) {
+                lottery('深层按摩筋膜枪')
+              }
+              removeAnimationClasses()
+              setTimeout(function () {
+                canClick = true; 
+              }, 1500) // 在延长1500毫秒后再可以再次点击,防重复点
+            }, 2000) 
+          } else {
+            normal('您没有抽奖机会')
+          }
+        }
+      })
+
+      //我的奖品弹窗
+      $(".game-fixed-r").click(function () {
+        layer.open({
+          type: 1,
+          title: false,
+          skin: "layui-html1", //样式类名
+          shift: 2,
+          area: ["100%", "auto"],
+          scrollbar: false,
+          shade: 0.7,
+          closeBtn: 0,
+          offset: "rb",
+          shadeClose: true, //开启遮罩关闭
+          move: false, //禁止拖拽
+          content: $("#prize-pup"),
+        });
+      })
+
+    </script>
+    <!--统计代码 START-->
+    <script src="/public/js/CountGW_m.js"></script>
+    <!--统计代码 END-->
+  </body>
+
+</html>

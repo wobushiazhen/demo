@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>swiper</title>
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no,viewport-fit=cover">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="stylesheet" type="text/css" href="/public/css/reset.css">
+        <link rel="stylesheet" href="https://mcignacmb.cchh8.com/campaign/20231114njhy2/css/swiper.css">
+        <style>
+            .swiper {
+                overflow: hidden;
+            }
+
+            .swiper .swiper-slide {
+                height: 100%;
+            } 
+
+            ::-webkit-scrollbar {
+                width: 0px;
+            }  
+            
+            .pagecont img {
+                height: auto;
+                display: block;
+                margin: 0 auto;
+                width: auto;
+            }  
+
+            .swiper .swiper-wrapper .swiper-slide {
+                height: 100%;
+                overflow: auto;
+            } 
+        </style>
+    </head>
+
+    <body>
+        <div class="m-page">
+            <div class="pagecont">
+                <div class="swiper">
+                    <div class="swiper-wrapper" style="height: 100vh;">
+                        <div class="swiper-slide" style="background-color: rgb(226, 235, 248);">
+                            <img src="/material/img/bg1.jpg" style="width: 100%; height: 100%;object-fit: cover;"
+                                srcset="">
+                        </div>
+                        <div class="swiper-slide" style="background-color: rgb(18, 29, 60);">
+                            <img src="/material/img/bg2.jpg" srcset="">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="/material/img/bg3.jpg" srcset="">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="/material/img/bg4.jpg" srcset="">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="/material/img/bg5.jpg" srcset="">
+                        </div>
+                        <div class="swiper-slide" style="background-color: rgb(18, 29, 60);">
+                            <img src="/material/img/bg6.jpg" srcset="">
+                        </div>
+                        <div class="swiper-slide" style="background-color: rgb(235, 245, 250);">
+                            <img src="/material/img/bg7.jpg" srcset="">
+                        </div>
+                        <div class="swiper-slide" style="background-color: rgb(22, 37, 73);">
+                            <img src="/material/img/bg8.jpg" srcset="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>   
+ 
+        <script src="swiper-bundle.min.js"></script>
+        <script>
+            // window.onload =  function () {
+            var Swiper = new Swiper('.swiper', {
+                direction: 'vertical', // 垂直切换选项   
+            })
+            console.log(Swiper.slides);
+            console.log(Swiper);
+            var startScroll, touchStart, touchCurrent;
+            Swiper.slides.on('touchstart', function (e) {
+                startScroll = this.scrollTop;
+                touchStart = e.targetTouches[0].pageY;
+            }, true);
+            Swiper.slides.on('touchmove', function (e) {
+                touchCurrent = e.targetTouches[0].pageY;
+                var touchesDiff = touchCurrent - touchStart;   //判断滑动方向
+                var slide = this;
+                var onlyScrolling =
+                    (slide.scrollHeight > slide.offsetHeight) && //如果滑动到存在滚动条的结构时，此判断为true
+                    (
+                        (touchesDiff < 0 && startScroll === 0) || //从顶部滚动到底部
+                        (touchesDiff > 0 && startScroll === (slide.scrollHeight - slide.offsetHeight)) || //从底部滚动到顶部
+                        (startScroll > 0 && startScroll < (slide.scrollHeight - slide.offsetHeight)) //从中间开始
+                    );
+                if (onlyScrolling) {
+                    e.stopPropagation();    //终止事件在传播过程的捕获、目标处理或起泡阶段进一步传播。
+                }
+            }, true);
+
+        </script>
+
+    </body>
+
+</html>

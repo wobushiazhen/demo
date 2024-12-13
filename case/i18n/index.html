@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://www.cignacmb.com/public/css/ui_base.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://www.cignacmb.com/public/css/detail.css">
+        <script src="https://www.cignacmb.com/public/js/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <div class="app">
+            <div class="cc-header">
+                <ul class="header-ul">
+                    <li><a href="#">首页</a></li>
+                    <li><a href="#">个人保险</a></li>
+                    <li><a href="#">团体保险</a></li>
+                    <li><a href="#">客户服务</a></li>
+                    <li><a href="#">关于我们</a></li>
+                    <li><a href="#">信息披露</a></li>
+                </ul>
+                <div class="header-cz">
+                    <input type="text">
+                    <div class="header-i18n">
+                        <button type="button" class="chinese">中文</button>
+                        <button type="button" class="english">EN</button>
+                    </div>
+                </div>
+            </div>
+            <div class="cc-banner">
+
+            </div>
+            <div class="cc-wrap">
+                <div class="pc-crumb">
+                    <a target="_blank" title="返回首页" class="path1" href="/">首页</a><span> > </span>
+                    <a href="/insurance/" class="path2" target="_blank" otype="chanpin" otitle="网上商城" oarea="面包屑"
+                        onclick="changeHref(this)">保险产品</a><span>
+                        > </span><span class="path3">福享康健重大疾病保险产品计划</span>
+                </div>
+                <div class="detail-top-right">
+                    <div class="myform" id="measure">
+                        <div class="detail-title">
+                            <h1>福享康健重大疾病保险产品计划</h1>
+                            <ul class="ys-ul clearfix">
+                                <li>最高赔付4次（重疾+轻症）</li>
+                                <li>全国医疗资源畅享</li>
+                                <li>160种疾病保障终身</li>
+                            </ul>
+                        </div>
+                        <form action="" method="post" id="myform" name="myform" target="myiframe">
+                            <ul class="form-ul">
+                                <li class="form-item">
+                                    <label class="form-label">您的性别</label>
+                                    <div class="form-inner form-radio" id="gender" tip="请选择您的性别">
+                                        <div class="radio-box">
+                                            <span class="radio-bg radio-bg2">男</span>
+                                            <input name="gender" value="男" type="radio" checked="checked">
+                                        </div>
+                                        <div class="radio-box">
+                                            <span class="radio-bg">女</span>
+                                            <input name="gender" value="女" type="radio">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="form-item">
+                                    <label class="form-label">您的年龄</label>
+                                    <div class="form-inner form-text form-date">
+                                        <input type="tel" id="age" name="age" class="age" placeholder="28天-55周岁"
+                                            value="" tip="请输入您的年龄" onkeyup="this.value=this.value.replace(/\D/g,'')"
+                                            maxlength="2" />
+                                    </div>
+                                </li>
+                                <li class="form-item">
+                                    <label class="form-label">保障金额</label>
+                                    <div class="form-inner form-radio">
+                                        <input type="hidden" value="50-60万" id="remark1" name="remark1" tip="请选择保障金额">
+                                        <ul class="radio-ul">
+                                            <li class="current">50-60万</li>
+                                            <li>30-50万</li>
+                                            <li>10-30万</li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="form-item">
+                                    <label class="form-label">交费年限</label>
+                                    <div class="form-inner form-radio">
+                                        <input type="hidden" value="30年" id="remark2" name="remark2" tip="请选择交费年限">
+                                        <ul class="radio-ul">
+                                            <li class="current">30年</li>
+                                            <li>20年</li>
+                                            <li>10年</li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="form-item">
+                                    <label class="form-label">您的姓名</label>
+                                    <div class="form-inner form-text">
+                                        <input name="name" id="name" type="text" placeholder="您的信息将被严格保密" tip="请填写您的姓名">
+                                    </div>
+                                </li>
+                                <li class="form-item">
+                                    <label class="form-label">您的电话</label>
+                                    <div class="form-inner form-text">
+                                        <input name="mobile" id="mobile" type="tel" placeholder="用于接收精准报价"
+                                            onkeyup="this.value=this.value.replace(/\D/g,'')" maxlength="11" value=""
+                                            tip="请填写您的电话">
+                                    </div>
+                                </li>
+                                <li class="form-item form-btn">
+                                    <div class="form-inner">
+                                        <button type="button" id="submit_form" class="btn-form">立即预约</button>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="state-html">
+                                <input name='clause' type='checkbox' class='clause check-state' id="clause" value=''
+                                    tip="请确认个人信息使用授权">
+                                <label for="clause"><span class="i-checkbox"></span>本人同意接受</label>
+                                <a href="javascript:void(0)" class="state-btn" data-text="stateProduct"
+                                    style="color: #3aaaf8;">《个人信息使用授权》</a>
+                                <label for="clause">及招商信诺后续致电联系进行保险服务</label>
+                            </div>
+
+                            <!--必填-->
+                            <input id="iqId" name="iqId" type="hidden" value="SEOPC" />
+                            <input id="campaignCode" name="campaignCode" type="hidden" value="1GZ3BSEOPCRDDFXKJ" />
+                            <!--sem-->
+                            <input id="product" name="product" type="hidden" value="SEOPC" />
+                            <input id="ChannelID" name="ChannelID" type="hidden" value="5" />
+                            <input id="subUrl" type="hidden" value="/campaign/hd/success.html" />
+                            <!--选填-->
+                            <input id="url" name="url" type="hidden" value="" />
+                            <input id="IsToLG" name="IsToLG" type="hidden" value="1" />
+                            <input id="searchWords" name="searchWords" type="hidden" value="" />
+                            <input id="remark" name="remark" type="hidden" value="预约咨询福享康健重疾险" />
+                            <input type="hidden" id="wtmcId" name="wtmcId" value="" />
+                        </form>
+                        <iframe id="myiframe" name="myiframe" style="display: none;"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="cc-footer">
+
+            </div>
+            <div class="cc-aside">
+
+            </div>
+        </div>
+        <script>
+            let currentLanguage = {};
+            function loadLanguageFile(language) {
+                console.log(language);
+                return fetch(`./${language}.json`)
+                    .then((response) => response.json())
+                    .catch((error) => {
+                        console.error(`Failed to load ${language} language file: ${error}`);
+                        return {};
+                    });
+            }
+
+            function setLanguage(language) {
+                loadLanguageFile(language)
+                    .then((languageData) => {
+                        currentLanguage = languageData;
+                        updateUI();
+                    });
+            }
+
+            function updateUI() {
+                // 更新其他页面元素的文本，例如导航链接和按钮
+                const navLinks = document.querySelectorAll('.header-ul li a');
+                navLinks.forEach((link, index) => {
+                    link.textContent = currentLanguage.nav_links[index];
+                });
+                $('.pc-crumb .path1').text(currentLanguage.path1)
+                $('.pc-crumb .path2').text(currentLanguage.path2)
+                $('.pc-crumb .path3').text(currentLanguage.path3)
+                $('.detail-top-right .detail-title h1') .text(currentLanguage.detail_h1)   
+                let detailUls = document.querySelectorAll('.detail-title ul li')     
+                console.log(detailUls); 
+                if (detailUls) {
+                    detailUls.forEach((li, index) => {
+                        li.textContent = currentLanguage.detail_title_ul[index];
+                    });
+                }
+            }
+
+            // 根据用户首选语言自动设置默认语言
+            const userLanguage = navigator.language || navigator.userLanguage;
+            setLanguage(userLanguage);
+
+            const changeToChines = document.querySelector('.chinese');
+            if (changeToChines) {
+                changeToChines.addEventListener('click', () => {
+                    setLanguage('zh-CN');
+                });
+            }
+            const changeToEnglish = document.querySelector('.english');
+            if (changeToEnglish) {
+                changeToEnglish.addEventListener('click', () => {
+                    setLanguage('en');
+                });
+            }
+        </script>
+    </body>
+ 
+</html>

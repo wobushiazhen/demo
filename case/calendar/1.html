@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>日历组件</title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+        <link rel="stylesheet" href="style.css">
+        <style>
+            /* .pup { 
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0; 
+                width: 100%;
+                height: 100%;
+                z-index: 99;
+                background: #0000007b;
+            } */
+
+            .pup-box {  
+                width: 25%;   
+                position: fixed; 
+                /* bottom: 0;  */      
+                right: 21.7%;  
+                background: #efefef;
+                overflow-y: hidden;
+            } 
+
+            .pup-ul {
+                display: flex; 
+                justify-content: center;
+                flex-direction: column; 
+                height: 300px; 
+                align-items: center;
+                /* overflow-y: auto; */
+                flex-wrap: wrap; 
+                margin: 30px 10px; 
+                border-top: 1px solid #ccc;
+                border-bottom: 1px solid #ccc;
+            }
+
+            .pup-ul li {  
+                /* width: 20%;  */
+                text-align: center;
+                cursor: pointer;
+                padding: 18px 5px;
+                border-bottom: 1px solid #ccc;
+            }
+ 
+            .pup-ul li:last-child {
+                border-bottom: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="step">
+            <div class="left">
+
+            </div>
+            <div class="right">
+                <div class="year-box">
+                    <div class="date"></div>
+                    <div class="year"></div>
+                </div>
+                <div class="month-box">
+                    <div class="month-pre">
+                        <!-- 上一个 -->
+                        <img src="images/you2-icon.png" alt="" srcset="">
+                    </div>
+                    <ul class="month-ul">
+
+                    </ul>
+                    <div class="month-next">
+                        <img src="images/you2-icon.png" alt="" srcset="">
+                    </div>
+                </div>
+                <div class="week-box">
+                    <ul class="week-ul">
+
+                    </ul>
+                </div>
+                <div class="day-box">
+                    <ul class="day-ul">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="pup">
+            <div class="pup-box">
+                <ul class="pup-ul">
+                    <li>2024</li>
+                    <li>2024</li>
+                    <li>2024</li>
+                    <li>2024</li>
+                    <li>2024</li>
+                    <li>2024</li>
+                    <li>2024</li>
+                    <li>2024</li>
+                    <li>2024</li>
+                    <li>2024</li>
+                    <li>2024</li>
+                    <li>2024</li>
+                    <li>2024</li>
+                    <li>2024</li>
+                    <li>2024</li>
+                </ul>
+                </ul>
+                </ul>
+            </div>
+        </div>
+        <script>
+            var weeks = ['一', '二', '三', '四', '五', '六', '七']
+            var month_olympic = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            var month_normal = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            var month_name = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+
+            var year_box = $('.year-box')
+            var month_box = $('.month-box .month-ul')
+            var week_box = $('.week-box .week-ul')
+            var day_box = $('.day-box .day-ul')
+
+            var date = new Date()
+            var year_now = date.getFullYear()
+            var month_now = date.getMonth() + 1
+            var week_now = date.getDay()
+            var day_now = date.getDate()
+
+            // 确定一个月的天数
+            function getDaysInMonth(month, year) {
+                return new Date(year, month, 0).getDate();
+            }
+
+            // 月份
+            let dom = ''
+            for (var i = 1; i <= month_name.length; i++) {
+                if (i == month_now) {
+                    dom += '<li class="active" data-month=' + month_name[i - 1] + '>' + month_name[i - 1] + '</li>\n'
+                } else {
+                    dom += '<li data-month=' + month_name[i - 1] + '>' + month_name[i - 1] + '</li>\n'
+                }
+            }
+            month_box.append(dom)
+
+            // 星期
+            let dom1 = ''
+            for (var i = 1; i <= weeks.length; i++) {
+                if (i == week_now) {
+                    dom1 += '<li class="active" data-week=' + weeks[i - 1] + '>' + weeks[i - 1] + '</li>\n'
+                } else {
+                    dom1 += '<li data-week=' + weeks[i - 1] + '>' + weeks[i - 1] + '</li>\n'
+                }
+            }
+            week_box.append(dom1)
+
+            // 日
+            let dom2 = ''
+            var daysInMonth = getDaysInMonth(month_now, year_now);
+            for (var i = 1; i <= daysInMonth; i++) {
+                if (i == day_now) {
+                    dom2 += '<li class="active" data-day=' + i + '>' + i + '</li>\n'
+                } else {
+                    dom2 += '<li data-day=' + i + '>' + i + '</li>\n'
+                }
+            }
+            day_box.append(dom2)
+
+            // 更新日期显示函数
+            function updateDateDisplay() {
+                $('.date').text(`${year_now}年${month_name[month_now - 1]}月${day_now < 10 ? '0' + day_now : day_now}日`);
+            }
+
+            $('.year').text(year_now)
+
+            $('.date').text(updateDateDisplay());
+            setInterval(updateDateDisplay, 1000);
+
+            // 点击日子   
+            $('.day-ul').on('click', 'li', function () {
+                var selectedDay = $(this).data('day');
+                day_now = selectedDay;
+                $(".day-ul li").removeClass('active')
+                $(".day-ul li").eq(day_now - 1).addClass('active')
+                updateDateDisplay();
+            });
+
+            $(".month-ul li").click(function () {
+                var selectedMonth = $(this).data('month');
+                month_now = parseInt(selectedMonth);
+                var daysInMonth = getDaysInMonth(month_now, year_now);
+                day_box.empty();
+                let dom2 = ''
+                for (var i = 1; i <= daysInMonth; i++) {
+                    if (i == day_now) {
+                        dom2 += '<li class="active" data-day=' + i + '>' + i + '</li>\n'
+                    } else {
+                        dom2 += '<li data-day=' + i + '>' + i + '</li>\n'
+                    }
+                }
+                day_box.append(dom2);
+                updateDateDisplay();
+            });
+
+            $(".month-pre").click(function () {
+                if (month_now > 1) {
+                    month_now = month_now - 1
+                }
+                $(".month-ul li").removeClass('active')
+                $(".month-ul li").eq(month_now - 1).addClass('active')
+                var daysInMonth = getDaysInMonth(month_now, year_now);
+                day_box.empty();
+                let dom2 = ''
+                for (var i = 1; i <= daysInMonth; i++) {
+                    if (i == day_now) {
+                        dom2 += '<li class="active" data-day=' + i + '>' + i + '</li>\n'
+                    } else {
+                        dom2 += '<li data-day=' + i + '>' + i + '</li>\n'
+                    }
+                }
+                day_box.append(dom2);
+                updateDateDisplay();
+            })
+
+            $(".month-next").click(function () {
+                if (month_now < 12) {
+                    month_now = month_now + 1
+                }
+                $(".month-ul li").removeClass('active')
+                $(".month-ul li").eq(month_now - 1).addClass('active')
+                var daysInMonth = getDaysInMonth(month_now, year_now);
+                day_box.empty();
+                let dom2 = ''
+                for (var i = 1; i <= daysInMonth; i++) {
+                    if (i == day_now) {
+                        dom2 += '<li class="active" data-day=' + i + '>' + i + '</li>\n'
+                    } else {
+                        dom2 += '<li data-day=' + i + '>' + i + '</li>\n'
+                    }
+                }
+                day_box.append(dom2);
+                updateDateDisplay();
+            })
+
+            // 点击月份和星期的处理
+            $('.right li').click(function () {
+                $(this).siblings().removeClass('active')
+                $(this).addClass('active')
+            })
+
+
+
+
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>强大的表格</title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+        <style>
+            input[type=checkbox] {
+                outline: none;
+                -webkit-appearance: none;
+                /*去除默认样式*/
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                -o-appearance: none;
+                -ms-appearance: none;
+            }
+
+            #diagonal::after {
+                position: absolute;
+                content: '';
+                width: calc(100% + 10px);
+                /* 添加10px作为缓冲 */
+                height: 1px;
+                background: #000;
+                left: -5px;
+                /* 负值使得对角线超出th的范围 */
+                top: 50%;
+                transform: rotateZ(-45deg);
+            }
+
+            th#diagonal {
+                position: relative;
+                padding: 5px;
+                z-index: 1;
+                overflow: visible;
+                /* 确保对角线超出th的范围 */
+            }
+
+            span.name,
+            span.birthdate {
+                position: absolute;
+            }
+
+            span.name {
+                left: 10px;
+                /* 调整姓名文本的位置 */
+            }
+
+            span.birthdate {
+                right: 10px;
+                /* 调整出生日期文本的位置 */
+            }
+
+            #diagonal {
+                position: relative;
+                width: 300px;     
+            }  
+
+            #diagonal:before {
+                content: "";
+                position: absolute;
+                width: 0;
+                height: 100%;
+                border-left: 2px solid black;
+                /* You can adjust the thickness and color of the#diagonal line */
+                top: 0;
+                left: 50%;
+                z-index: 1;
+            }
+
+            #diagonal-content {
+                position: relative;
+                padding-left: 10px;
+                /* Adjust as needed */
+                transform: translateX(-50%);
+                display: inline-block;
+                z-index: 2;
+            }
+
+            /* Optional: To make the table responsive */
+            .tableMain {
+                width: 100%;    
+            }
+
+            .tableMain th,
+            .tableMain td {
+                word-break: break-word;
+                max-width: 200px;
+                /* Adjust max-width as needed */
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="main">
+            <div class="tableWrap">
+                <div class="table">
+                    <div class="thead">
+                        <div class="thead-l">
+                            <button class="h-btn">获取数据</button>
+                        </div>
+                        <div class="thead-r">
+                            <button class="h-btn">获取数据</button>
+                        </div>
+                    </div>
+                    <table class="tableMain" border="1px">
+                        <tr>
+                            <th class="first_th">
+                                <input type="checkbox" id="first_th_icon" class="th_icon first_th_icon"></input>
+                            </th>
+                            <th>ID</th>
+                            <th id="diagonal">
+                                <span class="name">姓11名</span>
+                                <span class="birthdate">出生4534sdgassga日期</span>
+                            </th>
+                            <th>性别</th>
+                            <th>出生年月</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="th_icon"></input>
+                            </td>
+                            <td title="公共阿里阿莎爱国喀什噶好阿里嘎杀戮光环">公共阿里阿莎爱国喀什噶好阿里嘎杀戮光环</td>
+                            <td>把杀手</td>
+                            <td>把杀手</td>
+                            <td>把杀手</td>
+                            <td class="last_td"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="th_icon"></input></td>
+                            <td title="公共阿里阿莎爱国喀什噶好阿里嘎杀戮光环">公共阿里阿莎爱国喀什噶好阿里嘎杀戮光环</td>
+                            <td>把杀手</td>
+                            <td>把杀asgasgasgagaasg11g手</td>
+                            <td>把杀手</td>
+                            <td class="last_td">把杀手</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="th_icon"></input></td>
+                            <td title="公共阿里阿莎爱国喀什噶好阿里嘎杀戮光环">公共阿里阿莎爱国喀什噶好阿里嘎杀戮光环</td>
+                            <td>把杀手</td>
+                            <td>把杀手</td>
+                            <td>把杀手</td>
+                            <td cl>把杀手</td>
+                        </tr>
+                    </table>
+                    <div class="tfoot">
+                        <div class="tfoot-l">
+                            <button class="h-btn">获取数据</button>
+                        </div>
+                        <div class="tfoot-r">
+                            <button class="h-btn">获取数asg1ggg据</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $('.tableMain .first_th .first_th_icon').click(function () {
+                if (!$(this).is(':checked')) {
+                    console.log(11);
+                    $(this).prop("checked", false);
+                    $('.tableMain td .th_icon').prop("checked", false);
+                } else {
+                    $(this).prop("checked", true);
+                    $('.tableMain td .th_icon').prop("checked", true);
+                }
+                console.log($(this).get(0).checked)
+            })
+
+            $('.tableMain td .th_icon').click(function () {
+                if (!$(this).is(':checked')) {
+                    $(this).prop("checked", false);
+                } else {
+                    $(this).prop("checked", true);
+                }
+                if ($('.tableMain td .th_icon:checked').length == 3) {
+                    $('.tableMain .first_th .first_th_icon').prop("checked", true);
+                } else {
+                    $('.tableMain .first_th .first_th_icon').prop("checked", false);
+                }
+            })
+        </script>
+    </body>
+
+</html>

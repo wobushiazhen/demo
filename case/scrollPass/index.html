@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>滚动穿透</title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            html,
+            body {
+                height: 100%;
+
+            }
+
+            .main-contain {
+                width: 100%;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                font-size: 20px;
+                text-align: center;
+                line-height: 45px;
+            }
+
+            .main-contain,
+            .container p {
+                height: 75px;
+                line-height: 75px;
+                background: #db6666;
+                color: #fff;
+            }
+
+            .main-contain p:nth-child(2n) {
+                background: #158ad3;
+            }
+
+            .fiexd-box {
+                display: none;
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                z-index: 999;
+                background: #000000a0;
+
+            }
+
+            .fixed {
+                width: 100%;
+                height: 100%;
+
+            }
+
+            button {
+                display: block;
+                border: none;
+                height: 60px;
+                text-align: center;
+                line-height: 60px;
+                background: #21c4b9;
+            }
+
+            .container {
+                position: relative;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 300px;
+                background: #000;
+                height: 400px;
+                z-index: 9999;  
+                overflow-y: auto;
+                /* pointer-events: none */
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="main-contain">
+            <p>11111</p>
+            <p>11111</p>
+            <p>11111</p>
+            <p>11111</p>
+            <p>11111</p>
+            <p>11111</p>
+            <button id="mainbtn">打开</button>
+            <p>11111</p>
+            <p>11111</p>
+            <p>11111</p>
+            <p>11111</p>
+            <p>11111</p>
+            <p>11111</p>
+            <p>11111</p>
+            <p>11111</p>
+            <p>11111</p>
+        </div>
+        <div class="fiexd-box">
+            <div class="fixed">
+                <div class="container">
+                    <p>222222</p>
+                    <p>222222</p>
+                    <p>222222</p>
+                    <p>222222</p>
+                    <p>222222</p>
+                    <p>222222</p>
+                    <p>222222</p>
+                </div> 
+            </div> 
+        </div>    
+
+        <script>
+            $(document).ready(function () {
+                const container = document.querySelector('.container');
+                const fixed = document.querySelector('.fixed');
+                // 滚动穿透的方法很简单,就是在打开弹出框的时候把body设置不滚动，在关闭弹出后把body设置滚动
+                $('#mainbtn').click(function (e) {
+                    $('.fiexd-box').show();                     
+                    document.body.style.overflow = 'hidden';
+                }); 
+                fixed.addEventListener('click', function () {
+                    $('.fiexd-box').hide();     
+                    document.body.style.overflow = '';
+                });
+                // container.addEventListener('click', function (e) {
+                //     e.stopPropagation();
+                // });
+            });
+        </script>
+    </body>
+
+</html>

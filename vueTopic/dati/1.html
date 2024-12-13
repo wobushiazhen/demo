@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title></title>
+		<link rel="stylesheet" href="/public/css/reset.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<meta name="hotcss" content="max-width=750" />
+		<meta name="hotcss" content="design-width=750" />
+		<script src="/tool/vue2.6.12.js"></script>
+		<script src="js/hotcss.js"></script>
+		<script src="/tool/jquery-2.0.3.min.js"></script>
+		<style></style>
+	</head>
+
+	<body>
+		<div id="app">
+			<section id="loadwarp" class="load" v-if="isLoading">
+				<div class="loader_wp">
+					<i class="loader"></i><i class="progress">0%</i>
+				</div>
+			</section>
+			<section class="m-page">
+				<div class="inner-page">
+					<div class="title relcenter">
+						<img src="images/title.png" class="title-img" alt="" />
+					</div>
+					<div class="start-btn relcenter" @click="onStart">
+						<img src="images/page-btn.png" alt="" />
+					</div>
+					<div class="action-tip relcenter">
+						<p>已有<span>0</span>人参加活动</p>
+						<p>您今天还有<span>5</span>次参加机会</p>
+					</div>
+					<div class="activity relcenter">
+						<div class="top">
+							<img src="images/icon-shu.png" class="icon1" alt="">
+							<h5>活动说明</h5>
+						</div>
+						<div class="item">
+							<div class="item-title1">
+								活动时间
+							</div>
+							<p>2024年05月07日 10:22 - 2024年05月14日 10:22</p>
+						</div>
+						<div class="item">
+							<div class="item-title1">
+								主办单位
+							</div>
+							<p>-</p>
+						</div>
+						<div class="item">
+							<div class="item-title1">
+								活动规则
+							</div>
+							<p>每日每日有3次机会</p>
+						</div>
+						<div class="item">
+							<div class="item-title1">
+								活动规则
+							</div>
+							<p>每日每日有3次机会</p>
+						</div>
+					</div>
+				</div>
+				<div class="fixed-bottom">
+					<div class="btns">
+						<button class="create-ac">免费创建抽奖活动</button>
+						<button class="follow-us">关注我们</button>
+					</div>
+				</div>
+			</section>
+
+			<div class="pup-bg" @click.stop="pupBgClose" :style="{display: pup_bg ? 'block' : 'none' }">
+				<!-- pup1 -->
+				<div class="pup-hide pup-box pup-center" ref="pup1" @click.stop>
+					<div class="pup-content">
+						<p>阿嘎开始噶事老客户给厉害卡了杀戮光环厉害了更好了哈更厉害</p>
+						<button @click="openPup2()">点击</button>
+					</div>
+					<div class="close-icon close-bottom" @click="closePup()">
+						<img src="/material/img/close.png" alt="" srcset="">
+					</div>
+				</div>
+
+				<!-- pup2 -->
+				<div class="pup-hide pup-box pup-center" ref="pup2" @click.stop>
+					<div class="pup-content">
+						<p>阿嘎开始噶事老客户给厉害卡了杀戮光环厉害了更好了哈更厉害222222</p>
+						<p>阿嘎开始噶事老客户给厉害卡了杀戮光环厉害了更好了哈更厉害222222</p>
+						<p>阿嘎开始噶事老客户给厉害卡了杀戮光环厉害了更好了哈更厉害222222</p>
+					</div>
+					<div class="close-icon close-bottom" @click="$refs.pup2.classList.add('pup-hide')">
+						<img src="/material/img/close.png" alt="" srcset="">
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</body>
+	<script src="js/mixins.js"></script>
+	<script>
+		var app = new Vue({
+			el: "#app",
+			mixins: [exampleMixin],
+			data() {
+				return {
+					progress: "0%", // 页面加载数据
+					isLoading: true, // 页面加载数据
+					pup_bg: true
+				};   
+			},
+			created() {
+				this.pageLoding(); // 初始化页面时启用页面加载]
+			},
+			mixins: [exampleMixin], 
+			methods: {
+				pageLoding() {
+					let img = new Image();
+					var count = 0;
+					img.src = "images/bg.png";
+					img.onload = () => {
+						this.progress = "99%";
+						setTimeout(() => {
+							count = 1;
+							this.loading();
+						}, 1000);
+					};
+
+					this.loading = () => {
+						if (count === 1) {
+							this.progress = "100%";
+							this.isLoading = false;
+						}
+					};
+				},
+
+				onStart() {
+					// this.$nextTick(() => {
+					// 	this.pup_bg = !this.pup_bg;
+					// 	if (this.pup_bg) {
+					// 		document.body.setAttribute('style', 'overflow:hidden');
+					// 	} else {
+					// 		document.body.removeAttribute('style', 'overflow:hidden');
+					// 	}
+					// });  
+					// this.pagePup("pup1") 
+					window.location.href = '2.html'
+				},
+
+				closePup() {
+					this.pup_bg = !this.pup_bg
+					
+				},
+
+				pupBgClose(e) { 
+					this.pup_bg = !this.pup_bg
+				},
+
+				pagePup(content, index) {
+					if (!content) return false;
+					var pupBoxes = document.querySelectorAll('.pup-box');
+					pupBoxes.forEach(function (i, inx) {
+						console.log(inx);
+						i.classList.add('pup-hide');
+						if (index == (inx + 1)) {
+							i.classList.remove('pup-hide'); 
+						}
+					});
+					this.$refs[content].classList.remove('pup-hide');
+				},
+				openPup2() {
+					this.pagePup("pup1", 2)
+				}
+			},
+			computed: {
+				pupBgchange() {
+					return
+				}
+			}
+		});
+	</script>
+
+</html>

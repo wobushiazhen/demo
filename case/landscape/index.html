@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="/public/css/pc_base.css">
+        <script src="https://www.cignacmb.com/public/js/jquery.min.js"></script>
+
+    </head>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-contain {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-size: 20px;
+            text-align: center;
+            line-height: 45px;
+            overflow: hidden;
+        }
+
+        .c-header {
+            background: #f0f0f0;
+            height: 58px;
+        }
+
+        .c-cont {
+            width: 100%;
+            flex: 1;
+            display: flex;
+            background: #004cb6;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .section1 {
+            width: 34%;
+            background: #000;
+        }
+
+        .section2 {
+            width: 66%;
+            background: #001058;
+        }
+
+        .c-footer {
+            height: 100px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.509);
+        }
+
+        .box-block {
+            height: 100%;
+            padding: 50px 20px;
+            overflow-y: auto;
+        }
+
+        .box-block .item {
+            width: 100%;
+            height: 400px;
+            background: #456423;
+        }
+
+        .box-block .item:nth-child(2n) {
+            background: #fff;
+        }
+    </style>
+
+    <body>
+        <section id="loadwarp" class="load">
+            <div class="loader_wp">
+                <i class="loader"></i>
+                <div class="progress">0%</div>
+            </div>
+        </section>
+        <div class="main-contain" id="main-contain">
+
+            <div class="c-header">
+                <input type="text" class="headerSearch" oninput="onSearch()" placeholder="您想找什么？">
+            </div>
+            <div class="c-cont">
+                <div class="section1">
+                    左边
+                </div>
+                <div class="section2">
+                    <div class="box-block">
+                        <div class="item">
+                            <p>1</p>
+                        </div>
+                        <div class="item">
+                            <p>2</p>
+                        </div>
+                        <div class="item">
+                            <p>3</p>
+                        </div>
+                        <div class="item">
+                            <p>4</p>
+                        </div>
+                        <div class="item">
+                            <p>5</p>
+                        </div>
+                        <div class="item">
+                            <p>6</p>
+                        </div>
+                        <div class="item">
+                            <p>7</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="c-footer">
+                底部
+            </div>
+        </div>  
+        <script src="/public/js/common.js"></script>
+        <script>
+
+            function _debounce(func, delay = 500) {
+                let timeoutId;
+                return function (...args) {
+                    clearTimeout(timeoutId);
+                    timeoutId = setTimeout(() => {
+                        func.apply(this, args);
+                    }, delay);
+                };
+            }
+
+            function _throttle(func, delay) {
+                let timeoutId;
+                return function (...args) {
+                    clearTimeout(timeoutId);
+                    timeoutId = setTimeout(() => {
+                        func.apply(this, args);
+                    }, delay);
+                };
+            }
+
+            function throttle(func, delay) {
+                let lastCallTime = 0;
+                return function (...args) {
+                    const currentTime = Date.now();
+
+                    if (currentTime - lastCallTime >= delay) {
+                        func.apply(this, args);
+                        lastCallTime = currentTime;
+                    }
+                };
+            } 
+
+            function niganma() {
+                let clientWidth = document.documentElement.clientWidth;
+                let clientHeight = document.documentElement.clientHeight;
+                const orientation = (window.innerWidth > window.innerHeight) ? "landscape" : "portrait";
+                let wrapper = document.getElementById("main-contain");
+                let style = "";
+                if (orientation === 'portrait') {
+                    style += "width:100%";
+                    style += "height:100%;";
+                    style += "-webkit-transform: rotate(0); transform: rotate(0);";
+                    style += "-webkit-transform-origin: 0 0;";
+                    style += "transform-origin: 0 0;";
+                } else {
+                    style += "width:" + clientHeight + "px;";// 注意旋转后的宽高切换
+                    style += "height:" + clientWidth + "px;";
+                    style += "-webkit-transform: rotate(90deg); transform: rotate(90deg);";
+                    // 注意旋转中点的处理
+                    style += "-webkit-transform-origin: " + clientWidth / 2 + "px " + clientWidth / 2 + "px;";
+                    style += "transform-origin: " + clientWidth / 2 + "px " + clientWidth / 2 + "px;";
+                }
+                wrapper.style.cssText = style;
+            }
+
+            window.onload = niganma
+            window.addEventListener("resize", _debounce(niganma));
+            const throttleSearch = _throttle(getText, 1000);
+            function onSearch(e) {
+                const value = document.querySelector('.headerSearch').value
+                throttleSearch()
+            }
+
+            function getText() {
+                let a = 1;
+                console.log('一秒钟请求一次');
+            }
+
+            function isScrollAtBottom() {
+                const element = document.querySelector('.box-block');
+                const scrollTop = element.scrollTop;
+                const windowHeight = element.clientHeight;
+                const scrollHeight = element.scrollHeight;
+                console.log(scrollTop, '元素到顶部的距离');
+                console.log(windowHeight, '窗口高度');
+                console.log(scrollHeight, '滚动高度');
+                // 判断是否滑动到底部   
+                return scrollTop + windowHeight + 200 >= scrollHeight;
+            }
+
+            let element1 = document.querySelector('.box-block');
+            let throttle1 = _throttle(addItem, 1500);
+            element1.addEventListener('scroll', function () {
+                if (isScrollAtBottom()) {
+                    throttle1()
+                    // 发请求步骤
+                }
+            }) 
+
+            function addItem() {
+                $('.box-block').append('<div class="item"><p>7</p></div>')
+            }
+
+        </script>
+    </body>
+
+</html>

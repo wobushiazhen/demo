@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Loading</title>
+        <link rel="stylesheet" href="/public/css/reset.css">
+    </head>
+    <style>
+        body {
+            height: 100%;
+        }
+
+        .page {
+            width: 449px;
+            height: 100vh;
+        }
+    </style>
+
+    <body>
+        <div class="page">
+            <canvas id="myCanvas"></canvas>
+        </div>
+
+        <script>
+            let canvas = document.getElementById("myCanvas");
+            let ctx = canvas.getContext('2d');
+            var bg = new Image();
+            bg.src = "/material/img/bg1.jpg";
+
+            function resizeCanvas() {
+                const container = document.querySelector('.page');
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+
+                bg.onload = function () {
+                    ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+                    // drawCircle(99);
+                    animateCircle();
+                };
+            };
+
+            let currentAngle = 0;
+            const targetValue = 99;
+            const targetAngle = 100;
+            let animationFrameId;
+
+            function animateCircle() {
+                if (currentAngle < targetAngle) {
+                    currentAngle += Math.PI / 1; // 每次增加1度
+                    drawCircle(currentAngle);
+                    animationFrameId = requestAnimationFrame(animateCircle);
+                } else {
+                    cancelAnimationFrame(animationFrameId);
+                }
+            }
+
+            function drawCircle(value) {
+                const endAngle = (value / 100) * 2 * Math.PI;
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                // 创建线性渐变
+                const gradient = ctx.createLinearGradient(canvas.width / 2 - 120, canvas.width / 2, canvas.width / 2 + 40, canvas.width / 2);
+                gradient.addColorStop(0, 'red');
+                gradient.addColorStop(0.8, 'green');
+                gradient.addColorStop(1, 'blue');
+
+                ctx.strokeStyle = gradient;
+                ctx.arc(canvas.width / 2 - 40, canvas.width / 2, 80, 0, endAngle);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.lineWidth = 5;
+                ctx.lineCap = 'round';
+                ctx.moveTo(10, 100); // 起点
+                ctx.lineTo(100, 100);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.lineWidth = 20;
+                ctx.moveTo(160, 160);
+                ctx.lineTo(300, 160);
+                ctx.lineTo(300, 300);
+                ctx.lineJoin = 'round';
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(canvas.width / 2 - 1, 0);
+                ctx.lineTo(canvas.width / 2, canvas.height);
+                ctx.strokeStyle = 'pink';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+
+                ctx.beginPath();
+                ctx.moveTo(60, 440);
+                ctx.lineTo(160, 440);
+                ctx.strokeStyle = 'pink';
+                ctx.lineWidth = 20;
+                ctx.stroke();
+
+
+                if (currentAngle < targetAngle) { 
+                    currentAngle += 1; // 每次增加1度
+                    // animationFrameId = requestAnimationFrame(animateCircle);
+                } else {  
+                    // cancelAnimationFrame(animationFrameId);
+                }                                             
+                ctx.font = '28px 宋体'; 
+                ctx.fillText(currentAngle+'%', 90, 472);
+ 
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            document.addEventListener('DOMContentLoaded', resizeCanvas);
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>摸鱼软件</title>
+        <meta name="description" content="摸鱼软件，等你哦" />
+        <meta name="keywords" content="摸鱼软件，等你哦" />
+        <link rel="stylesheet" href="/public/css/reset.css">
+        <link rel="stylesheet" href="/public/css/pc_base.css">
+        <link rel="stylesheet" href="/public/iconfont/iconfont.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+        <script src="/tool/jquery-2.0.3.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/layui.js"></script>
+        <style>
+            .layui-anim.layui-anim-upbit {
+                max-height: 600px;
+            }
+
+            .title {
+                font-size: 20px;
+                margin-bottom: 2px;
+            }
+
+            .sub-t {
+                color: #7a7a7a;
+                margin-bottom: 12px;
+            }
+
+            .iv-form {
+                max-width: 1000px;
+                margin-bottom: 30px;
+            }
+
+            .iv-form .layui-input {
+                margin-bottom: 20px;
+            }
+
+            .layui-btn-primary:hover {
+                border-color: #333;
+            }
+        </style>
+    </head>
+
+    <body>
+        <script src="/tool/axios.min.js"></script>
+        <script src="/public/js/common.js"></script>
+
+        <div class="main">
+            <div class="pc-wrap">
+                <!-- 写入代码 -->
+                <link rel="stylesheet" href="/catchFish/style.css">
+                <div class="cf-cont">
+                    <p class="title">interview</p>
+                    <p class="sub-t">写一遍，记一遍</p>
+
+                    <div class="">
+                        <div class="item">
+                            <div class="iv-form layui-form" style="position: relative;">
+                                <a href="./showtable.html"
+                                    style="float: right;position: absolute; right: 0; top: -40px;">我的学习记录</a>
+                                <input type="text" name="subject" placeholder="题目" class="layui-input">
+                                <select id="subList" name="subList" lay-filter="demo-select-filter">
+                                    <option value="">选择题目所属类型</option>
+                                </select>
+                                <textarea style="margin-bottom: 18px;" name="subUnderstand" placeholder="您的理解"
+                                    class="layui-textarea"></textarea>
+                                <select id="level" name="level" lay-filter="demo-select-filter">
+                                    <option value="">掌握程度</option>
+                                    <option value="熟悉">熟悉</option>
+                                    <option value="掌握">掌握</option>
+                                    <option value="了解">了解</option>
+                                    <option value="较差">较差</option>
+                                </select>
+                            </div>
+                            <button class="layui-btn layui-btn-primary" id="submit-iv">我要提交</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script> $('.pc-wrap').prepend(c_header('test'))</script>
+            <script>
+                function submitIv(parmas) {
+                    requestAxios('POST', parmas, baseUrl + '/interview/add_question').then(res => {
+                        if (res) {
+                            layer.open({
+                                type: 1,
+                                content: '<div style="padding: 16px;">添加成功，今天也要好好学习哦！</div>'
+                            });
+                            setTimeout(function () {
+                                history.go(0)
+                            }, 1500) 
+                        } 
+                    })
+                }
+
+                $('#submit-iv').click(function () {
+                    console.log($("select[name='level']").val());
+                    if ($("input[name='subject']").val() == '') {
+                        layer.msg('请输入完整题目', { icon: 0 }, function () { });
+                        return false;
+                    }
+                    if ($("select[name='subList']").val() == '') {
+                        layer.msg('选择题目所属类型', { icon: 0 }, function () { });
+                        return false;
+                    }
+
+                    if ($("textarea[name='subUnderstand']").val() == '') {
+                        layer.msg('请填空您对题目的理解', { icon: 0 }, function () { });
+                        return false;
+                    }
+
+                    if ($("select[name='level']").val() == '') {
+                        layer.msg('请选择您对该题目的理解深度', { icon: 0 }, function () { });
+                        return false;
+                    }
+
+                    var parmas = {
+                        subname: $("input[name='subject']").val(),
+                        subtype: $("select[name='subList']").val(),
+                        subUnderstand: $("textarea[name='subUnderstand']").val(),
+                        subtime: new Date().toLocaleString("zh-CN", { timeZone: "Asia/Shanghai", hour12: false }).replace(/\//g, '-').replace(' ', 'T'),
+                        level: $("select[name='level']").val()
+                    }
+                    submitIv(parmas)
+                }) 
+            </script>
+        </div>
+    </body>
+
+    <script>
+        window.subList = ['优化与安全', '计算机网络', '浏览器', 'html', 'html5', 'css', 'css3', 'javascript', 'typescript', 'vue2', 'vue3', 'react', 'photoshop', 'git', 'nodeJs', '大屏可视化', '小程序', 'webpack/vite', 'axios/ajax', '插件库/组件库', '微前端', '低代码/无代码平台', 'rust', 'nestJS', '桌面端electron', '其他'];
+        var optionhtml = ''
+        subList.forEach(i => {
+            optionhtml += '<option value="' + i + '">' + i + '</option>'
+        })
+
+        console.log(subList.splice(2,4));
+        $("#subList").append(optionhtml)
+    </script>
+
+</html>
