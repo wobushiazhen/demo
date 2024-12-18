@@ -117,6 +117,10 @@ function getUrlString(name) {
   return str.get(name);
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3bb6de7580b37ebbc297f074cb15f6ec10ed5e44
 // 获取图像验证码
 function getCaptchaImg() {
   return (async () => {
