@@ -270,10 +270,10 @@
         function onGetCaptchaImg() {
             getCaptchaImg().then((captcha) => {
                 $("#maincaptcha").empty()
-                if (captcha != '') {
+                if (captcha != '') {   
                     sessionStorage.setItem('createAricle_captcha_CODE', JSON.stringify(captcha.text));
-                    $("#maincaptcha").append(captcha)
-                }
+                    $("#maincaptcha").append(captcha.data)
+                } 
             })
         }
 

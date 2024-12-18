@@ -1,0 +1,19 @@
+{
+    "name": "一个简单的插件",
+    "description": "Demo Extension to change background color!",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": ["storage"],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/icon16.gif"
+        } 
+    },   
+    "icons": {
+        "16": "images/icon16.gif"
+    }
+}

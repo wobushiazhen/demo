@@ -13,7 +13,10 @@
 
 <body>
     <div class="editor">
-
+        <div class="editor-title">
+            标题
+        </div>   
+        <p>内容</p>
     </div>
     <div class="submit-editor">
         <button type="button" id="submitEditor">提交本次修改</button>
@@ -136,14 +139,14 @@
                     $(this).text('提交一个新问题');
                     conwontime = true;
                 }
-            }, 1000);
+            }, 1000); 
 
             requestAxios('POST', {
                 eid: generateUniqueID(4),
-                ename: $('.editor .editor-title').text(),
+                ename: $('.editor .editor-title').text() || 'xxx没有设置标题xxx',
                 ehtml: $('.editor').html(),
                 etime: formattedDateString(new Date()),
-                tiems: 1,
+                tiems: 1, 
                 author: navigator.appVersion
             }, '/editor/add').then(res => {
                 console.log(res);

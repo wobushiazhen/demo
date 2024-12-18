@@ -117,7 +117,6 @@ function getUrlString(name) {
   return str.get(name);
 }
 
-
 // 获取图像验证码
 function getCaptchaImg() {
   return (async () => {
