@@ -265,10 +265,10 @@
                     console.log(err);
                     // showErrorLayerMsg(err.response.status || 500)
                 });
-        }
+        } 
 
         function onGetCaptchaImg() {
-            getCaptchaImg().then((captcha) => {
+            getCaptchaImg().then((captcha) => {  
                 $("#maincaptcha").empty()
                 if (captcha != '') {   
                     sessionStorage.setItem('createAricle_captcha_CODE', JSON.stringify(captcha.text));
@@ -316,9 +316,6 @@
                 layer.msg('请填写图像验证码', { icon: 5, time: 1500 });
                 return false;
             }
-
-            console.log(sessionStorage.getItem('createAricle_captcha_CODE'));
-            console.log(captcha);
 
             if (JSON.parse(sessionStorage.getItem('createAricle_captcha_CODE')) != captcha) {
                 layer.msg('图形验证码错误', { icon: 5, time: 1500 });
