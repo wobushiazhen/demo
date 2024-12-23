@@ -27,14 +27,16 @@
             color: #7a7a7a;
             margin-bottom: 12px;
         }
-    </style>
+        .layui-laypage .layui-laypage-curr .layui-laypage-em{
+            background: rgba(38, 38, 42, 0.72);  
+        } 
+    </style>    
 </head>
 
 <body>
-    <script src="/tool/axios.min.js"></script> 
+    <script src="/tool/axios.min.js"></script>
     <script src="/public/js/errorStatus.js"></script>
     <script src="/public/js/common.js"></script>
-    
 
     <div class="main">
         <div class="pc-wrap">
@@ -44,6 +46,7 @@
                 <p class="title">Learning table records</p>
                 <p class="sub-t">看一看，想一想</p>
                 <table class="layui-hide" id="ID-table-demo-filter"></table>
+                <div id="demo-laypage-hash"></div>
             </div>
         </div>
         <script>
@@ -52,12 +55,18 @@
             layui.use(function () {
                 var $ = layui.$;
                 var table = layui.table;
+                var laypage = layui.laypage;
                 // 渲染 
 
                 requestAxios('GET', '', '/interview/question').then(res => {
+                    // 初始化表格数据（只显示第一页的数据）
+                    var limit = 10; // 每页显示的条数
+                    var pageData = res.slice(0, limit); // 初始化时只显示第一页的数据
+
+                    // 渲染表格
                     table.render({
                         elem: '#ID-table-demo-filter',
-                        data: res,
+                        data: pageData, // 初始化时只显示第一页的数据
                         toolbar: 'default',
                         height: 'auto',
                         cols: [function () {
@@ -79,8 +88,31 @@
                             });
                             return arr;
                         }()],
+                        page: false // 关闭表格内置的分页
                     });
-                })
+
+                    // 渲染分页
+                    laypage.render({
+                        elem: 'demo-laypage-hash',
+                        count: res.length, // 数据总数
+                        limit: limit, // 每页显示的条数
+                        curr: location.hash.replace('#!curr=', '') || 1, // 初始获取 hash 值为 curr 的当前页，默认为第一页
+                        hash: 'curr', // 自定义 hash 名称
+                        jump: function (obj, first) {
+                            if (!first) {
+                                // 当分页发生变化时，重新截取当前页的数据
+                                var start = (obj.curr - 1) * obj.limit;
+                                var end = start + obj.limit;
+                                var pageData = res.slice(start, end); // 截取当前页的数据
+
+                                // 重新渲染表格数据
+                                table.reload('ID-table-demo-filter', {
+                                    data: pageData // 只显示当前页的数据
+                                });
+                            }
+                        }
+                    });
+                });
             });
 
             $(document).ready(function () {

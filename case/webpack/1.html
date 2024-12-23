@@ -13,14 +13,10 @@
 
 <body>
     <div class="editor">
-<<<<<<< HEAD
         <div class="editor-title">
             标题
         </div>   
         <p>内容</p>
-=======
-
->>>>>>> 3bb6de7580b37ebbc297f074cb15f6ec10ed5e44
     </div>
     <div class="submit-editor">
         <button type="button" id="submitEditor">提交本次修改</button>
@@ -143,7 +139,6 @@
                     $(this).text('提交一个新问题');
                     conwontime = true;
                 }
-<<<<<<< HEAD
             }, 1000); 
 
             requestAxios('POST', {
@@ -152,16 +147,6 @@
                 ehtml: $('.editor').html(),
                 etime: formattedDateString(new Date()),
                 tiems: 1, 
-=======
-            }, 1000);
-
-            requestAxios('POST', {
-                eid: generateUniqueID(4),
-                ename: $('.editor .editor-title').text(),
-                ehtml: $('.editor').html(),
-                etime: formattedDateString(new Date()),
-                tiems: 1,
->>>>>>> 3bb6de7580b37ebbc297f074cb15f6ec10ed5e44
                 author: navigator.appVersion
             }, '/editor/add').then(res => {
                 console.log(res);
@@ -173,7 +158,6 @@
                 }
             })
         })
-
     </script>
 </body>
 

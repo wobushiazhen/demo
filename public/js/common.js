@@ -117,10 +117,6 @@ function getUrlString(name) {
   return str.get(name);
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 3bb6de7580b37ebbc297f074cb15f6ec10ed5e44
 // 获取图像验证码
 function getCaptchaImg() {
   return (async () => {
@@ -157,8 +153,10 @@ function requestAxios(method = "GET", data = {}, url) {
 
 // header_search
 
-// 没有utoken，要跳回首页
+
+
 window.onload = function () {
+
   if (!getCookie('uToken')) {
     layer.confirm('您还没有权限，请跳转到首页', { icon: 3 }, function () {
       window.location.href = '/';
@@ -166,9 +164,8 @@ window.onload = function () {
       window.location.reload()
     });
   }
-};
 
-window.onload = function () {
+
   $("input[name='header_search']").on("keydown", function (e) {
     console.log(e.keyCode);
     if (e.key === "Enter" || e.keyCode === 13) {

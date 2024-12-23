@@ -265,7 +265,6 @@
                     console.log(err);
                     // showErrorLayerMsg(err.response.status || 500)
                 });
-<<<<<<< HEAD
         } 
 
         function onGetCaptchaImg() {
@@ -275,17 +274,6 @@
                     sessionStorage.setItem('createAricle_captcha_CODE', JSON.stringify(captcha.text));
                     $("#maincaptcha").append(captcha.data)
                 } 
-=======
-        }
-
-        function onGetCaptchaImg() {
-            getCaptchaImg().then((captcha) => {
-                $("#maincaptcha").empty()
-                if (captcha != '') {
-                    sessionStorage.setItem('createAricle_captcha_CODE', JSON.stringify(captcha.text));
-                    $("#maincaptcha").append(captcha)
-                }
->>>>>>> 3bb6de7580b37ebbc297f074cb15f6ec10ed5e44
             })
         }
 
@@ -329,12 +317,6 @@
                 return false;
             }
 
-<<<<<<< HEAD
-=======
-            console.log(sessionStorage.getItem('createAricle_captcha_CODE'));
-            console.log(captcha);
-
->>>>>>> 3bb6de7580b37ebbc297f074cb15f6ec10ed5e44
             if (JSON.parse(sessionStorage.getItem('createAricle_captcha_CODE')) != captcha) {
                 layer.msg('图形验证码错误', { icon: 5, time: 1500 });
                 return false;
