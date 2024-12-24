@@ -167,7 +167,7 @@
                                 placeholder="验证码" lay-reqtext="请填写验证码" autocomplete="off" class="layui-input"
                                 lay-affix="clear">
                             <!-- <img class="captcha-img" src="">  -->
-                            <div id="maincaptcha">
+                            <div id="maincaptcha" onclick="onGetCaptchaImg()">
                             </div>
                         </div>
                     </div>
@@ -265,23 +265,19 @@
                     console.log(err);
                     // showErrorLayerMsg(err.response.status || 500)
                 });
-        } 
+        }
 
         function onGetCaptchaImg() {
-            getCaptchaImg().then((captcha) => {  
+            getCaptchaImg().then((captcha) => {
                 $("#maincaptcha").empty()
-                if (captcha != '') {   
+                if (captcha != '') {
                     sessionStorage.setItem('createAricle_captcha_CODE', JSON.stringify(captcha.text));
                     $("#maincaptcha").append(captcha.data)
-                } 
+                }
             })
         }
 
         $(document).ready(function () {
-            onGetCaptchaImg()
-        })
-
-        $("#maincaptcha").click(function () {
             onGetCaptchaImg()
         })
 
