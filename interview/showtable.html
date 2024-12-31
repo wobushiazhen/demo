@@ -27,10 +27,29 @@
             color: #7a7a7a;
             margin-bottom: 12px;
         }
-        .layui-laypage .layui-laypage-curr .layui-laypage-em{
-            background: rgba(38, 38, 42, 0.72);  
+
+        .layui-laypage .layui-laypage-curr .layui-laypage-em {
+            background: rgba(38, 38, 42, 0.72);
+        }
+
+        .layui-table-checked {
+            background: #ededed;
+        }
+
+        .layui-table-hover {
+            background: #e1e1e1 !important;
+        }
+
+        .layui-form-checked[lay-skin=primary]>i {
+            background: #939393;
+            border: none; 
+            line-height: 18px !important;
+        }   
+
+        .layui-form-checkbox[lay-skin=primary]:hover>i {
+            border-color: #939393;
         } 
-    </style>    
+    </style>
 </head>
 
 <body>
@@ -56,7 +75,31 @@
                 var $ = layui.$;
                 var table = layui.table;
                 var laypage = layui.laypage;
-                // 渲染 
+
+                table.render({
+                    elem: '#ID-table-demo-filter',
+                    toolbar: '#toolbarDemo',
+                });
+
+                // 头部工具栏事件 
+                table.on('toolbar(ID-table-demo-filter)', function (obj) {
+                    var options = obj.config; // 获取当前表格属性配置项
+                    var checkStatus = table.checkStatus(options.id); // 获取选中行相关数据
+                    // 根据不同的事件名进行相应的操作
+                    switch (obj.event) { // 对应模板元素中的 lay-event 属性值
+                        case 'add':
+                            window.location.href = '/interview/'
+                            break;
+                        case 'delete':
+                            var tableStatus = table.checkStatus('ID-table-demo-filter');
+                            console.log(tableStatus.data) // 选中行的数据
+                            deleteInterview(tableStatus.data)
+                            break;
+                        case 'update': s
+                            layer.msg('编辑');
+                            break;
+                    };
+                });
 
                 requestAxios('GET', '', '/interview/question').then(res => {
                     // 初始化表格数据（只显示第一页的数据）
@@ -71,6 +114,7 @@
                         height: 'auto',
                         cols: [function () {
                             var arr = [
+                                { type: 'checkbox', fixed: 'left' },
                                 { field: 'subid', title: 'ID', width: 100, fixed: 'left' },
                                 { field: 'subname', title: '题目', width: 280 },
                                 { field: 'subtype', title: '类型', width: 100 },
@@ -88,7 +132,7 @@
                             });
                             return arr;
                         }()],
-                        page: false // 关闭表格内置的分页
+                        page: false, // 关闭表格内置的分页
                     });
 
                     // 渲染分页
@@ -113,36 +157,13 @@
                         }
                     });
                 });
+
             });
 
-            $(document).ready(function () {
-                layui.use(function () {
-                    var table = layui.table;
-                    // 渲染
-                    table.render({
-                        elem: '#ID-table-demo-filter',
-                        toolbar: '#toolbarDemo',
-                    });
 
-                    // 头部工具栏事件 
-                    table.on('toolbar(ID-table-demo-filter)', function (obj) {
-                        var options = obj.config; // 获取当前表格属性配置项
-                        var checkStatus = table.checkStatus(options.id); // 获取选中行相关数据
-                        // 根据不同的事件名进行相应的操作
-                        switch (obj.event) { // 对应模板元素中的 lay-event 属性值
-                            case 'add':
-                                window.location.href = '/interview/'
-                                break;
-                            case 'delete':
-                                layer.msg('删除');
-                                break;
-                            case 'update':
-                                layer.msg('编辑');
-                                break;
-                        };
-                    });
-                });
-            })
+            function deleteInterview(data){ 
+                
+            }
         </script>
 
     </div>

@@ -1383,12 +1383,11 @@ Page({
             </div>
         </div>
     </div>
+    <script src="index/index.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $('.pc-wrap').prepend(c_header('test'));
-            console.log(111);
-            
+        $('.pc-wrap').prepend(c_header('test'));
+        $(document).ready(function () {  
             requestAxios("get", "", '/indexSHOWLIST').then(res => {
                 let linkmus = []
                 var linkItems = $('.link-item .link-item-a');
@@ -1416,7 +1415,7 @@ Page({
             });
         });
     </script>
-    <script src="index/index.js"></script>
+
 </body>
 
 </html>
