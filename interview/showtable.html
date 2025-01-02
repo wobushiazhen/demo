@@ -42,13 +42,21 @@
 
         .layui-form-checked[lay-skin=primary]>i {
             background: #939393;
-            border: none; 
+            border: none;
             line-height: 18px !important;
-        }   
+        }
 
         .layui-form-checkbox[lay-skin=primary]:hover>i {
             border-color: #939393;
-        } 
+        }
+
+        .layui-form-checkbox[lay-skin=primary]>.layui-icon-indeterminate {
+            border-color: #939393;
+        }
+
+        .layui-form-checkbox[lay-skin=primary]>.layui-icon-indeterminate:before {
+            background-color: #939393;
+        }
     </style>
 </head>
 
@@ -92,7 +100,6 @@
                             break;
                         case 'delete':
                             var tableStatus = table.checkStatus('ID-table-demo-filter');
-                            console.log(tableStatus.data) // 选中行的数据
                             deleteInterview(tableStatus.data)
                             break;
                         case 'update': s
@@ -161,8 +168,22 @@
             });
 
 
-            function deleteInterview(data){ 
-                
+            function deleteInterview(data) {
+                let tempArr = [];
+                data.forEach(item => {
+                    tempArr.push(item.subid)
+                });
+                console.log(tempArr);
+                requestAxios('POST', tempArr, '/interview/del_question').then(res => {
+                    console.log(res);
+                    if (res.status == 200) {
+                        layer.msg('删除成功');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000) 
+                    }
+                })
+
             }
         </script>
 
