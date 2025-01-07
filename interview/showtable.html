@@ -57,6 +57,11 @@
         .layui-form-checkbox[lay-skin=primary]>.layui-icon-indeterminate:before {
             background-color: #939393;
         }
+
+        .layui-table-expanded .layui-table-cell {
+            height: auto;
+            max-height: 500px;
+        }
     </style>
 </head>
 
@@ -154,7 +159,7 @@
                         limit: limit, // 每页显示的条数
                         curr: currlist, // 初始获取 hash 值为 curr 的当前页，默认为第一页
                         hash: 'curr', // 自定义 hash 名称
-                        jump: function (obj, first) { 
+                        jump: function (obj, first) {
                             if (!first) {
                                 // 当分页发生变化时，重新截取当前页的数据
                                 var start = (obj.curr - 1) * obj.limit;
