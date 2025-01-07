@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>与 AI 交互</title>
+</head>
+<body>
+    <center>
+        <h1>时间日期篇--当前时间</h1>
+        <p id="time"></p>
+        <input type="radio" name="time-radio" checked value="f1" onchange="changeRadio(value)"> 24小时 <br />
+        <input type="radio" name="time-radio" value="f2" onchange="changeRadio(value)"> 12小时
+    </center>
+
+    <h1>DeepSeek API Example</h1>
+    <textarea id="inputText" rows="4" cols="50"></textarea><br><br>
+    <button onclick="callDeepSeekAPI()">Submit</button>
+    <p id="response"></p>
+
+    <script>
+        var fs = 'f1';
+        function showTime() {
+            var time = new Date();
+            var hours = fs == 'f1' ? time.getHours() : time.getHours() % 12 || 12;
+            var minutes = time.getMinutes() < 10 ? '0' + time.getMinutes() : time.getMinutes();
+            var seconds = time.getSeconds() < 10 ? '0' + time.getSeconds() : time.getSeconds();
+            var ampm = time.getHours() >= 12 ? 'PM' : 'AM';
+            let tiemtext = hours + ':' + minutes + ':' + seconds + (fs == 'f2' ? ' ' + ampm : '');
+            document.querySelector('#time').innerHTML = tiemtext;
+            setTimeout(showTime, 1000);
+        }
+
+        showTime();
+
+        function changeRadio(e) {
+            fs = e;
+        }
+    </script>
+
+    <script>
+        async function callDeepSeekAPI() {   
+            const apiKey = 'sk-58d3f767bb45443382f13b6d775c9420'; // 替换为你的 API 密钥
+            const inputText = document.getElementById('inputText').value;
+
+            try {
+                const response = await fetch('https://api.deepseek.com/chat/completions', { // 使用 DeepSeek 的 API 地址
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: 'deepseek-chat', // 指定模型名称
+                        messages: [
+                            { role: 'user', content: inputText } // 用户输入
+                        ],
+                        stream: false // 非流式输出
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.text(); // 捕获非 JSON 格式的错误信息
+                    throw new Error(`API 请求失败: ${response.status} - ${errorData}`);
+                }
+
+                const data = await response.json();
+                document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+            } catch (error) {
+                console.error('发生错误:', error);
+                document.getElementById('response').innerText = '错误: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -102,7 +102,7 @@
                             var tableStatus = table.checkStatus('ID-table-demo-filter');
                             deleteInterview(tableStatus.data)
                             break;
-                        case 'update': s
+                        case 'update':
                             layer.msg('编辑');
                             break;
                     };
@@ -110,10 +110,15 @@
 
                 requestAxios('GET', '', '/interview/question').then(res => {
                     // 初始化表格数据（只显示第一页的数据）
-                    var limit = 10; // 每页显示的条数
-                    var pageData = res.slice(0, limit); // 初始化时只显示第一页的数据
+                    res.filter(item => {
+                        item.subtime = formattedDateString(item.subtime)
+                    })
 
-                    // 渲染表格
+                    let currlist = location.hash.replace('#!curr=', '') || 1
+                    var limit = 10; // 每页显示的条数
+                    var pageData = res.slice(limit * (currlist - 1), limit * currlist); // 初始化时只显示第一页的数据
+
+                    // 渲染表格 
                     table.render({
                         elem: '#ID-table-demo-filter',
                         data: pageData, // 初始化时只显示第一页的数据
@@ -147,9 +152,9 @@
                         elem: 'demo-laypage-hash',
                         count: res.length, // 数据总数
                         limit: limit, // 每页显示的条数
-                        curr: location.hash.replace('#!curr=', '') || 1, // 初始获取 hash 值为 curr 的当前页，默认为第一页
+                        curr: currlist, // 初始获取 hash 值为 curr 的当前页，默认为第一页
                         hash: 'curr', // 自定义 hash 名称
-                        jump: function (obj, first) {
+                        jump: function (obj, first) { 
                             if (!first) {
                                 // 当分页发生变化时，重新截取当前页的数据
                                 var start = (obj.curr - 1) * obj.limit;
@@ -164,7 +169,6 @@
                         }
                     });
                 });
-
             });
 
 
@@ -180,7 +184,7 @@
                         layer.msg('删除成功');
                         setTimeout(() => {
                             location.reload();
-                        }, 2000) 
+                        }, 2000)
                     }
                 })
 

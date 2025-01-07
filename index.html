@@ -18,6 +18,7 @@
 
 <body>
     <script src="/public/js/common.js"></script>
+
     <script>
         fetch(baseurl + '/auth/getToken')
             .then(response => response.json())
@@ -64,6 +65,7 @@
         })
 
     </script>
+
     <div class="main">
         <!-- 写入代码 -->
         <link rel="stylesheet" href="index/style.css">
@@ -98,6 +100,36 @@
                         </div> 
                     </div> 
                 </div> -->
+ 
+            <style>
+                .notice {
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    max-width: 804px;  
+                    margin: 60px auto 0;
+                    padding: 4px; 
+                }  
+
+                .notice img { 
+                    background: transparent;
+                    border-radius: 50%; 
+                    border: 2px solid #4d4d4d;
+                    padding: 4px;   
+                    width: 30px;
+                    margin-right: 10px;
+                }
+                .notice:hover{
+                    background: #f0f0f0;
+                    transition: background 0.3s;
+                   
+                }         
+            </style>   
+ 
+            <a class="notice" href="/case/imitate300/4.html" target="_blank">
+                <img src="/material/img/notice.png" alt="" srcset="">
+                <p>试行接入deepSeep v3</p>
+            </a> 
 
             <div class="pc-cont">
                 <!-- css -->
@@ -1383,11 +1415,12 @@ Page({
             </div>
         </div>
     </div>
+
     <script src="index/index.js"></script>
 
     <script>
         $('.pc-wrap').prepend(c_header('test'));
-        $(document).ready(function () {  
+        $(document).ready(function () {
             requestAxios("get", "", '/indexSHOWLIST').then(res => {
                 let linkmus = []
                 var linkItems = $('.link-item .link-item-a');
@@ -1396,7 +1429,7 @@ Page({
                         linkmus.push({ text: item.innerHTML, href: item.href })
                     }
                 });
-                if (res.status == 200) {   
+                if (res.status == 200) {
                     if (linkmus.length == res.total) {
                         console.log($('.link-item .link-item-a').length);
                     } else {

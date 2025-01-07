@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文字动画，输入</title>
+</head>
+
+
+<BODY bgcolor="#fef4d2" onload=TextOutput()>
+
+    <br><br>
+    <center>
+        <h2>文本特效篇--文本自动输出</h2>
+        <hr width=300>
+        <br><br>
+
+        <script language="JavaScript">
+
+            function TList() {
+                max = TList.arguments.length;
+                for (i = 0; i < max; i++)
+                    this[i] = TList.arguments[i];
+            }
+
+            tl = new TList("    传统的HTML语言不能开发交互式的动态网页，而JavaScript却能很好的做到这一点。JavaScript是一门相当简单易学的网络化编程语言，通过把她和HTML语言相互结合起来，能够实现实时的动态网页特效，这给网页浏览者在浏览网页的同时也提供了某些乐趣。"
+            );
+
+            var x = 0; pos = 0;
+            var l = tl[0].length;
+            function TextOutput() {
+                document.TyperText.tickfield.value = tl[x].substring(0, pos) + "I";
+                pos++;
+                if (pos == l) {   
+                    pos = 0;
+                    setTimeout("TextOutput()", 100000);
+                    // if (++x == max) x = 0;
+                    l = tl[x].length;   
+                } else    
+                    setTimeout("TextOutput()", 100);
+            }
+        </script>
+  
+        <form name=TyperText>
+            <textarea name=tickfield rows=10 cols=38
+                style="background-color:#FF99CC; color: #330033; cursor: default; font-family: Arial; font-size: 12px"
+                wrap=virtual>
+            </textarea>
+        </form>
+
+</BODY>
+
+</HTML>
