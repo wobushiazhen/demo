@@ -20,12 +20,15 @@
     <script src="/public/js/common.js"></script>
 
     <script>
-        fetch(baseurl + '/auth/getToken')
-            .then(response => response.json())
-            .then(data => {
-                if (getCookie('uToken')) return
-                setCookie('uToken', data.token, { expires: 1 })
-            }).catch(error => console.error('Error:', error));
+        // fetch(baseurl + '/auth/getToken')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         if (getCookie('uToken')) return
+        //         setCookie('uToken', data.token, { expires: 1 })
+        //     }).catch(error => console.error('Error:', error));
+
+        // if (getCookie('uToken')) return    
+        // setCookie('uToken', data.token, { expires: 1 })
 
         // 最强UUID+时间戳 
         function generateUniqueID() {
@@ -63,7 +66,6 @@
 
             $('.cont9 .link-ul').append(whtml)
         })
-
     </script>
 
     <div class="main">
@@ -100,36 +102,41 @@
                         </div> 
                     </div> 
                 </div> -->
- 
+
             <style>
                 .notice {
                     cursor: pointer;
                     display: flex;
                     align-items: center;
-                    max-width: 804px;  
-                    margin: 60px auto 0;
-                    padding: 4px; 
-                }  
+                    max-width: 804px;
+                    margin: 20px auto 0;
+                    padding: 4px;
+                }
 
-                .notice img { 
+                .notice img {
                     background: transparent;
-                    border-radius: 50%; 
+                    border-radius: 50%;
                     border: 2px solid #4d4d4d;
-                    padding: 4px;   
+                    padding: 4px;
                     width: 30px;
                     margin-right: 10px;
                 }
-                .notice:hover{
+
+                .notice:hover {
                     background: #f0f0f0;
                     transition: background 0.3s;
-                   
-                }         
-            </style>   
- 
+                }
+            </style>
+
             <a class="notice" href="/case/imitate300/4.html" target="_blank">
                 <img src="/material/img/notice.png" alt="" srcset="">
                 <p>试行接入deepSeep v3</p>
-            </a> 
+            </a>
+
+            <a class="notice" href="/UI/vuetify1/dist/index.html" target="_blank">
+                <img src="/material/img/notice.png" alt="" srcset="">
+                <p>如您还未登录</p>
+            </a>
 
             <div class="pc-cont">
                 <!-- css -->
@@ -1230,7 +1237,7 @@ Page({
     <view class="nav-bar" style="height:{{navBarHeight}}px;line-height: {{navBarHeight}}px;">
         <input class="search" placeholder-class="placeholder-search" placeholder="输入关键词"
             style="height:{{menuHeight}}px;  line-height:{{menuHeight}}px; left:{{menuRight}}px; top:{{menuTop}}px;"></input>
-    </view>
+    </view> 
 </view>
 
 // index.wxss 文件

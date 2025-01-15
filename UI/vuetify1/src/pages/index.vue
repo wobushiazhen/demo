@@ -180,6 +180,10 @@
   </div>
 </template>
 
+<script>
+  
+</script>
+
 <style scoped lang="scss">
 .index {
   background: rgb(233, 236, 239);

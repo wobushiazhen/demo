@@ -32,7 +32,8 @@ export default defineConfig({
         }],
       },
     }),
-  ],
+  ], 
+  base:"./",
   define: { 'process.env': {} },
   resolve: {
     alias: {
@@ -48,7 +49,14 @@ export default defineConfig({
       '.vue',
     ],
   },
-  server: {
-    port: 3000,
-  },
-})
+  // server: {
+  //   host: '127.0.0.1',
+  //   proxy: {
+  //     '/api': {
+  //       target: 'http://127.0.0.1:7007', // 后端地址
+  //       changeOrigin: true, // 允许跨域
+  //       rewrite: (path) => path.replace(/^\/api/, ''), // 重写路径
+  //     },
+  //   },
+  // },
+}) 

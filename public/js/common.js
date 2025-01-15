@@ -59,7 +59,7 @@ function c_header(activeItem = "test") {
 }
 
 // 获取cookie
-function getCookie(name) {
+ function getCookie(name) {
   if (!name) return null;
   const arr = document.cookie.split("; ");
   let result = null;
@@ -69,11 +69,12 @@ function getCookie(name) {
   });
   return result;
 }
-
+  
 // 设置cookie
 function setCookie(name, value, options = {}) {
   if (!name) return;
   let cookieString = `${name}=${value}`;
+
   if (options.expires) {
     const expires = options.expires;
     if (expires instanceof Date) {
@@ -87,13 +88,31 @@ function setCookie(name, value, options = {}) {
       }
     }
   }
+
   if (options.path) {
     cookieString += `; path=${options.path}`;
   }
+
+  if (options.domain) {
+    cookieString += `; domain=${options.domain}`;
+  }
+
+  if (options.sameSite) {
+    cookieString += `; SameSite=${options.sameSite}`;
+    if (options.sameSite.toLowerCase() === "none") {
+      cookieString += "; Secure"; // SameSite=None 必须与 Secure 一起使用
+    }
+  }
+
+  if (options.secure) {
+    cookieString += "; Secure";
+  }
+
   document.cookie = cookieString;
 }
 
-function delCookie(name) {
+// 删除cookie
+ function delCookie(name) {
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
 }
 
@@ -152,19 +171,14 @@ function requestAxios(method = "GET", data = {}, url) {
 }
 
 // header_search
-
-
-
 window.onload = function () {
-
   if (!getCookie('uToken')) {
     layer.confirm('您还没有权限，请跳转到首页', { icon: 3 }, function () {
-      window.location.href = '/';
-    }, function () {
+      window.location.href = '/UI/vuetify1/dist/index.html';
+    }, function () { 
       window.location.reload()
     });
   }
-
 
   $("input[name='header_search']").on("keydown", function (e) {
     console.log(e.keyCode);

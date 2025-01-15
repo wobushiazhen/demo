@@ -23,24 +23,20 @@
             </v-card>
 
             <v-card class="tab-card" v-if="i == 2">
-              <v-form ref="form">
-                <v-text-field
-                  v-model="formData.username"
-                  label="用户名"
-                  required
-                />
-                <v-text-field
-                  v-model="formData.password"
-                  type="password"
-                  label="密码"
-                  required
-                />
-                <v-text-field
-                  v-model="formData.email"
-                  label="邮箱"
-                  type="email"
-                  required
-                />
+              <v-form ref="form" @submit.prevent="submitForm">
+                <v-text-field v-model="formData.email" label="邮箱" required />
+                <v-btn
+                  v-show="formData.email"
+                  ref="refSendBtn"
+                  class="send-btn"
+                  :disabled="isSending"
+                  @click="sendCode()"
+                  >{{ buttonText }}</v-btn
+                >
+                <v-text-field v-model="formData.code" label="验证码" required />
+                <v-btn class="submit-btn" type="submit" color="primary"
+                  >提交</v-btn
+                >
               </v-form>
             </v-card>
           </v-tabs-window-item>
@@ -54,7 +50,7 @@
 
           <v-tab value="tab-2">
             <!-- <v-icon icon="mdi-heart"></v-icon> -->
-            账号密码登录/注册
+            邮箱登录/注册
           </v-tab>
         </v-tabs>
 
@@ -62,16 +58,94 @@
       </v-card>
     </div>
   </div>
-</template>  
-
+</template>
 <script setup>
-import { ref } from "vue";
+import { ref, reactive, onMounted } from "vue";
+import axios from "axios";
+import { baseurl, getCookie, setCookie } from "@/utils/common";
+import { showTips } from "@/components/tips/tips.js";
 
-const formData = ref({ username: "", password: "", email: "" });
-const tab = ref("tab-1");
+const tab = ref("tab-2");
+const refSendBtn = ref(null);
+const isSending = ref(false); // 是否正在发送
+const buttonText = ref("发送验证码"); // 按钮文字
+const formData = reactive({
+  email: "",
+  code: "",
+});
+
+// Methods
+const submitForm = async () => {
+  await axios
+    .post(baseurl + "/verify-code", formData, {
+      headers: {
+        "Content-Type": "application/json",
+        authorization:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyMTIzIiwiaWF0IjoxNzM2MzA5ODkyLCJleHAiOjE3MzcxNzM4OTJ9.xRJDCm5_aN8v0C11eilip8qcGdU4-Nm12tTn-FPXWVU",
+      },
+    })
+    .then((res) => {
+      if (res.data.status == 200) {
+        showTips(res.data.message, 2000);
+
+        fetch(baseurl + "/auth/getToken")
+          .then((response) => response.json())
+          .then((data) => {
+            if (getCookie("uToken")) return;
+            setCookie("uToken", data.token, {
+              expires: 1,
+              path: "/",
+              domain: location.hostname,
+            }); 
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 1500);
+          })
+          .catch((error) => console.error("Error:", error));
+      } else {
+        showTips(res.data.message, 2000);
+        console.log(res.data.status);
+      }
+    });
+};
+
+const sendCode = async () => {
+  if (isSending.value) {
+    return;
+  }
+  isSending.value = true;
+  buttonText.value = "已发送请查收";
+
+  setTimeout(() => {
+    isSending.value = false;
+    buttonText.value = "发送验证码";
+  }, 60000);
+
+  await axios
+    .post(
+      baseurl + "/send-code",
+      { email: formData.email },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          authorization:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyMTIzIiwiaWF0IjoxNzM2MzA5ODkyLCJleHAiOjE3MzcxNzM4OTJ9.xRJDCm5_aN8v0C11eilip8qcGdU4-Nm12tTn-FPXWVU",
+        },
+      }
+    )
+    .then((res) => {
+      if (res.data.status == 200) {
+        showTips(res.data.message, 2000);
+      } else {
+        showTips(res.data.message, 2000);
+      }
+    });
+};
+
+onMounted(() => {});
 </script>
 
-<style  scoped lang="scss">
+<style scoped lang="scss">
 .regsiter {
   width: 100%;
   height: 100vh;
@@ -113,6 +187,16 @@ const tab = ref("tab-1");
   }
   .v-card--variant-elevated {
     box-shadow: none;
+  }
+  .send-btn {
+    position: absolute;
+    right: 15px;
+    top: 30px;
+  }
+  .submit-btn {
+    height: 42px;
+    width: 100%;
+    margin: 0 auto;
   }
 }
 </style> 
