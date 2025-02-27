@@ -118,18 +118,16 @@
             var bpaData = null
             // 获取浏览器插件文章
             function getBPA() {
-                axios({
-                    url: baseurl + "/article/getBrowserPlugins",
-                    method: "GET",
+                axios.get(baseurl + "/article/getBrowserPlugins", {
                     headers: {
                         authorization: getCookie('uToken')
                     }
                 }).then((response) => {
-                    bpaData = response.data
-                    bpaData.forEach(item => {
-                        item.bpa_datetime = formattedDateString(item.bpa_datetime)
-                    });
-                    renderBPA(bpaData)
+                    const bpaData = response.data.map(item => ({
+                        ...item,
+                        bpa_datetime: formattedDateString(item.bpa_datetime)
+                    }));
+                    renderBPA(bpaData);
                 }).catch((error) => {
                     console.error(error);
                 });

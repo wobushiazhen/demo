@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>春节假期服务公告</title>
+		<meta name="keywords" content="招商信诺,春节假期服务公告" />
+		<meta name="description" content="春节假期服务公告" />
+		<link href="/favicon.ico" rel="Shortcut Icon" />
+		<link href="/favicon.ico" rel="Bookmark" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no,viewport-fit=cover">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="hotcss" content="max-width=750">
+		<meta name="hotcss" content="design-width=750">
+		<link rel="stylesheet" href="css/style.css">
+		<script src="js/hotcss.js"></script>
+		<style>
+			.preloader {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background-color: #fff;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				z-index: 9999;
+			}
+
+			.progress-bar {
+				width: 80%;
+				max-width: 600px;
+				height: 20px;
+				background-color: #f0f0f0;
+				border-radius: 10px;
+				margin-top: 20px;
+				position: relative;
+			}
+
+			.progress {
+				position: absolute;
+				left: 0;
+				top: 0;
+				height: 100%;
+				background-color: #007bff;
+				width: 0; 
+				border-radius: 10px;
+				transition: width 0.3s ease-in-out;
+			}
+
+			.ip-character {
+				position: absolute;
+				left: 0;         
+				top: -22px;     
+				transition: left 0.3s ease-in-out;
+			}
+		</style>
+		<script>
+			window.wx = undefined
+		</script>
+	</head>
+
+	<body>
+		<div class="preloader">  
+			<div class="progress-bar">
+				<div class="progress"></div> 
+				<img src="images/p1_63.png" alt="IP Character" class="ip-character" style="width: 50px;">
+			</div>
+			
+		</div>
+		<div class="main-content">
+			<h1>Welcome to Our Site</h1>
+			<p>This is the main content of the page.</p>
+			<img src="images/bg.png" alt="Large Image">
+			<img src="images/bg.png" alt="Another Large Image">
+		</div>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				const images = [
+					"images/bg.png",
+					"images/jindan.png",
+					"images/jindan-actived.png"
+				];
+				let loadedCount = 0;
+
+				function loadImage(src) {
+					return new Promise((resolve, reject) => {
+						const img = new Image();  
+						img.onload = () => resolve(img);
+						img.onerror = reject;
+						img.src = src; 
+					});
+				}
+
+				function updateProgress() {
+					loadedCount++;
+					const progress = (loadedCount / images.length) * 100;
+					document.querySelector('.progress').style.width = `${progress}%`;
+					document.querySelector('.ip-character').style.left = `${progress}%`;
+					if (loadedCount === images.length) {
+						setTimeout(() => {
+							document.querySelector('.preloader').style.display = 'none';
+						}, 1000); 
+					} 
+				}
+ 
+				images.forEach(src => {
+					loadImage(src).then(updateProgress).catch(console.error);
+				});
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ 
+<div id="container"></div>   
+<!-- <script src="https://unpkg.com/promise-polyfill/dist/polyfill.min.js"></script> -->
+<script src="https://unpkg.com/jszip/dist/jszip.min.js"></script>
+<script src="https://unpkg.com/docx-preview@0.2.0-next.1/dist/docx-preview.min.js"></script>
+ 
+<script>
+    const options = {method: 'get', responseType: 'blob'}
+    fetch('文件夹说明.docx', options).then( 
+        res => {          
+            const options = {inWrapper: false, ignoreWidth: true, ignoreHeight: true}
+            docx.renderAsync(res.blob(), document.getElementById("container"), null, options)
+        })
+</script>
+</body>
+</html> 

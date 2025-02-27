@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body> 
+    <input id="document" type="file" onchange="onGetFile(this)" accept=".docx,.doc" />
+    <br>
+    <div id="container"></div>
+    <script src="https://unpkg.com/promise-polyfill/dist/polyfill.min.js"></script>
+    <script src="https://unpkg.com/jszip/dist/jszip.min.js"></script>
+    <script src="https://unpkg.com/docx-preview@0.2.0-next.1/dist/docx-preview.min.js"></script>
+    <script>
+        function onGetFile(el) {
+            var file = el.files[0]
+            var options = { inWrapper: false, ignoreWidth: true, ignoreHeight: true }
+            docx.renderAsync(
+                file,
+                document.getElementById("container"),
+                null,
+                options
+            ).then(
+                x => console.log("docx: finished")
+            );
+        }
+    </script>
+</body>
+
+</html>

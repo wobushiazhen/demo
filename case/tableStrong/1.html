@@ -1,79 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <style>
-            /* 基本表格元素 */
-            table {
-                border-collapse: collapse;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 基本表格元素 */
+        table {
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #666;
+            padding: 5px;
+        }
+
+        /* th单元格 */
+        .slash-wrap {
+            position: relative;
+            box-sizing: border-box;
+            width: 150px;
+            height: 80px;
+        }
+
+        /* 斜线 */
+        .slash {
+            position: absolute;
+            display: block;
+            top: 0;
+            left: 0;
+            width: 170px;
+            height: 1px;
+            background-color: #000;
+            transform: rotate(28.072486935852954deg);
+            transform-origin: top left;
+        }
+
+        /* 左下角文字 */
+        .left {
+            position: absolute;
+            /* 左下角 left:0; bottom: 0; */
+            left: 15px;
+            bottom: 15px;
+        }
+
+        /* 右上角文字 */
+        .right {
+            position: absolute;
+            /* 右上角 right:0; top: 0; */
+            right: 15px;
+            top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <div>
+                        阿斯古丽改好了
+                    </div>
+                    <p>
+
+                    </p>
+                    <div>
+                        构架嘎嘎嘎不
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <button>1</button>
+    </div>
+</body>
+
+<script>
+    // 什么是this指向
+    // this是一个关键字，他是动态的，指向取决于调用方式。
+    // 1.普通函数的this 非严格模式 this指向window 严格模式下为undefined
+    function fn1() {
+        console.log("fn1:" + this)
+        function fn2() {
+            console.log("fn2:" + this)
+        }
+        fn2()
+    }
+    fn1()
+
+    // 2.箭头函数的this 指向外层作用域的this
+    function fn3() {
+        console.log("fn3:" + this)
+        const fn4 = () => {
+            console.log("fn4:" + this)
+            const fn5 = () => {
+                console.log("fn5:" + this)
             }
+            fn5()
+        }
+        fn4()
+    }
+    const obj = {
+        nested: {
+            method: fn3
+        }
+    }
+    obj.nested.method() // 对象方法调用，this指向该对象
 
-            th,
-            td {
-                border: 1px solid #666;
-                padding: 5px;
-            }
+    // 3.构造函数的this 指向实例对象
+    function Person(name) {
+        this.name = name
+        console.log(this)
+    }
+    const p = new Person('张三')
 
-            /* th单元格 */
-            .slash-wrap {
-                position: relative;
-                box-sizing: border-box;
-                width: 150px;
-                height: 80px;
-            }
+    // 4.事件函数的this 指向触发事件的元素
+    const btn = document.querySelector('button')
+    btn.onclick = function () {
+        console.log(this)
+    }
 
-            /* 斜线 */
-            .slash {
-                position: absolute;
-                display: block;
-                top: 0;
-                left: 0;
-                width: 170px;
-                height: 1px;
-                background-color: #000;
-                transform: rotate(28.072486935852954deg);
-                transform-origin: top left;
-            }
+    // 5.定时器函数的this 指向window
+    setTimeout(function () {
+        console.log(this)
+    }, 1000)
 
-            /* 左下角文字 */
-            .left {
-                position: absolute;
-                /* 左下角 left:0; bottom: 0; */
-                left: 15px;
-                bottom: 15px;
-            }
+    // 6.对象方法的this 指向调用方法的对象
+    const obj2 = {
+        name: '李四',
+        sayName() {
+            console.log(this)
+        }
+    }
+    obj2.sayName()
 
-            /* 右上角文字 */
-            .right {
-                position: absolute;
-                /* 右上角 right:0; top: 0; */
-                right: 15px;
-                top: 15px;
-            }
-        </style>
-    </head>
+    // 7. 改变this指向的方法
+    function fn6(name) {
+        console.log(this, name)
+    }
+    let obj3 = { name: '张三' }
+    fn6.call(obj3, '李四')
+    fn6.apply(obj3, ['李四'])
 
-    <body>
-        <div>
-            <table>
-                <tr>
-                    <td> 
-                        <div >
-                            阿斯古丽改好了
-                        </div>
-                        <p>
 
-                        </p>
-                        <div>
-                            构架嘎嘎嘎不
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </body>
+    // 改变this指向的方法和区别
+    // call 立即执行函数，参数一个个依次传递
+    function fn7(name, age) {
+        console.log(this, name, age)
+    }
+    function fn8(name, age) {
+        console.log(this, name, age)
+    }
+
+    function fn9(name, age) {
+        console.log(this, name, age)
+    }
+
+    function Animal(name, age) {
+        this.name = name;
+        this.age = age
+        console.log(name);
+        console.log(age);
+        console.log(this);
+    }
+
+    let obj4 = {
+        n: "阿珍",
+        a: 24 
+    }
+
+    let obj5 = {
+        n: "阿美",
+        a: 24
+    }
+
+    const a1 = new Animal(obj4.n, obj4.a)
+    fn7.call(Animal, obj4.n, obj4.a)
+    // apply 立即执行函数，参数以一个数组形式传递。 
+    fn8.apply(obj4, [obj4.n, 88])
+
+    // bind 不会立即执行，而是返回一个新函数，this指向这个新函数，参数一个个依次传递
+    fn9.bind(obj5, obj4.n, obj4.a)()
+</script>
 
 </html>

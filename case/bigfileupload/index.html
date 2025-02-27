@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大文件上传</title>
+    <link rel="stylesheet" href="/public/css/reset.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/css/layui.css">
+    <script src="/tool/jquery-2.0.3.min.js"></script>
+    <style>
+        .step {
+            min-width: 1200px;
+            width: 1200px;
+            margin: 20px auto;
+        }
+
+        .step .t {
+            font-weight: bold;
+            line-height: 38px;
+            font-size: 20px;
+        }
+
+        input {
+            margin-top: 20px;
+        }
+
+        button {
+            display: block;
+            width: 100px;
+            margin-top: 30px;
+            border-radius: 4px;
+            line-height: 30px;
+        }
+
+        #progressBar {
+            width: 100%;
+            background-color: #f3f3f3;
+            border-radius: 4px;
+            margin-top: 20px;
+            display: none; /* 初始隐藏 */
+        }
+
+        #progressBar div {
+            height: 30px;
+            width: 0;
+            background-color: #4caf50;
+            border-radius: 4px;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="step">
+        <p class="t">大文件上传</p>
+        <input type="file" id="inputFile" placeholder="文件">
+        <button onclick="clickUpload()">上传</button>
+        <div id="progressBar"><div></div></div>
+    </div>
+    <script>
+        function getCookie(name) {
+            if (!name) return null;
+            const arr = document.cookie.split("; ");
+            let result = null;
+            arr.forEach((item) => {
+                const [cookieName, value] = item.split("=");
+                if (cookieName === name) result = decodeURIComponent(value);
+            });
+            return result;
+        }
+
+        const filedom = document.getElementById('inputFile');
+        async function clickUpload() {
+            let file = filedom.files[0];
+            if (!file) return;
+            console.log(file.name);
+            console.log(file.size);
+ 
+            let chunkSize = 1024 * 500; // 500k
+            const totalChunks = Math.ceil(file.size / chunkSize);
+            const progressBar = document.getElementById('progressBar').firstElementChild;
+            document.getElementById('progressBar').style.display = 'block'; // 显示进度条
+
+            for (let i = 0; i < totalChunks; i++) {
+                const start = i * chunkSize;
+                const end = Math.min(start + chunkSize, file.size);
+                const chunk = file.slice(start, end);
+                const formData = new FormData();
+                formData.append('chunk', chunk);
+                formData.append('filename', file.name);
+                formData.append('chunkIndex', i);
+                formData.append('totalChunks', totalChunks);
+                try {
+                    const response = await fetch(baseurl+'/bigfileupload', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            authorization: getCookie("uToken")
+                        },
+                    });
+                    if (!response.ok) {
+                        throw new Error('上传失败');
+                    }
+                    console.log(`Chunk ${i} of ${file.name} uploaded successfully`);
+                    const progress = ((i + 1) / totalChunks) * 100;
+                    progressBar.style.width = progress + '%';
+                    progressBar.textContent = Math.round(progress) + '%';
+                    
+                } catch (error) {
+                    console.error('上传出错:', error);
+                    document.getElementById('progressBar').style.display = 'none'; // 隐藏进度条
+                    return;
+                }
+            }
+            document.getElementById('progressBar').style.display = 'none'; // 上传完成后隐藏进度条
+        }
+    </script>
+</body>
+
+</html>

@@ -39,23 +39,99 @@
                 </div>
                 <div class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"
                     style="width: 100%; font-size: 60px; text-align: center;"></div>
+
+                <div class="linkt" style="display: none;" id="isShowOtherText">其他搜索内容</div>
+                <table class="layui-hide" id="ID-table-demo-filter"></table>
+                <div id="demo-laypage-hash"></div>
             </div>
         </div>
         <script>
             let keyword = getUrlString('keyword') || $('input[name="header_search"]').val()
-            $('.pc-wrap').prepend(c_header('')) 
-            if (keyword && keyword != '') {
-                $("input[name='header_search']").val(keyword)
+            $('.pc-wrap').prepend(c_header(''))
+            if (keyword && keyword.trim() !== '') {
+                $("input[name='header_search']").val(keyword);
                 requestAxios("GET", {}, `/header_search?keyword=${encodeURIComponent(keyword)}`).then(res => {
                     $('.layui-icon.layui-icon-loading').hide();
-                    if (res == '') {
-                        $('.links').append('<div class="">未找到与 "' + keyword + '" 相匹配的结果</div>')
+                    if (!res.hschtml && !res.hsctable) {
+                        $('.links').append(`<div class="">未找到与 "${keyword}" 相匹配的结果</div>`);
                     } else {
-                        $('.links').append(res)
+                        $('.links').append(res.hschtml);
+                        if (res.hsctable) {
+                            $('#isShowOtherText').show();
+                            layui.use(['table', 'laypage'], function () {
+                                var table = layui.table;
+                                var laypage = layui.laypage;
+                                res.hsctable.forEach(item => {
+                                    item.subtime = formattedDateString(item.subtime);
+                                });
+
+                                let currlist = location.hash.replace('#!curr=', '') || 1;
+                                var limit = 10; // 每页显示的条数
+                                var pageData = res.hsctable.slice(limit * (currlist - 1), limit * currlist); // 初始化时只显示第一页的数据
+
+                                // 渲染表格
+                                table.render({
+                                    elem: '#ID-table-demo-filter',
+                                    data: pageData, // 初始化时只显示第一页的数据
+                                    toolbar: 'default',
+                                    height: 'auto',
+                                    cols: [[
+                                        { type: 'checkbox', fixed: 'left' },
+                                        { field: 'subid', title: 'ID', width: 100, fixed: 'left' },
+                                        { field: 'subname', title: '题目', width: 280 },
+                                        { field: 'subtype', title: '类型', width: 100 },
+                                        { field: 'subUnderstand', title: '个人理解' },
+                                        { field: 'subtime', title: '提交时间', width: 210 },
+                                        { field: 'level', title: '理解程度', width: 90 }
+                                    ]],
+                                    page: false, // 关闭表格内置的分页
+                                });
+
+                                // 渲染分页
+                                laypage.render({
+                                    elem: 'demo-laypage-hash',
+                                    count: res.hsctable.length, // 数据总数
+                                    limit: limit, // 每页显示的条数
+                                    curr: currlist, // 初始获取 hash 值为 curr 的当前页，默认为第一页
+                                    hash: 'curr', // 自定义 hash 名称
+                                    jump: function (obj, first) {
+                                        if (!first) {
+                                            // 当分页发生变化时，重新截取当前页的数据
+                                            var start = (obj.curr - 1) * obj.limit;
+                                            var end = start + obj.limit;
+                                            var pageData = res.hsctable.slice(start, end); // 截取当前页的数据
+                                            // 重新渲染表格数据
+                                            table.reload('ID-table-demo-filter', {
+                                                data: pageData // 只显示当前页的数据
+                                            });
+                                        }
+                                    }
+                                });
+                            });
+                        }
                     }
                 });
-            } else {
-                
+            }else{
+                $('.layui-icon.layui-icon-loading').hide();
+                $('.links').append(`<div>输入关键字搜索</div>`);
+            }
+
+            function deleteInterview(data) {
+                let tempArr = [];
+                data.forEach(item => {
+                    tempArr.push(item.subid)
+                });
+                console.log(tempArr);
+                requestAxios('POST', tempArr, '/interview/del_question').then(res => {
+                    console.log(res);
+                    if (res.status == 200) {
+                        layer.msg('删除成功');
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000)
+                    }
+                })
+
             }
         </script>
     </div>

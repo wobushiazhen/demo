@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word文档预览</title>
+
+    <style>
+        .word-wrap {
+            max-width: 800px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+        }
+
+        #wordView {
+            white-space: pre-wrap;
+            /* 保持Word文档的格式 */
+            line-height: 1.6;
+        }
+
+        #wordView img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+        }
+
+        #wordView p {
+            margin: 10px 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="word-wrap" style="padding: 15px;">
+        <div id="wordView" style="white-space: pre-wrap;"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.4.8/mammoth.browser.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const wordURL = 'http://60.204.250.158/1.docx'; // 替换为实际的Word文档路径
+ 
+            function loadWordDocument() {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', wordURL, true);
+                xhr.responseType = 'arraybuffer';
+
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        const uint8Array = new Uint8Array(xhr.response);
+                        mammoth.convertToHtml({ arrayBuffer: uint8Array })
+                            .then(function (result) {
+                                const previewContainer = document.getElementById('wordView');
+                                previewContainer.innerHTML = result.value;
+                            })
+                            .catch(function (error) {
+                                console.error('转换Word文档时出错:', error);
+                            });
+                    } else {
+                        console.error('加载Word文档失败，状态码:', xhr.status);
+                    }
+                };
+
+                xhr.send();
+            }
+
+            loadWordDocument();
+        });
+
+    </script>
+</body>
+
+</html>

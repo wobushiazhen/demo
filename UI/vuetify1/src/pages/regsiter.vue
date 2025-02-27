@@ -80,28 +80,38 @@ const submitForm = async () => {
     .post(baseurl + "/verify-code", formData, {
       headers: {
         "Content-Type": "application/json",
-        authorization:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyMTIzIiwiaWF0IjoxNzM2MzA5ODkyLCJleHAiOjE3MzcxNzM4OTJ9.xRJDCm5_aN8v0C11eilip8qcGdU4-Nm12tTn-FPXWVU",
+        authorization: getCookie("uToken"),
       },
     })
     .then((res) => {
       if (res.data.status == 200) {
         showTips(res.data.message, 2000);
+        // fetch(baseurl + "/auth/getToken")
+        //   .then((response) => response.json())
+        //   .then((data) => {
+        //     if (getCookie("uToken")) return;
+        //     setCookie("uToken", data.token, {
+        //       expires: 1,
+        //       path: "/",
+        //       domain: location.hostname,
+        //     });
+        //     setTimeout(() => {
+        //       window.location.href = "/";
+        //     }, 1500);
+        //   })
+        //   .catch((error) => console.error("Error:", error));
 
-        fetch(baseurl + "/auth/getToken")
-          .then((response) => response.json())
-          .then((data) => {
-            if (getCookie("uToken")) return;
-            setCookie("uToken", data.token, {
-              expires: 1,
-              path: "/",
-              domain: location.hostname,
-            }); 
-            setTimeout(() => {
-              window.location.href = "/";
-            }, 1500);
-          })
-          .catch((error) => console.error("Error:", error));
+
+        setCookie("LOGINSTATUS", true, {
+          expires: 7, 
+          path: "/",
+          domain: location.hostname,
+        });
+
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1500);
+        
       } else {
         showTips(res.data.message, 2000);
         console.log(res.data.status);
@@ -128,8 +138,7 @@ const sendCode = async () => {
       {
         headers: {
           "Content-Type": "application/json",
-          authorization:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyMTIzIiwiaWF0IjoxNzM2MzA5ODkyLCJleHAiOjE3MzcxNzM4OTJ9.xRJDCm5_aN8v0C11eilip8qcGdU4-Nm12tTn-FPXWVU",
+          authorization: getCookie("uToken"),
         },
       }
     )
@@ -142,7 +151,19 @@ const sendCode = async () => {
     });
 };
 
-onMounted(() => {});
+onMounted(() => {
+  fetch(baseurl + "/auth/getToken")
+    .then((response) => response.json())
+    .then((data) => {
+      if (getCookie("uToken")) return;
+      setCookie("uToken", data.token, {
+        expires: 7,  
+        path: "/",
+        domain: location.hostname,
+      });
+    })
+    .catch((error) => console.error("Error:", error));
+});
 </script>
 
 <style scoped lang="scss">
@@ -199,4 +220,4 @@ onMounted(() => {});
     margin: 0 auto;
   }
 }
-</style> 
+</style>

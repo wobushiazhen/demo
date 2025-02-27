@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img {
+   
+            width: 400px; 
+            display: block;
+            margin: 10% auto; 
+        } 
+        p { 
+            text-align: center;
+            font-size: 20px;
+            color: #b0b0b0;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="/material/img/404.png" alt="">
+    <p>找不到页面，<span id="sec">10</span>后跳转index.html</p>
+</body> 
+<script>
+    var sec = 10;
+    var timer = setInterval(() => {
+        sec--;
+        document.getElementById('sec').innerText = sec;
+        if (sec == 0) {
+            clearInterval(timer);
+            location.href = '/index.html';
+        }
+    }, 1000);
+</script>
+
+</html>

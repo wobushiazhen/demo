@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /* 样式定义：无序列表去除默认样式，设置消息区域的内边距，按钮样式 */
 body {
   width: 16rem;
@@ -66,6 +67,13 @@ button {
   font-size: 0.55rem;
   border: 1px solid #6a6a6a;
   outline: none;
+}
+
+.my-py {
+  position: fixed;
+  top: 2%; 
+  right: 2%;
+  font-size: 14px;
 }
 
 #sendBtn {

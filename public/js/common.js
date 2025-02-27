@@ -59,7 +59,7 @@ function c_header(activeItem = "test") {
 }
 
 // 获取cookie
- function getCookie(name) {
+function getCookie(name) {
   if (!name) return null;
   const arr = document.cookie.split("; ");
   let result = null;
@@ -69,7 +69,7 @@ function c_header(activeItem = "test") {
   });
   return result;
 }
-  
+
 // 设置cookie
 function setCookie(name, value, options = {}) {
   if (!name) return;
@@ -112,7 +112,7 @@ function setCookie(name, value, options = {}) {
 }
 
 // 删除cookie
- function delCookie(name) {
+function delCookie(name) {
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
 }
 
@@ -172,11 +172,11 @@ function requestAxios(method = "GET", data = {}, url) {
 
 // header_search
 window.onload = function () {
-  if (!getCookie('uToken')) {
-    layer.confirm('您还没有权限，请跳转到首页', { icon: 3 }, function () {
+  if (!getCookie('uToken') && !getCookie('LOGINSTATUS')) {
+    layer.confirm('您还没有权限，请跳转到登录页面', { icon: 3 }, function () {
       window.location.href = '/UI/vuetify1/dist/index.html';
     }, function () { 
-      window.location.reload()
+      window.location.reload();
     });
   }
 
@@ -196,4 +196,5 @@ window.onload = function () {
       // });
     }
   });
+
 };
