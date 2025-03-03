@@ -18,9 +18,11 @@
 
         #chat-box {
             margin-top: 20px;
-            width: 100%;
-            max-width: 800px;
-            height: 400px;
+            width: 100%; 
+            max-width: 800px;   
+            max-height: 80%;  
+            /* height: 400px;  */
+            min-height: 400px; 
             border: 1px solid #ccc;
             padding: 20px;
             overflow-y: auto;
@@ -37,23 +39,24 @@
         }
   
         .assistant-message {
-            /* color: #28a745; */
+           
             text-align: left; 
             padding: 10px 0;
         }
    
         .assistant-message h3{
-            font-size: 18px;
-        } 
-
-        #inputText {
-            width: 100%;
+            font-size: 19px;
+        }   
+ 
+        #inputText { 
+            width: 100%; 
             max-width: 800px;
             height: 100px;
             padding: 10px;
             border-radius: 10px;
             border: 1px solid #ccc;
             margin-bottom: 20px;
+          
         }
 
         .dot-flashing {
@@ -159,7 +162,7 @@
 
             try {
                 const response = await fetch(`http://127.0.0.1:7007/api/deepseek/chat`, {
-                    method: 'POST',
+                    method: 'POST',    
                     headers: {
                         'Content-Type': 'application/json',
                         authorization: getCookie("uToken"),
