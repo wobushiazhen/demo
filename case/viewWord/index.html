@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>word预览</title>
+</head>
+
+<body>
+    <!-- accept=".doc,.docx" -->
+
+    <input type="file" id="file" name="file">
+    <button id="submit" type="button">提交</button>
+
+    <script>
+        function getCookie(name) {
+            if (!name) return null;
+            const arr = document.cookie.split("; ");
+            let result = null;
+            arr.forEach((item) => {
+                const [cookieName, value] = item.split("=");
+                if (cookieName === name) result = decodeURIComponent(value);
+            });
+            return result;
+        }
+
+        let file = document.querySelector('#file')
+        let submitBtn = document.getElementById('submit')
+        submitBtn.addEventListener('click', function () {
+            let fileData = file.files[0]
+            if (!fileData) {
+                alert('请选择文件')
+                return
+            }
+            const validMimeTypes = [
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+            ];
+
+            if (!validMimeTypes.includes(fileData.type) || (getExtension(fileData.name) !== 'doc' && getExtension(fileData.name) !== 'docx')) {
+                alert('请上传word文件')
+                return
+            }
+
+            let formData = new FormData()
+            formData.append('file', fileData)
+            fetch('http://127.0.0.1:7007/files/upload', {
+                method: 'POST',
+                body: formData, 
+                // headers: {
+                //     'authorization': getCookie('uToken')
+                // }
+            }).then(res => res.json()).then(res => {
+                if (res.code === 200) {
+                    window.open(res.data.url)
+                } else {
+                    alert(res.msg)
+                }
+            })
+        })
+
+        let getExtension = (fileName) => {
+            let parts = fileName.split('.');
+            return parts.length > 1 ? parts.pop().toLowerCase() : '';
+        }
+    </script>
+</body>
+
+</html>
