@@ -246,6 +246,8 @@
         })
 
         function axiosRequest(method = "GET", formData, url) {
+            
+            
             return axios({
                 method,
                 data: formData,
@@ -278,6 +280,7 @@
         }
 
         $(document).ready(function () {
+            console.log(baseurl);   
             onGetCaptchaImg()
         })
 

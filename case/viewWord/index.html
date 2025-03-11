@@ -10,8 +10,8 @@
 <body>
     <!-- accept=".doc,.docx" -->
 
-    <input type="file" id="file" name="file">
-    <button id="submit" type="button">提交</button>
+    <input type="file" id="file" name="file" accept=".doc,.docx">
+    <span id="submit">点击</span>   
 
     <script>
         function getCookie(name) {
@@ -25,40 +25,38 @@
             return result;
         }
 
-        let file = document.querySelector('#file')
-        let submitBtn = document.getElementById('submit')
-        submitBtn.addEventListener('click', function () {
-            let fileData = file.files[0]
-            if (!fileData) {
-                alert('请选择文件')
-                return
-            }
-            const validMimeTypes = [
-                'application/msword',
-                'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-            ];
+        let file = document.querySelector('#file');
+        let submitBtn = document.getElementById('submit');
 
-            if (!validMimeTypes.includes(fileData.type) || (getExtension(fileData.name) !== 'doc' && getExtension(fileData.name) !== 'docx')) {
-                alert('请上传word文件')
-                return
+        submitBtn.addEventListener('click', function (e) {
+            if (!file.files.length) {
+                alert('请选择文件');
+                return;
             }
 
-            let formData = new FormData()
-            formData.append('file', fileData)
+            // ... 文件验证逻辑 ...
+            let fileData = file.files[0];
+            let formData = new FormData();
+            formData.append('file', fileData);
             fetch('http://127.0.0.1:7007/files/upload', {
                 method: 'POST',
-                body: formData, 
-                // headers: {
-                //     'authorization': getCookie('uToken')
-                // }
-            }).then(res => res.json()).then(res => {
-                if (res.code === 200) {
-                    window.open(res.data.url)
-                } else {
-                    alert(res.msg)
-                }
-            })
-        })
+                body: formData,
+                // headers: { 'authorization': getCookie('uToken') }
+            }) 
+               
+                .then(res => {
+                    if (res && res.code === 200) {
+                        // window.open(res.data.url); // 新标签页打开，不影响当前页
+                    } else {
+                        console.log('上传失败:', res);
+                        // alert(res?.msg || '上传失败');
+                    } 
+                })
+                .catch(error => {
+                    console.error('上传出错:', error);
+                    // alert('上传过程中发生错误');
+                });
+        });
 
         let getExtension = (fileName) => {
             let parts = fileName.split('.');
