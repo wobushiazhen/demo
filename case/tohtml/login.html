@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=375, initial-scale=1.0">
+    <title>后台管理系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1890FF',
+                        secondary: '#36CFC9'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '2px',
+                        DEFAULT: '4px',
+                        'md': '8px',
+                        'lg': '12px',
+                        'xl': '16px',
+                        '2xl': '20px',
+                        '3xl': '24px',
+                        'full': '9999px',
+                        'button': '4px'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F5F5F5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .login-bg {
+            background-image: url('https://ai-public.mastergo.com/ai/img_res/6e63c46ef3bfc55dfa8a8d8c6d923e96.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="loginPage" class="fixed inset-0 flex flex-col items-center justify-center login-bg">
+        <div class="text-4xl font-['Pacifico'] text-primary mb-8">logo</div>
+        <div class="bg-white p-6 rounded-lg shadow-lg w-[320px]">
+            <div class="mb-6">
+                <div class="text-lg font-medium text-gray-800 mb-6 text-center">管理系统登录</div>
+                <div class="relative mb-4">
+                    <i class="fas fa-user absolute left-3 top-3 text-gray-400"></i>
+                    <input type="text" placeholder="用户名/手机号"
+                        class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-button focus:outline-none focus:border-primary">
+                </div>
+                <div class="relative mb-4">
+                    <i class="fas fa-lock absolute left-3 top-3 text-gray-400"></i>
+                    <input type="password" placeholder="密码"
+                        class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-button focus:outline-none focus:border-primary">
+                    <i class="fas fa-eye absolute right-3 top-3 text-gray-400 cursor-pointer"></i>
+                </div>
+                <div class="flex items-center justify-between mb-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="mr-2">
+                        <span class="text-sm text-gray-600">记住密码</span>
+                    </label>
+                    <button class="text-sm text-primary">忘记密码？</button>
+                </div>
+                <button class="w-full bg-primary text-white py-2 rounded-button mb-3" onclick="login()">登 录</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            location.href = 'index.html'
+        }
+    </script>
+</body>
+
+</html>

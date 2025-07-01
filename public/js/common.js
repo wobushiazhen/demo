@@ -30,6 +30,9 @@ function c_header(activeItem = "test") {
                     <i class="iconfont icon-sousuo"></i>
                     <input type="text" name="header_search" id="header_search" placeholder="资源/教程">
                 </div>
+                 <div class="inner-l-open">  
+                    <i class="iconfont icon-zhedie"></i>  
+                </div> 
               </div>
               <div class="inner-r">    
                   <ul class="layui-nav" lay-filter="">    
@@ -145,12 +148,12 @@ function getCaptchaImg() {
     } catch (error) {
       throw error;
     }
-  })();
+  })();  
 }
 
 // 请求封装
 function requestAxios(method = "GET", data = {}, url) {
-  console.log(method, data, url);
+  console.log(baseurl+url);
   return axios({
     method,
     data: data,
@@ -178,7 +181,7 @@ window.onload = function () {
     }, function () { 
       window.location.reload();
     });
-  }
+  } 
 
   $("input[name='header_search']").on("keydown", function (e) {
     console.log(e.keyCode);

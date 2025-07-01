@@ -1,9 +1,9 @@
 // 设置 baseurl
 var baseurl = '';
-if (window.location.host.indexOf("127.0.0.1") > -1) {
+if (window.location.host.indexOf("127.0.0.1") > -1||window.location.host.indexOf("localhost") > -1) {
     baseurl = "http://127.0.0.1:7007";
-} else {
-    baseurl = "http://60.204.250.158:7007";
+} else {  
+    baseurl = "http://60.204.250.158:7007"; 
 } 
 
 console.log("After setting baseurl:", baseurl);

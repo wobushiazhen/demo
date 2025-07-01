@@ -23,12 +23,62 @@
     <span class="inline">Inline 1</span>
     <span class="inline">Inline 2</span>
     <span class="inline">Inline 3</span>
- 
+
     <script type="module" charset="UTF-8" src="https://unpkg.com/date-holidays@3.23.16/dist/index.min.js"></script>
     <script>
         const hd = new holiday('CN');
         console.log(hd); // Output: Thanksgiving Day
     </script>
-</body>  
 
+
+    <script>
+        /* 关于js 的一些判断方法
+         * 首先 是一些基本类型数据判断适合用 typeof 
+         */
+        typeof '111' // 'string'
+        typeof 123 // 'number'
+        typeof false // 'boolean'
+        typeof undefined // 'undefined'
+        typeof Symbol(34) // 'symbol'
+        typeof function fn() { } // 'function'
+        typeof { c: 11 } // 'object' 
+        typeof null // 'object' 
+        typeof new Date() // 'object' 
+        // 看到null，Date类型等等对象类型，他也是返回 'object' null他也是一个对象，是一个空对象，所以用它来判定一些复杂类型显然不太合适
+
+        /*
+         * 再看判断复杂类型数据的办法 instanceof，还能清楚的判定是对象还是数组还是日期类型
+         */
+        let obj = { name: "aga", grade: 1 }
+        let date = new Date()
+        let arr = ['1', '2', '3']
+        obj instanceof Object // true
+        obj instanceof Array // false
+        arr instanceof Date // false
+        date instanceof Date // true 
+        // 虽然可以判断类型一个变量是否是对应的类型，但是他只是返回boolean值，还不能确定对象具体是什么类型，还有如果原型链修改了判断可能不准确
+
+        /*
+         * 最好用的还是 Object.protoProty.toSting.call()，全能型，返回一个字符 '[类型,类型名]'
+         */
+        Object.prototype.toString.call(['a', 'b']) // '[object Array]'
+        Object.prototype.toString.call(1) // '[object Number]'
+        Object.prototype.toString.call(true) // '[object Boolean]'
+        Object.prototype.toString.call(new Date()) // '[object Date]'  
+        Object.prototype.toString.call({}) // '[object Object]'   
+
+        // hasOwnProperty 判断对象自身是否有该属性
+        // obj.hasOwnProperty('a') 
+
+        // in 判断对象自身和原型上是否有该属性
+        // 'a' in obj
+
+        // in 和 hasOwnProperty 结合 精准属性来自对象本身还是原型上
+        function propertyFormPrototype(obj, prop) {
+            return obj.hasOwnProperty(prop) && prop in obj
+            //当return为true时表示属性位于对象本身
+        }
+
+    </script>
+</body>
 </html>

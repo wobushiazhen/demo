@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSAP Stagger Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            width: 50px;
+            height: 50px;
+            background-color: #3498db;
+            margin: 10px;
+        }
+
+        section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .start {
+            width: 150px;
+            height: 150px;
+            background-color: #32d819;
+            margin: 10px;
+        }
+
+        .end {
+            width: 150px;
+            height: 150px;
+            background-color: #dc7a09;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <section>
+            <div class="start" id="startElement"></div>
+        </section>
+        <section>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </section>
+        <section> 
+            <div class="end" id="endEl"></div>
+        </section>
+    </div>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.to(".box", {
+            scrollTrigger: {
+                trigger: ".container",
+                start: "top center",
+                end: "bottom center",
+                trigger: "#startElement",
+                endTrigger: "#endEl",
+                scrub: true,
+                markers: true
+            },
+            opacity: 0.5, 
+            y:-50,
+            stagger: .1
+        });
+        gsap.to("#startElement", {
+            scrollTrigger: {
+                trigger: "#startElement",  
+                start: "top center",
+                end: "bottom center",
+                scrub: true,
+                markers: true
+            },
+            scale: 2,  
+            rotation: 360,
+        });
+    </script>
+</body>
+
+</html>

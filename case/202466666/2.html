@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #rotateImg {
+            animation: rotateAnimate 1s ease-in-out infinite;
+        }
+
+        @keyframes rotateAnimate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .pause {
+            animation-play-state: paused;
+        }
+ 
+        .start { 
+            animation-play-state: running;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="div-max">
+        <!-- 请替换为实际存在的图片路径 -->
+        <img id="rotateImg" src="images/p1_63.png" alt="" srcset="">
+    </div>
+    <button class="pause">暂停</button>
+    <button class="start">开始</button>
+    <script>
+        let rotateImg = document.getElementById('rotateImg');
+        let pause = document.querySelector('.pause');
+        let start = document.querySelector('.start');
+
+        // 检查元素是否正确获取
+        console.log('rotateImg:', rotateImg);
+        console.log('pause button:', pause);
+        console.log('start button:', start);
+
+        pause.addEventListener('click', function () {
+            rotateImg.classList.remove('start');
+            rotateImg.classList.add('pause');
+            // 输出当前元素的类名，用于调试
+            console.log('After pause click, classList:', rotateImg.classList);
+        });
+
+        start.addEventListener('click', function () {
+            rotateImg.classList.remove('pause');
+            rotateImg.classList.add('start');
+        
+        });
+    </script>
+</body>
+
+</html> 

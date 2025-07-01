@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>数据概览</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1890FF',
+                        secondary: '#36CFC9'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '2px',
+                        DEFAULT: '4px',
+                        'md': '8px',
+                        'lg': '12px',
+                        'xl': '16px',
+                        '2xl': '20px',
+                        '3xl': '24px',
+                        'full': '9999px',
+                        'button': '4px'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .nav-shadow {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 mx-auto">
+    <nav class="fixed top-0 left-0 right-0 bg-white nav-shadow z-50">
+        <div class="flex items-center justify-between px-4 h-[56px]">
+            <a href="index.html" class="flex items-center">
+                <i class="fas fa-chevron-left text-gray-600"></i>
+                <span class="ml-4 text-lg font-medium">数据概览</span>
+            </a>
+            <div class="flex items-center space-x-4">
+                <i class="fas fa-bell text-gray-600"></i>
+                <i class="fas fa-ellipsis-v text-gray-600"></i>
+            </div>
+        </div>
+    </nav>
+    <main class="pt-[72px] pb-[80px] px-4 mx-auto">
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="bg-white rounded-lg p-4 card-shadow">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm text-gray-500">总用户数</span>
+                    <i class="fas fa-users text-primary"></i>
+                </div>
+                <div class="text-lg font-semibold">128,456</div>
+                <div class="text-xs text-green-500 mt-2">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>23.5% 较上月</span>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg p-4 card-shadow">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm text-gray-500">活跃用户</span>
+                    <i class="fas fa-user-check text-secondary"></i>
+                </div>
+                <div class="text-lg font-semibold">45,892</div>
+                <div class="text-xs text-red-500 mt-2">
+                    <i class="fas fa-arrow-down"></i>
+                    <span>5.2% 较上月</span>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white rounded-lg p-4 mb-6 card-shadow">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-base font-medium">用户增长趋势</span>
+                <div class="flex space-x-2">
+                    <button class="px-3 py-1 text-xs text-primary border border-primary rounded-button">周</button>
+                    <button class="px-3 py-1 text-xs text-gray-500 border border-gray-200 rounded-button">月</button>
+                    <button class="px-3 py-1 text-xs text-gray-500 border border-gray-200 rounded-button">年</button>
+                </div>
+            </div>
+            <div id="userGrowthChart" class="w-full h-[200px]"></div>
+        </div>
+        <div class="bg-white rounded-lg p-4 mb-6 card-shadow">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-base font-medium">用户分布</span>
+                <i class="fas fa-ellipsis-h text-gray-400"></i>
+            </div>
+            <div id="userDistributionChart" class="w-full h-[200px]"></div>
+        </div>
+        <div class="bg-white rounded-lg p-4 card-shadow">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-base font-medium">活跃时段分析</span>
+                <i class="fas fa-ellipsis-h text-gray-400"></i>
+            </div>
+            <div id="activeTimeChart" class="w-full h-[200px]"></div>
+        </div> 
+    </main>
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 mx-auto">
+        <div class="grid grid-cols-4 h-[56px]">
+            <a href="index.html" class="flex flex-col items-center justify-center">
+                <i class="fas fa-home text-gray-400"></i>
+                <span class="text-xs text-gray-400 mt-1">首页</span>
+            </a>
+            <a href="#" class="flex flex-col items-center justify-center">
+                <i class="fas fa-chart-line text-primary"></i>
+                <span class="text-xs text-primary mt-1">概括</span>  
+            </a>
+            <a href="sjjk.html" class="flex flex-col items-center justify-center">
+                <i class="fas fa-tasks text-gray-400"></i> 
+                <span class="text-xs text-gray-400 mt-1">监控</span>
+            </a>
+            <a href="#" class="flex flex-col items-center justify-center">
+                <i class="fas fa-user text-gray-400"></i>
+                <span class="text-xs text-gray-400 mt-1">我的</span>
+            </a>
+        </div>
+    </div>
+    <script>
+        const userGrowthChart = echarts.init(document.getElementById('userGrowthChart'));
+        const userDistributionChart = echarts.init(document.getElementById('userDistributionChart'));
+        const activeTimeChart = echarts.init(document.getElementById('activeTimeChart'));
+        userGrowthChart.setOption({
+            grid: {
+                top: 10,
+                right: 10,
+                bottom: 20,
+                left: 40,
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                axisLine: {
+                    lineStyle: {
+                        color: '#eee'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                axisLine: {
+                    show: false
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: '#eee'
+                    }
+                }
+            },
+            series: [{
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'line',
+                smooth: true,
+                itemStyle: {
+                    color: '#1890FF'
+                },
+                areaStyle: {
+                    color: {
+                        type: 'linear',
+                        x: 0,
+                        y: 0,
+                        x2: 0,
+                        y2: 1,
+                        colorStops: [{
+                            offset: 0,
+                            color: 'rgba(24,144,255,0.3)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(24,144,255,0)'
+                        }]
+                    }
+                }
+            }]
+        });
+        userDistributionChart.setOption({
+            tooltip: {
+                trigger: 'item'
+            },
+            series: [{
+                type: 'pie',
+                radius: ['40%', '70%'],
+                data: [
+                    { value: 1048, name: '北京' },
+                    { value: 735, name: '上海' },
+                    { value: 580, name: '广州' },
+                    { value: 484, name: '深圳' },
+                    { value: 300, name: '其他' }
+                ],
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }]
+        });
+        activeTimeChart.setOption({
+            grid: {
+                top: 10,
+                right: 10,
+                bottom: 20,
+                left: 40,
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['00:00', '06:00', '12:00', '18:00', '24:00'],
+                axisLine: {
+                    lineStyle: {
+                        color: '#eee'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                axisLine: {
+                    show: false
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: '#eee'
+                    }
+                }
+            },
+            series: [{
+                data: [120, 200, 150, 80, 70],
+                type: 'bar',
+                itemStyle: {
+                    color: '#36CFC9'
+                }
+            }]
+        });
+        window.addEventListener('resize', function () {
+            userGrowthChart.resize();
+            userDistributionChart.resize();
+            activeTimeChart.resize();
+        });
+    </script>
+</body>
+
+</html> 

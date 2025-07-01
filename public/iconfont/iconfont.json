@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "11309697",
+      "name": "机构平台-折叠",
+      "font_class": "zhedie",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "19109292",
+      "name": "单选框-选中",
+      "font_class": "danxuankuang-xuanzhong",
+      "unicode": "e783",
+      "unicode_decimal": 59267
+    },
+    {
       "icon_id": "1722992",
       "name": "关闭",
       "font_class": "guanbi",

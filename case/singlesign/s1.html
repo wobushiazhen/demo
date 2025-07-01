@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统 A - 单点登录示例</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>系统 A - 单点登录示例</h1>
+    <form id="loginForm">
+        <label for="username">用户名:</label>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">密码:</label>
+        <input type="password" id="password" name="password" required><br>
+        <button type="submit">登录</button>
+    </form>
+    <div id="message"></div>
+    <a href="s2.html" id="accessSystemB">访问系统 B</a>
+
+    <script>
+        $(document).ready(function () {  
+            let fr = new FileReader()
+            console.log(fr);
+            
+            $('#loginForm').on('submit', function (e) {
+                e.preventDefault();
+                const username = $('#username').val();
+                const password = $('#password').val();
+                $.ajax({
+                    url: 'http://127.0.0.1:7007/ddlogin',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ username, password }),
+                    success: function (response) {
+                        if (response.success) {
+                            localStorage.setItem('token', response.token);
+                            localStorage.setItem('refreshToken', response.refreshToken);
+                            localStorage.setItem('expiresAt', response.expiresAt);
+                            $('#message').text('登录成功！');
+                            $('#accessSystemB').show();
+                        } else {
+                            $('#message').text('登录失败: ' + response.message);
+                        }
+                    },
+                    error: function () {
+                        $('#message').text('请求出错，请稍后重试。');
+                    }
+                });
+            });
+
+            $('#accessSystemB').hide();
+
+            // 检查令牌是否快过期并尝试刷新
+            function checkTokenExpiration() {
+                const expiresAt = localStorage.getItem('expiresAt');
+                if (expiresAt) {
+                    const currentTime = Date.now();
+                    const expirationTime = new Date(expiresAt).getTime();
+                    // 提前 5 分钟刷新令牌
+                    if (expirationTime - currentTime < 5 * 60 * 1000) {
+                        const refreshToken = localStorage.getItem('refreshToken');
+                        if (refreshToken) {
+                            $.ajax({
+                                url: 'http://127.0.0.1:7007/ddrefresh',
+                                method: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify({ refreshToken }),
+                                success: function (response) {
+                                    if (response.success) {
+                                        localStorage.setItem('token', response.token);
+                                        localStorage.setItem('refreshToken', response.refreshToken);
+                                        localStorage.setItem('expiresAt', response.expiresAt);
+                                        console.log('令牌已刷新');
+                                    } else {
+                                        console.log('刷新令牌失败: ' + response.message);
+                                        // 刷新失败，可能需要重新登录
+                                        localStorage.removeItem('token');
+                                        localStorage.removeItem('refreshToken');
+                                        localStorage.removeItem('expiresAt');
+                                    }
+                                },
+                                error: function () {
+                                    console.log('请求刷新令牌出错，请稍后重试。');
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
+            // 每隔一段时间检查一次令牌有效期
+            setInterval(checkTokenExpiration, 60 * 1000);
+        });
+    </script>
+</body>
+
+</html>

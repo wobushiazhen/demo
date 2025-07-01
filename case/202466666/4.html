@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprite Animation Controller</title>
+    <link rel="preload" href="./images/sprites.png" as="image">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            gap: 20px;
+        }
+
+        .sprite-container {
+            width: 1175px;
+            height: 1175px;
+            position: relative;
+            border: 1px solid red;
+            isolation: isolate;
+        }
+
+        .sprite {
+            width: 100%;
+            height: 100%;
+            background-image: url("./images/sprites.png");
+            background-repeat: no-repeat;
+            transform-origin: center bottom;
+            animation: none;
+        }
+
+        .sprite.animate {
+            animation: frameAnim5 2.5s steps(4) infinite;
+        }
+
+        @keyframes frameAnim5 {
+            0%, 24.999% {
+                background-position: 0 0;
+                transform: scaleY(0.96);
+            }
+            25%, 49.999% {
+                background-position: 0 -1175px;
+                transform: scaleY(1);
+            }
+            50%, 74.999% {
+                background-position: -1175px 0;
+                transform: scaleY(1);
+            }
+            75%, 100% {
+                background-position: -1165px -1175px;
+                transform: scaleY(1);
+            }
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <button id="startBtn">开始动画</button>
+    <div class="sprite-container">
+        <div class="sprite" id="sprite"></div>
+    </div>
+
+    <script>
+        const startBtn = document.getElementById('startBtn');
+        const sprite = document.getElementById('sprite');
+        let animationTimeout;
+
+        startBtn.addEventListener('click', () => {
+            // 禁用按钮防止重复点击
+            startBtn.disabled = true;
+            startBtn.textContent = '动画进行中...';
+            
+            // 添加动画类  
+            sprite.classList.add('animate');
+            
+            // 设置3秒后停止动画
+            animationTimeout = setTimeout(() => {
+                sprite.classList.remove('animate');
+                startBtn.disabled = false;
+                startBtn.textContent = '开始动画';
+                
+                // 显示提示框
+                alert('动画已结束！');
+            }, 2400);   
+        });   
+    </script>
+</body>
+</html>

@@ -63,7 +63,7 @@
     height: 40px;
     box-shadow: 0px 1px 5px 4px #f1f1f1;
     background: #ffffff;
-    transform: all .3s inherit;
+    transition: all .3s inherit;
 }
 
 .cont-link .link-item .code.hidden {

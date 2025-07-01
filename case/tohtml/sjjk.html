@@ -1,0 +1,213 @@
+。
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据监控</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '2px',
+                        DEFAULT: '4px',
+                        'md': '8px',
+                        'lg': '12px',
+                        'xl': '16px',
+                        '2xl': '20px',
+                        '3xl': '24px',
+                        'full': '9999px',
+                        'button': '4px'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+</head>
+
+<body class="bg-gray-50">
+    <nav class="fixed top-0 w-full bg-white shadow-sm z-50 px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center">
+            <button class="mr-3" onclick="window.location.href='index.html'">
+                <i class="fas fa-arrow-left text-gray-600"></i>   
+            </button>
+            <span class="text-lg font-medium">数据监控</span>  
+        </div>
+        <div class="flex items-center space-x-4">
+            <button class="relative">
+                <i class="fas fa-bell text-gray-600"></i>
+                <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            </button>
+            <button>
+                <i class="fas fa-ellipsis-vertical text-gray-600"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mt-16 px-4 pb-20">
+        <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+                <div class="text-sm text-gray-500 mb-2">总访问量</div>
+                <div class="text-2xl font-medium">238,721</div>
+                <div class="flex items-center text-xs mt-2">
+                    <i class="fas fa-arrow-up text-green-500 mr-1"></i>
+                    <span class="text-green-500">23.5%</span>
+                    <span class="text-gray-400 ml-1">较上周</span>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-sm">
+                <div class="text-sm text-gray-500 mb-2">活跃用户</div>
+                <div class="text-2xl font-medium">45,892</div>
+                <div class="flex items-center text-xs mt-2">
+                    <i class="fas fa-arrow-down text-red-500 mr-1"></i>
+                    <span class="text-red-500">5.2%</span>
+                    <span class="text-gray-400 ml-1">较上月</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-sm mb-6 p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-medium">访问趋势</h3>
+                <div class="flex space-x-2">
+                    <button class="px-3 py-1 text-sm text-primary bg-blue-50 rounded-button">周</button>
+                    <button class="px-3 py-1 text-sm text-gray-500 rounded-button">月</button>
+                    <button class="px-3 py-1 text-sm text-gray-500 rounded-button">年</button>
+                </div>
+            </div>
+            <div id="trendChart" style="height: 300px;"></div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-sm mb-6 p-4">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="font-medium">地域分布</h3>
+                <button>
+                    <i class="fas fa-ellipsis-h text-gray-400"></i>
+                </button>
+            </div>
+            <div id="distributionChart" style="height: 300px;"></div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-0 w-full bg-white border-t">
+        <div class="grid grid-cols-4 py-2">
+            <a href="index.html" class="flex flex-col items-center">
+                <i class="fas fa-home text-gray-400"></i>
+                <span class="text-xs mt-1 text-gray-400">首页</span>
+            </a>
+            <a href="sjgk.html" class="flex flex-col items-center">
+                <i class="fas fa-chart-line text-gray-400"></i> 
+                <span class="text-xs mt-1 text-gray-400">概括</span> 
+            </a> 
+            <a class="flex flex-col items-center">
+                <i class="fas fa-tasks text-primary"></i>
+                <span class="text-xs mt-1 text-primary">监控</span>
+            </a>
+            <a class="flex flex-col items-center">
+                <i class="fas fa-user text-gray-400"></i>
+                <span class="text-xs mt-1 text-gray-400">我的</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const trendChart = echarts.init(document.getElementById('trendChart'));
+        const distributionChart = echarts.init(document.getElementById('distributionChart'));
+
+        trendChart.setOption({
+            grid: {
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 40
+            },
+            xAxis: {
+                type: 'category',
+                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                axisLine: {
+                    lineStyle: {
+                        color: '#eee'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                axisLine: {
+                    show: false
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: '#eee'
+                    }
+                }
+            },
+            series: [{
+                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                type: 'line',
+                smooth: true,
+                itemStyle: {
+                    color: '#3B82F6'
+                },
+                areaStyle: {
+                    color: {
+                        type: 'linear',
+                        x: 0,
+                        y: 0,
+                        x2: 0,
+                        y2: 1,
+                        colorStops: [{
+                            offset: 0,
+                            color: 'rgba(59,130,246,0.2)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(59,130,246,0)'
+                        }]
+                    }
+                }
+            }]
+        });
+
+        distributionChart.setOption({
+            tooltip: {
+                trigger: 'item'
+            },
+            series: [{
+                type: 'pie',
+                radius: ['40%', '70%'],
+                data: [
+                    { value: 1048, name: '北京' },
+                    { value: 735, name: '上海' },
+                    { value: 580, name: '广州' },
+                    { value: 484, name: '深圳' },
+                    { value: 300, name: '其他' }
+                ],
+                itemStyle: {
+                    borderRadius: 4
+                },
+                label: {
+                    show: true,
+                    position: 'outside',
+                    formatter: '{b}: {d}%'
+                }
+            }]
+        });  
+
+        window.addEventListener('resize', function () {
+            trendChart.resize();
+            distributionChart.resize();
+        });
+    </script>
+</body>
+
+</html>

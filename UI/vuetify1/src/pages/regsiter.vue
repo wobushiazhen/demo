@@ -88,7 +88,7 @@ const submitForm = async () => {
         showTips(res.data.message, 2000);
         // fetch(baseurl + "/auth/getToken")
         //   .then((response) => response.json())
-        //   .then((data) => {
+        //   .then((data) => { 
         //     if (getCookie("uToken")) return;
         //     setCookie("uToken", data.token, {
         //       expires: 1,
@@ -98,10 +98,8 @@ const submitForm = async () => {
         //     setTimeout(() => {
         //       window.location.href = "/";
         //     }, 1500);
-        //   })
+        //   })  
         //   .catch((error) => console.error("Error:", error));
-
-
         setCookie("LOGINSTATUS", true, {
           expires: 7, 
           path: "/",
@@ -144,7 +142,7 @@ const sendCode = async () => {
     )
     .then((res) => {
       if (res.data.status == 200) {
-        showTips(res.data.message, 2000);
+        showTips(res.data.message, 2000); 
       } else {
         showTips(res.data.message, 2000);
       }
@@ -156,9 +154,9 @@ onMounted(() => {
     .then((response) => response.json())
     .then((data) => {
       if (getCookie("uToken")) return;
-      setCookie("uToken", data.token, {
-        expires: 7,  
-        path: "/",
+      setCookie("uToken", data.token, { 
+        path: "/",  
+        expires:'3m',
         domain: location.hostname,
       });
     })

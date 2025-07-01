@@ -72,7 +72,11 @@
     cursor: pointer;
     line-height: normal;
 }
-
+ 
+.inner-l  .inner-l-open{ 
+    display: none;
+}
+ 
 .header-inner .inner-r {
     margin-top: -1px;
 }

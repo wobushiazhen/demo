@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统 B - 单点登录示例</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>系统 B - 单点登录示例</h1>
+    <div id="message"></div>
+
+    <script>
+        $(document).ready(function () {
+            const token = localStorage.getItem('token');
+            if (token) {
+                $.ajax({  
+                    url: 'http://127.0.0.1:7007/ddverify',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ token }),
+                    success: function (response) {
+                        if (response.success) {
+                            $('#message').text('欢迎访问系统 B！');
+                        } else {
+                            $('#message').text('访问失败: ' + response.message);
+                        }
+                    },
+                    error: function () {
+                        $('#message').text('请求出错，请稍后重试。');
+                    }
+                });
+            } else {
+                $('#message').text('请先在系统 A 登录。');
+            }
+        });
+    </script>
+</body>
+
+</html>    

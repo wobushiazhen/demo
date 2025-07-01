@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>阿珍的主页</title>
-    <meta name="description" content="链接，demo" />
-    <meta name="keywords" content="链接，demo" />
+    <title>阿珍的主页 - 优质资源与教程分享</title>
+    <meta name="description" content="阿珍的主页提供优质的资源和教程，包括CSS、HTML、JavaScript、微信小程序等内容，帮助您快速提升技能。" />
+    <meta name="keywords" content="阿珍, 资源, 教程, CSS, HTML, JavaScript, 微信小程序, 前端开发" />
     <link rel="stylesheet" href="public/css/reset.css">
     <link rel="stylesheet" href="public/css/pc_base.css">
     <link rel="stylesheet" href="public/iconfont/iconfont.css">
@@ -14,6 +14,66 @@
     <script src="tool/jquery-2.0.3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.0/layui.js"></script>
     <script src="/tool/axios.min.js"></script>
+    <style>
+        @media screen and (max-width: 750px) {
+            .pc-header .header-inner {
+                width: 100%;
+                display: block;
+            }
+
+            .pc-header .header-inner .inner-r {
+                display: none;
+            }
+
+            .pc-header .header-inner .inner-l {
+                padding-left: 10px;
+                display: flex;
+                justify-content: space-around;
+            }
+
+            .inner-l .inner-l-text p {
+                font-size: 13px;
+            }
+
+            .pc-header .header-inner .inner-l-open {
+                display: block;
+            }
+
+            .pc-cont {
+                width: 100% !important;
+            }
+
+            .pc-cont .cont-top{   
+                display: flex;
+            }
+            .pc-cont .cont-link .link-ul {
+                padding: 0 10px;
+            } 
+  
+            .pc-cont .cont-link .link-item {
+                width: 92%;
+            }
+
+            .inner-l .inner-l-search input {
+                width: 140px;
+            }
+
+            .cont-link .link-item a {
+                width: 100%; 
+                min-width: 100% !important;
+            }
+
+        }
+    </style>
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?811d73b430cc2d61d97bced69aacd9f6";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 </head>
 
 <body>
@@ -185,7 +245,7 @@
                                     <a class="link-item-a" target="_blank"
                                         href="/case/tartcloud/dist/index.html">响应式设计(PC端/移动端)</a>
                                     <i class="link-icon2 iconfont icon-arrowrightdl"></i>
-                                </div> 
+                                </div>
                             </li>
                             <li class="link-item">
                                 <div class="top">
@@ -1400,6 +1460,29 @@ Page({
                                     <i class="link-icon2 iconfont icon-arrowrightdl"></i>
                                 </div>
                             </li>
+                        </ul>
+                    </div>
+                </div>
+
+                 <!-- AI -->
+                <div class="cont8">
+                    <div class="cont-top">
+                        <i class="iconfont icon-weibiaoti22"></i>
+                        <div class="cont-title">
+                            <p class="mtitle">AI系列</p>
+                            <span class="subtitle">高效的AI工具</span>
+                        </div>
+                    </div>
+                    <div class="cont-link">
+                        <ul class="link-ul">
+                            <li class="link-item">
+                                <div class="top">
+                                    <i class="link-icon"></i> 
+                                    <a class="link-item-a" target="_blank"
+                                        href="/case/tohtml/index.html">mastergo AI生成代码，有点东西啊</a>
+                                    <i class="link-icon2 iconfont icon-arrowrightdl"></i>
+                                </div>
+                            </li> 
                         </ul>
                     </div>
                 </div>

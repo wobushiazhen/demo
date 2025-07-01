@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sprite Animation</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .sprite-container {
+            width: 747px;
+            height: 1063px;
+            position: relative;
+        }
+
+        .sprite {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+        }
+
+
+        @keyframes frameAnim5 {
+
+            0%,
+            12.499% {
+                background-position: -10px -10px;
+            }
+
+            12.5%,
+            24.999% {
+                background-position: -777px -10px;
+            }
+
+            25%,
+            37.499% {
+                background-position: -1544px -10px;
+            }
+
+            37.5%,
+            49.999% {
+                background-position: -10px -1093px;
+            }
+
+            50%,
+            62.499% {
+                background-position: -777px -1093px;
+            }
+
+            62.5%,
+            74.999% {
+                background-position: -1544px -1093px;
+            }
+
+            75%,
+            87.499% {
+                background-position: -2311px -10px;
+            }
+
+            87.5%,
+            100% {
+                background-position: -2311px -1093px;
+            }
+        }
+
+        #frameAnimImg5 {
+            animation: frameAnim5 1s steps(8) infinite;
+            /* 改为 steps(8) */
+        }
+
+
+        .imageStyle {
+            width: 747px;
+            height: 1063px;
+        }
+
+        .imageBg {
+            background-image: url("./images/css_sprites.png");
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sprite-container">
+
+        <img id="frameAnimImg5" class="imageStyle imageBg">
+    </div>
+
+    <script>
+        // 自动切换背景图像的脚本
+        const sprites = document.querySelectorAll('.sprite');
+        let currentIndex = 0;
+
+        function showNextSprite() {
+            sprites[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % sprites.length;
+            sprites[currentIndex].classList.add('active');
+        }
+
+        // 每3秒切换一次
+        setInterval(showNextSprite, 3000);
+
+
+    </script>
+</body>
+
+</html>
